@@ -23,19 +23,23 @@ struct TodayView: View {
     var body: some View {
         VStack {
             Spacer()
-            Text(title)
-                .font(.title)
             
-            AsyncImage(url: imageUrl) { image in
-                image
-            } placeholder: {
-                ProgressView()
+            VStack {
+                Text(title)
+                    .font(.largeTitle)
+                    .padding()
+                
+                AsyncImage(url: imageUrl) { image in
+                    image
+                } placeholder: {
+                    ProgressView()
+                }
             }
-            
-            Divider()
-            Spacer()
+            .padding([.bottom], 100)
+
             Text(text)
                 .font(.footnote)
+                .foregroundColor(.gray)
                 .frame(width: 300)
             Spacer()
         }
