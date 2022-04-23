@@ -11,7 +11,7 @@ import SwiftUI
 struct xkcdBrowserApp: App {
     var body: some Scene {
         WindowGroup {
-            TodayView(model: XKCDViewModel())
+            MainView()
         }
     }
 }

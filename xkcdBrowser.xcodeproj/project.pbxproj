@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		895D91242813D332006D786F /* ComicsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895D91232813D332006D786F /* ComicsListView.swift */; };
+		895D91262813D363006D786F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895D91252813D363006D786F /* MainView.swift */; };
 		8968A6262812A8CA00D84D3D /* xkcdBrowserApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8968A6252812A8CA00D84D3D /* xkcdBrowserApp.swift */; };
 		8968A62A2812A8CC00D84D3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8968A6292812A8CC00D84D3D /* Assets.xcassets */; };
 		8968A62D2812A8CC00D84D3D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8968A62C2812A8CC00D84D3D /* Preview Assets.xcassets */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		895D91232813D332006D786F /* ComicsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsListView.swift; sourceTree = "<group>"; };
+		895D91252813D363006D786F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		8968A6222812A8CA00D84D3D /* xkcdBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xkcdBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8968A6252812A8CA00D84D3D /* xkcdBrowserApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xkcdBrowserApp.swift; sourceTree = "<group>"; };
 		8968A6292812A8CC00D84D3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -85,6 +89,8 @@
 			isa = PBXGroup;
 			children = (
 				8968A6372812D77F00D84D3D /* TodayView.swift */,
+				895D91232813D332006D786F /* ComicsListView.swift */,
+				895D91252813D363006D786F /* MainView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -167,10 +173,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				895D91262813D363006D786F /* MainView.swift in Sources */,
 				89D68E6E2813C24100D06CB8 /* XKCDViewModel.swift in Sources */,
 				8968A6262812A8CA00D84D3D /* xkcdBrowserApp.swift in Sources */,
 				8968A6382812D77F00D84D3D /* TodayView.swift in Sources */,
 				8968A6362812AA0A00D84D3D /* XKCDModel.swift in Sources */,
+				895D91242813D332006D786F /* ComicsListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
