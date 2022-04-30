@@ -25,9 +25,9 @@ struct ComicsView: View {
                         .resizable()
                 } placeholder: {
                     ProgressView()
+                        .progressViewStyle(.circular)
                 }
             }
-            .padding([.bottom])
             
             Text(description)
                 .font(.footnote)
@@ -42,5 +42,6 @@ struct ComicsView_Previews: PreviewProvider {
         ComicsView(title: "Woodpecker",
                    imageURL: URL(string: "https://imgs.xkcd.com/comics/woodpecker.png"),
                    description: "If you don't have an extension cord I can get that too.  Because we're friends!  Right?")
+        .padding()
     }
 }
