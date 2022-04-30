@@ -10,6 +10,7 @@ import SwiftUI
 struct TodayView: View {
     
     let model: XKCDViewModel
+    @State var comics: XKCDComics?
     
     @State var title: String = ""
     @State var imageUrl: URL?
@@ -22,26 +23,15 @@ struct TodayView: View {
     
     var body: some View {
         VStack {
-            Spacer()
+            ComicsView(title: title,
+                       imageURL: imageUrl,
+                       description: text)
+            .padding()
             
-            VStack {
-                Text(title)
-                    .font(.largeTitle)
+            if let comics = comics {
+                ControlsView(prevNumber: comics.number - 1, nextNumber: comics.number)
                     .padding()
-                
-                AsyncImage(url: imageUrl) { image in
-                    image
-                } placeholder: {
-                    ProgressView()
-                }
             }
-            .padding([.bottom], 100)
-
-            Text(text)
-                .font(.footnote)
-                .foregroundColor(.gray)
-                .frame(width: 300)
-            Spacer()
         }
         .alert("Error", isPresented: $receivedError, actions: {
             Button(":(", role: .cancel) { }
@@ -50,10 +40,10 @@ struct TodayView: View {
         })
         .task {
             do {
-                let comics = try await model.fetchCurrentComics()
-                title = comics.title
-                imageUrl = comics.image
-                text = comics.text
+                comics = try await model.fetchCurrentComics()
+                title = comics?.title ?? ""
+                imageUrl = comics?.image
+                text = comics?.text ?? ""
             } catch {
                 errorDetails = error.localizedDescription
             }
