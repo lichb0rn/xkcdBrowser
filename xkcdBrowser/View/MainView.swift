@@ -9,11 +9,12 @@ import SwiftUI
 
 struct MainView: View {
     
-    let viewModel = XKCDViewModel()
+    @StateObject var viewModel = XKCDViewModel()
+    @StateObject var imageService = ImageService()
     
     var body: some View {
         TabView {
-            TodayView(model: viewModel)
+            TodayView()
                 .tabItem {
                     Image(systemName: "tray.and.arrow.down.fill")
                     Text("Latest")
@@ -25,6 +26,8 @@ struct MainView: View {
                     Text("More")
                 }
         }
+        .environmentObject(viewModel)
+        .environmentObject(imageService)
     }
 }
 

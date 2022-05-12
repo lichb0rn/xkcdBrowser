@@ -1,12 +1,14 @@
 
 import Foundation
+import UIKit
 
 struct XKCDComics {
-    let number: Int
-    let link: String
-    let text: String
-    let image: URL
-    let title: String
+    var number: Int = 0
+    var link: String = ""
+    var text: String = ""
+    var imageURL: URL? = nil
+    var title: String = ""
+    var image: UIImage? = nil
 }
 
 extension XKCDComics: Decodable {
@@ -14,7 +16,12 @@ extension XKCDComics: Decodable {
         case link, title
         case number = "num"
         case text = "alt"
-        case image = "img"
+        case imageURL = "img"
     }
 }
 
+extension XKCDComics: Identifiable {
+    var id: Int {
+        return number
+    }
+}

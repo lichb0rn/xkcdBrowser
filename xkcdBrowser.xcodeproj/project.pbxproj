@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		893E20C42824F52B002E7A43 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E20C32824F52B002E7A43 /* ImageService.swift */; };
 		895D91242813D332006D786F /* ComicsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895D91232813D332006D786F /* ComicsListView.swift */; };
 		895D91262813D363006D786F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895D91252813D363006D786F /* MainView.swift */; };
 		8968A6262812A8CA00D84D3D /* xkcdBrowserApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8968A6252812A8CA00D84D3D /* xkcdBrowserApp.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		893E20C32824F52B002E7A43 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		895D91232813D332006D786F /* ComicsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsListView.swift; sourceTree = "<group>"; };
 		895D91252813D363006D786F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		8968A6222812A8CA00D84D3D /* xkcdBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xkcdBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,8 +49,8 @@
 		8968A6192812A8CA00D84D3D = {
 			isa = PBXGroup;
 			children = (
-				8968A6242812A8CA00D84D3D /* xkcdBrowser */,
 				8968A6232812A8CA00D84D3D /* Products */,
+				8968A6242812A8CA00D84D3D /* xkcdBrowser */,
 			);
 			sourceTree = "<group>";
 		};
@@ -85,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				8968A6352812AA0A00D84D3D /* XKCDModel.swift */,
+				893E20C32824F52B002E7A43 /* ImageService.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 			files = (
 				895D91262813D363006D786F /* MainView.swift in Sources */,
 				899B8F98281D12530054D803 /* ComicsView.swift in Sources */,
+				893E20C42824F52B002E7A43 /* ImageService.swift in Sources */,
 				89D68E6E2813C24100D06CB8 /* XKCDViewModel.swift in Sources */,
 				8968A6262812A8CA00D84D3D /* xkcdBrowserApp.swift in Sources */,
 				899B8F9A281D16D50054D803 /* ControlsView.swift in Sources */,

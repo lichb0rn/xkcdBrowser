@@ -10,7 +10,7 @@ import SwiftUI
 struct ComicsView: View {
     
     let title: String
-    let imageURL: URL?
+    let image: UIImage
     let description: String
     
     var body: some View {
@@ -19,14 +19,10 @@ struct ComicsView: View {
                 Text(title)
                     .font(.headline)
                     .padding()
-                
-                AsyncImage(url: imageURL) { image in
-                    image
-                        .resizable()
-                } placeholder: {
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                }
+
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
             }
             
             Text(description)
@@ -37,11 +33,12 @@ struct ComicsView: View {
     }
 }
 
-struct ComicsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ComicsView(title: "Woodpecker",
-                   imageURL: URL(string: "https://imgs.xkcd.com/comics/woodpecker.png"),
-                   description: "If you don't have an extension cord I can get that too.  Because we're friends!  Right?")
-        .padding()
-    }
-}
+//struct ComicsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ComicsView(
+//            title: "Woodpecker",
+//            imageURL: "https://imgs.xkcd.com/comics/woodpecker.png",
+//            description: "If you don't have an extension cord I can get that too.  Because we're friends!  Right?")
+//        .padding()
+//    }
+//}

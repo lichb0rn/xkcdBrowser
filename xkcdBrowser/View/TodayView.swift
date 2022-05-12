@@ -9,13 +9,13 @@ import SwiftUI
 
 struct TodayView: View {
     
-    let model: XKCDViewModel
-    @State var comics: XKCDComics?
-    
-    @State var title: String = ""
-    @State var imageUrl: URL?
-    @State var text: String = ""
-    
+    @EnvironmentObject var viewModel: XKCDViewModel
+    @EnvironmentObject var imageService: ImageService
+
+    @State private var comics: XKCDComics?
+    @State private var image = UIImage()
+    @State private var number: Int = 2000
+
     @State var receivedError = false
     @State var errorDetails: String = "" {
         didSet { receivedError = true }
@@ -23,27 +23,34 @@ struct TodayView: View {
     
     var body: some View {
         VStack {
-            ComicsView(title: title,
-                       imageURL: imageUrl,
-                       description: text)
-            .padding()
-            
-            if let comics = comics {
-                ControlsView(prevNumber: comics.number - 1, nextNumber: comics.number)
+            Group {
+                if let comics = comics {
+                    ComicsView(title: comics.title,
+                               image: image,
+                               description: comics.text)
                     .padding()
+
+                    Spacer()
+                    ControlsView(
+                        max: viewModel.maxNumber,
+                        currentIndex: $number
+                    )
+                    .padding()
+                } else {
+                    ProgressView()
+                }
             }
+
         }
         .alert("Error", isPresented: $receivedError, actions: {
             Button(":(", role: .cancel) { }
         }, message: {
             Text(errorDetails)
         })
-        .task {
+        .task(id: number) {
             do {
-                comics = try await model.fetchCurrentComics()
-                title = comics?.title ?? ""
-                imageUrl = comics?.image
-                text = comics?.text ?? ""
+                comics = try await viewModel.download(withNumber: number)
+                image = try await imageService.downloadImage(fromURL: comics!.imageURL!)
             } catch {
                 errorDetails = error.localizedDescription
             }

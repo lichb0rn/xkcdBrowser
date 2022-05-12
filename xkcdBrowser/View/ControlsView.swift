@@ -8,36 +8,57 @@
 import SwiftUI
 
 struct ControlsView: View {
-    
-    var prevNumber: Int
-    var nextNumber: Int? = nil
-    
+
+    var min: Int
+    var max: Int
+
+    @Binding var currentIndex: Int
+
+    @State private var leftEnabled: Bool
+    @State private var rightEnabled: Bool
+
+    init(min: Int = 0, max: Int, currentIndex: Binding<Int>) {
+        self.min = min
+        self.max = max
+        self._currentIndex = currentIndex
+        self._leftEnabled = State(initialValue: currentIndex.wrappedValue > min)
+        self._rightEnabled = State(initialValue: currentIndex.wrappedValue < max)
+    }
+
     var body: some View {
         HStack {
             Button {
-                print("prev")
+                if currentIndex > min {
+                    currentIndex -= 1
+                } else {
+                    currentIndex = min
+                    leftEnabled = false
+                }
             } label: {
-                HStack {
-                    Text("\(Image(systemName: "arrow.left")) \(prevNumber)")
-                }
+                Image(systemName: "chevron.left")
             }
+            .disabled(!leftEnabled)
+
             Spacer()
-            if let nextNumber = nextNumber {
-                Button {
-                    print("back")
-                } label: {
-                    HStack {
-                        Text("\(nextNumber) \(Image(systemName: "arrow.right"))")
-                    }
+
+            Button {
+                if currentIndex < max {
+                    currentIndex += 1
+                } else {
+                    currentIndex = max
+                    rightEnabled = false
                 }
+            } label: {
+                Image(systemName: "chevron.right")
             }
+            .disabled(!rightEnabled)
         }
     }
 }
 
 struct ControlsView_Previews: PreviewProvider {
     static var previews: some View {
-        ControlsView(prevNumber: 2500, nextNumber: 2502)
+        ControlsView(max: 2000, currentIndex: .constant(1000))
             .padding()
     }
 }
