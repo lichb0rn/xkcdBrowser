@@ -8,7 +8,6 @@ struct XKCDComics {
     var text: String = ""
     var imageURL: URL? = nil
     var title: String = ""
-    var image: UIImage? = nil
 }
 
 extension XKCDComics: Decodable {

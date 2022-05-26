@@ -1,10 +1,3 @@
-//
-//  ComicsListView.swift
-//  xkcdBrowser
-//
-//  Created by Miroslav Taleiko on 23.04.2022.
-//
-
 import SwiftUI
 
 struct ComicsListView: View {

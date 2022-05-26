@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		892FCE84283B96E60046C56F /* ComicsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FCE83283B96E60046C56F /* ComicsError.swift */; };
 		893E20C42824F52B002E7A43 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E20C32824F52B002E7A43 /* ImageService.swift */; };
 		895D91242813D332006D786F /* ComicsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895D91232813D332006D786F /* ComicsListView.swift */; };
 		895D91262813D363006D786F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895D91252813D363006D786F /* MainView.swift */; };
@@ -17,10 +18,11 @@
 		8968A6382812D77F00D84D3D /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8968A6372812D77F00D84D3D /* TodayView.swift */; };
 		899B8F98281D12530054D803 /* ComicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899B8F97281D12530054D803 /* ComicsView.swift */; };
 		899B8F9A281D16D50054D803 /* ControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899B8F99281D16D50054D803 /* ControlsView.swift */; };
-		89D68E6E2813C24100D06CB8 /* XKCDViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D68E6D2813C24100D06CB8 /* XKCDViewModel.swift */; };
+		89B3D9432838DDE000B884EA /* ComicsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B3D9422838DDE000B884EA /* ComicsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		892FCE83283B96E60046C56F /* ComicsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsError.swift; sourceTree = "<group>"; };
 		893E20C32824F52B002E7A43 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		895D91232813D332006D786F /* ComicsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsListView.swift; sourceTree = "<group>"; };
 		895D91252813D363006D786F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -32,7 +34,7 @@
 		8968A6372812D77F00D84D3D /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		899B8F97281D12530054D803 /* ComicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsView.swift; sourceTree = "<group>"; };
 		899B8F99281D16D50054D803 /* ControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsView.swift; sourceTree = "<group>"; };
-		89D68E6D2813C24100D06CB8 /* XKCDViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XKCDViewModel.swift; sourceTree = "<group>"; };
+		89B3D9422838DDE000B884EA /* ComicsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 			children = (
 				8968A6352812AA0A00D84D3D /* XKCDModel.swift */,
 				893E20C32824F52B002E7A43 /* ImageService.swift */,
+				892FCE83283B96E60046C56F /* ComicsError.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -107,7 +110,7 @@
 		89D68E6C2813C22300D06CB8 /* View Model */ = {
 			isa = PBXGroup;
 			children = (
-				89D68E6D2813C24100D06CB8 /* XKCDViewModel.swift */,
+				89B3D9422838DDE000B884EA /* ComicsViewModel.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -184,12 +187,13 @@
 			files = (
 				895D91262813D363006D786F /* MainView.swift in Sources */,
 				899B8F98281D12530054D803 /* ComicsView.swift in Sources */,
+				892FCE84283B96E60046C56F /* ComicsError.swift in Sources */,
 				893E20C42824F52B002E7A43 /* ImageService.swift in Sources */,
-				89D68E6E2813C24100D06CB8 /* XKCDViewModel.swift in Sources */,
 				8968A6262812A8CA00D84D3D /* xkcdBrowserApp.swift in Sources */,
 				899B8F9A281D16D50054D803 /* ControlsView.swift in Sources */,
 				8968A6382812D77F00D84D3D /* TodayView.swift in Sources */,
 				8968A6362812AA0A00D84D3D /* XKCDModel.swift in Sources */,
+				89B3D9432838DDE000B884EA /* ComicsViewModel.swift in Sources */,
 				895D91242813D332006D786F /* ComicsListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

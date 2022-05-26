@@ -1,5 +1,7 @@
 import UIKit
 
+
+
 actor ImageService: ObservableObject {
     enum State {
         case inProgress(Task<UIImage, Error>)
@@ -18,14 +20,14 @@ actor ImageService: ObservableObject {
             case .inProgress(let task):
                 return try await task.value
             case .failed:
-                throw XKCDError.networkError
+                throw ComicsError.networkError
             }
         }
 
         let downloadTask: Task<UIImage, Error> = Task.detached {
             let data = try await URLSession.shared.data(from: url).0
             guard let image = UIImage(data: data) else {
-                throw XKCDError.parseJSONError
+                throw ComicsError.parseJSONError
             }
             return image
         }
@@ -38,12 +40,12 @@ actor ImageService: ObservableObject {
             return image
         } catch {
             cache[key] = .failed
-            throw XKCDError.networkError
+            throw ComicsError.networkError
         }
     }
 
     func add(_ image: UIImage, key: String) {
-        cache[key] = .completed(image)
+        cache[key] = cache[key, default: .completed(image)]
     }
 }
 

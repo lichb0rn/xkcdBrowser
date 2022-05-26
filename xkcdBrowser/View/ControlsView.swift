@@ -1,39 +1,15 @@
-//
-//  ControlsView.swift
-//  xkcdBrowser
-//
-//  Created by Miroslav Taleiko on 30.04.2022.
-//
-
 import SwiftUI
 
 struct ControlsView: View {
 
-    var min: Int
-    var max: Int
-
-    @Binding var currentIndex: Int
-
-    @State private var leftEnabled: Bool
-    @State private var rightEnabled: Bool
-
-    init(min: Int = 0, max: Int, currentIndex: Binding<Int>) {
-        self.min = min
-        self.max = max
-        self._currentIndex = currentIndex
-        self._leftEnabled = State(initialValue: currentIndex.wrappedValue > min)
-        self._rightEnabled = State(initialValue: currentIndex.wrappedValue < max)
-    }
+    @Binding var index: Int
+    @Binding var leftEnabled: Bool
+    @Binding var rightEnabled: Bool
 
     var body: some View {
         HStack {
             Button {
-                if currentIndex > min {
-                    currentIndex -= 1
-                } else {
-                    currentIndex = min
-                    leftEnabled = false
-                }
+                index -= 1
             } label: {
                 Image(systemName: "chevron.left")
             }
@@ -42,12 +18,7 @@ struct ControlsView: View {
             Spacer()
 
             Button {
-                if currentIndex < max {
-                    currentIndex += 1
-                } else {
-                    currentIndex = max
-                    rightEnabled = false
-                }
+                index += 1
             } label: {
                 Image(systemName: "chevron.right")
             }
@@ -58,7 +29,7 @@ struct ControlsView: View {
 
 struct ControlsView_Previews: PreviewProvider {
     static var previews: some View {
-        ControlsView(max: 2000, currentIndex: .constant(1000))
+        ControlsView(index: .constant(1000), leftEnabled: .constant(true), rightEnabled: .constant(false))
             .padding()
     }
 }
