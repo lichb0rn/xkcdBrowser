@@ -7,8 +7,7 @@ struct TodayView: View {
     var body: some View {
         NavigationView {
             VStack {
-                ComicsView(title: $viewModel.title,
-                           image: $viewModel.image,
+                ComicsView(image: $viewModel.image,
                            description: $viewModel.alt)
                 .padding()
                 .navigationTitle(viewModel.title + " #\(viewModel.currentIndex)")
@@ -30,8 +29,9 @@ struct TodayView: View {
             })
             .task {
                 await viewModel.fetchCurrent()
+            }
         }
-        }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 
     @ViewBuilder private var progressOverlay: some View {

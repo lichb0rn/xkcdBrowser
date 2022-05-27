@@ -2,7 +2,6 @@ import SwiftUI
 
 struct ComicsView: View {
     
-    @Binding var title: String
     @Binding var image: UIImage
     @Binding var description: String
     

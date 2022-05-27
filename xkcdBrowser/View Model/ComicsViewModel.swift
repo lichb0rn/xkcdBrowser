@@ -4,6 +4,7 @@ import SwiftUI
 class ComicsViewModel: ObservableObject {
 
     private let imageService: ImageService
+    private let fetcher: ComicsDownloader
 
     @Published var isLoading: Bool = true
     @Published var image: UIImage = UIImage()
@@ -15,7 +16,7 @@ class ComicsViewModel: ObservableObject {
 
     @Published var currentIndex: Int = -1 {
         didSet {
-            hasOldComics = currentIndex > 0
+            hasOldComics = currentIndex > 1
             hasNewComics = currentIndex < maxIndex - 1
             guard currentIndex != maxIndex else { return }
             Task {
@@ -32,14 +33,16 @@ class ComicsViewModel: ObservableObject {
     private(set) var maxIndex: Int = .max
 
     private let decoder = JSONDecoder()
-    init(imageService: ImageService) {
+    init(imageService: ImageService, fetcher: ComicsDownloader = ComicsFetcher()) {
         self.imageService = imageService
+        self.fetcher = fetcher
     }
 
 
     func fetchCurrent() async {
+        isLoading = true
         do {
-            let comics = try await downloadComicsInfo(from: ComicsVersion.current.url)
+            let comics = try await fetcher.downloadComicsInfo(from: ComicsEndpoint.current.url)
             let img = try await imageService.downloadImage(fromURL: comics.imageURL!)
             maxIndex = comics.number
             updateUI(comics: comics, image: img)
@@ -58,8 +61,9 @@ class ComicsViewModel: ObservableObject {
     }
 
     private func fetchSpecific(with index: Int) async {
+        isLoading = true
         do {
-            let comics = try await downloadComicsInfo(from: ComicsVersion.version(number: index).url)
+            let comics = try await fetcher.downloadComicsInfo(from: ComicsEndpoint.version(number: index).url)
             let img = try await imageService.downloadImage(fromURL: comics.imageURL!)
             updateUI(comics: comics, image: img)
         } catch (let error) {
@@ -67,45 +71,5 @@ class ComicsViewModel: ObservableObject {
             hasError = true
         }
 
-    }
-
-    private func downloadComicsInfo(from url: URL) async throws -> XKCDComics {
-        isLoading = true
-        let (data, response) = try await URLSession.shared.data(from: url)
-
-        guard (response as? HTTPURLResponse)?.statusCode == 200 else {
-            throw ComicsError.serverError
-        }
-
-        do {
-            let comics = try decoder.decode(XKCDComics.self, from: data)
-            return comics
-        } catch {
-            throw ComicsError.parseJSONError
-        }
-    }
-
-
-
-}
-
-
-extension ComicsViewModel {
-    enum ComicsVersion {
-        private var baseURL: String { "https://xkcd.com/" }
-        private var suffix: String { "info.0.json" }
-
-        case current
-        case version(number: Int)
-
-        var url: URL {
-            guard let url = URL(string: baseURL) else { preconditionFailure("Not valid baseURL") }
-            switch self {
-            case .current:
-                return url.appendingPathComponent(suffix)
-            case .version(let number):
-                return url.appendingPathComponent("\(number)/\(suffix)")
-            }
-        }
     }
 }
