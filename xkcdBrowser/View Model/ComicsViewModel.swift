@@ -77,8 +77,6 @@ class ComicsViewModel: ObservableObject {
             throw ComicsError.serverError
         }
 
-        print("Downloading \(url.description)")
-
         do {
             let comics = try decoder.decode(XKCDComics.self, from: data)
             return comics

@@ -98,13 +98,21 @@
 		8968A6342812A9F700D84D3D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				8968A6372812D77F00D84D3D /* TodayView.swift */,
+				89D3E7522840FE7100306386 /* Today screen */,
 				895D91232813D332006D786F /* ComicsListView.swift */,
 				895D91252813D363006D786F /* MainView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		89D3E7522840FE7100306386 /* Today screen */ = {
+			isa = PBXGroup;
+			children = (
+				8968A6372812D77F00D84D3D /* TodayView.swift */,
 				899B8F97281D12530054D803 /* ComicsView.swift */,
 				899B8F99281D16D50054D803 /* ControlsView.swift */,
 			);
-			path = View;
+			path = "Today screen";
 			sourceTree = "<group>";
 		};
 		89D68E6C2813C22300D06CB8 /* View Model */ = {

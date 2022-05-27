@@ -8,15 +8,9 @@ struct ComicsView: View {
     
     var body: some View {
         VStack {
-            VStack {
-                Text(title)
-                    .font(.headline)
-                    .padding()
-
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-            }
+            Image(uiImage: image)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
             
             Text(description)
                 .font(.footnote)
