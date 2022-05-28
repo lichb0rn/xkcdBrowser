@@ -3,7 +3,7 @@ import SwiftUI
 @MainActor
 class ComicsViewModel: ObservableObject {
 
-    private let imageService: ImageService
+    private let imageService: ImageDownloader
     private let fetcher: ComicsDownloader
 
     @Published var isLoading: Bool = true
@@ -30,10 +30,10 @@ class ComicsViewModel: ObservableObject {
     private(set) var errorDescription: String = ""
 
     // maxIndex is the latest comics number
-    private(set) var maxIndex: Int = .max
+    private var maxIndex: Int = .max
 
     private let decoder = JSONDecoder()
-    init(imageService: ImageService, fetcher: ComicsDownloader = ComicsFetcher()) {
+    init(imageService: ImageDownloader, fetcher: ComicsDownloader = ComicsFetcher()) {
         self.imageService = imageService
         self.fetcher = fetcher
     }

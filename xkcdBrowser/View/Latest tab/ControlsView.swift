@@ -26,10 +26,3 @@ struct ControlsView: View {
         }
     }
 }
-
-struct ControlsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ControlsView(index: .constant(1000), leftEnabled: .constant(true), rightEnabled: .constant(false))
-            .padding()
-    }
-}

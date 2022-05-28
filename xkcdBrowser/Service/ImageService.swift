@@ -1,6 +1,9 @@
 import UIKit
 
-
+protocol ImageDownloader: Actor {
+    func downloadImage(fromURL url: URL) async throws -> UIImage
+    func add(_ image: UIImage, key: String)
+}
 
 actor ImageService: ObservableObject {
     enum State {
@@ -49,3 +52,12 @@ actor ImageService: ObservableObject {
     }
 }
 
+extension ImageService: ImageDownloader {}
+
+actor MockImageService: ImageDownloader {
+    func downloadImage(fromURL url: URL) async throws -> UIImage {
+        return UIImage(named: "error")!
+    }
+
+    func add(_ image: UIImage, key: String) { }
+}

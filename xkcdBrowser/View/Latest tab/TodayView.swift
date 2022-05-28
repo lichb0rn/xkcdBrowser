@@ -2,7 +2,7 @@ import SwiftUI
 
 struct TodayView: View {
     
-    @EnvironmentObject var viewModel: ComicsViewModel
+    @ObservedObject var viewModel: ComicsViewModel
 
     var body: some View {
         NavigationView {

@@ -2,28 +2,23 @@ import SwiftUI
 
 struct MainView: View {
 
-    @ObservedObject var comicsViewModel: ComicsViewModel
-
-    init() {
-        self.comicsViewModel = ComicsViewModel(imageService: ImageService())
-    }
+    @StateObject var imageService = ImageService()
 
     var body: some View {
         TabView {
-            TodayView()
+            TodayView(viewModel: ComicsViewModel(imageService: imageService))
                 .tabItem {
                     Image(systemName: "tray.and.arrow.down.fill")
                     Text("Latest")
                 }
-                .environmentObject(comicsViewModel)
+
             
-            ComicsListView()
+            ComicsListView(viewModel: ComicsListViewModel(imageService: imageService))
                 .tabItem {
                     Image(systemName: "photo.on.rectangle.angled")
                     Text("More")
                 }
         }
-
     }
 }
 

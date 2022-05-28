@@ -41,3 +41,16 @@ enum ComicsEndpoint {
         }
     }
 }
+
+
+struct MockComicsFetcher: ComicsDownloader {
+    func downloadComicsInfo(from url: URL) async throws -> XKCDComics {
+        let comics = XKCDComics(
+            number: 614,
+            link: "https://xkcd.com/614/info.0.json",
+            text: "If you don't have an extension cord I can get that too.  Because we're friends!  Right?",
+            imageURL: URL(string: "https://imgs.xkcd.com/comics/woodpecker.png"),
+            title: "Woodpecker")
+        return comics
+    }
+}
