@@ -1,25 +1,25 @@
 import Foundation
 
-protocol ComicsDownloader {
-    func downloadComicsInfo(from url: URL) async throws -> XKCDComics
+protocol ComicDownloader {
+    func downloadComicInfo(from url: URL) async throws -> XKCDComic
 }
 
-struct ComicsFetcher: ComicsDownloader {
+struct ComicFetcher: ComicDownloader {
     
     private let decoder = JSONDecoder()
     
-    func downloadComicsInfo(from url: URL) async throws -> XKCDComics {
+    func downloadComicInfo(from url: URL) async throws -> XKCDComic {
         let (data, response) = try await URLSession.shared.data(from: url)
         
         guard (response as? HTTPURLResponse)?.statusCode == 200 else {
-            throw ComicsError.serverError
+            throw NetworkError.serverError
         }
         
         do {
-            let comics = try decoder.decode(XKCDComics.self, from: data)
+            let comics = try decoder.decode(XKCDComic.self, from: data)
             return comics
         } catch {
-            throw ComicsError.parseJSONError
+            throw NetworkError.parseJSONError
         }
     }
 }
@@ -43,13 +43,12 @@ enum ComicsEndpoint {
 }
 
 
-struct MockComicsFetcher: ComicsDownloader {
-    func downloadComicsInfo(from url: URL) async throws -> XKCDComics {
-        let comics = XKCDComics(
-            number: 614,
-            link: "https://xkcd.com/614/info.0.json",
+struct MockComicsFetcher: ComicDownloader {
+    func downloadComicInfo(from url: URL) async throws -> XKCDComic {
+        let comics = XKCDComic(
+            id: 614,
             text: "If you don't have an extension cord I can get that too.  Because we're friends!  Right?",
-            imageURL: URL(string: "https://imgs.xkcd.com/comics/woodpecker.png"),
+            imageUrl: URL(string: "https://imgs.xkcd.com/comics/woodpecker.png")!,
             title: "Woodpecker")
         return comics
     }

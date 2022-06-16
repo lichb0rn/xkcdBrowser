@@ -2,16 +2,16 @@ import SwiftUI
 
 struct TodayView: View {
     
-    @ObservedObject var viewModel: ComicsViewModel
+    @ObservedObject var viewModel: ComicViewModel
 
     var body: some View {
         NavigationView {
             VStack {
-                ComicsView(image: $viewModel.image,
-                           description: $viewModel.alt)
-                .padding()
-                .navigationTitle(viewModel.title + " #\(viewModel.currentIndex)")
-                .navigationBarTitleDisplayMode(.inline)
+//                ComicView(image: $viewModel.image,
+//                           description: $viewModel.alt)
+//                .padding()
+//                .navigationTitle(viewModel.title + " #\(viewModel.currentIndex)")
+//                .navigationBarTitleDisplayMode(.inline)
 
                 Spacer()
                 ControlsView(
@@ -40,3 +40,5 @@ struct TodayView: View {
         }
     }
 }
+
+

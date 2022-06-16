@@ -6,6 +6,9 @@ protocol ImageDownloader: Actor {
 }
 
 actor ImageService: ObservableObject {
+    static let shared = ImageService()
+    private init() {}
+
     enum State {
         case inProgress(Task<UIImage, Error>)
         case completed(UIImage)
@@ -23,14 +26,14 @@ actor ImageService: ObservableObject {
             case .inProgress(let task):
                 return try await task.value
             case .failed:
-                throw ComicsError.networkError
+                throw NetworkError.networkError
             }
         }
 
         let downloadTask: Task<UIImage, Error> = Task.detached {
             let data = try await URLSession.shared.data(from: url).0
             guard let image = UIImage(data: data) else {
-                throw ComicsError.parseJSONError
+                throw NetworkError.parseJSONError
             }
             return image
         }
@@ -43,7 +46,7 @@ actor ImageService: ObservableObject {
             return image
         } catch {
             cache[key] = .failed
-            throw ComicsError.networkError
+            throw NetworkError.networkError
         }
     }
 

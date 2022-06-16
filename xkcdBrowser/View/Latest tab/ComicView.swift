@@ -1,13 +1,13 @@
 import SwiftUI
 
-struct ComicsView: View {
+struct ComicView: View {
     
-    @Binding var image: UIImage
+    @Binding var image: Image
     @Binding var description: String
     
     var body: some View {
         VStack {
-            Image(uiImage: image)
+            image
                 .resizable()
                 .aspectRatio(contentMode: .fit)
             

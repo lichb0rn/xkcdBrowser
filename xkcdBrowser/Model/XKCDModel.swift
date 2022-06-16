@@ -2,25 +2,24 @@
 import Foundation
 import UIKit
 
-struct XKCDComics {
-    var number: Int = 0
-    var link: String = ""
+struct XKCDComic {
+    var id: Int
     var text: String = ""
-    var imageURL: URL? = nil
+    var imageUrl: URL
     var title: String = ""
+
+    var link: URL {
+        imageUrl.deletingLastPathComponent()
+    }
 }
 
-extension XKCDComics: Decodable {
+extension XKCDComic: Decodable {
     private enum CodingKeys: String, CodingKey {
-        case link, title
-        case number = "num"
+        case id = "num"
+        case title
+        case imageUrl = "img"
         case text = "alt"
-        case imageURL = "img"
     }
 }
 
-extension XKCDComics: Identifiable {
-    var id: Int {
-        return number
-    }
-}
+extension XKCDComic: Identifiable {}

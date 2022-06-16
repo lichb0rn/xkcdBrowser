@@ -1,8 +1,7 @@
 import Foundation
 
-enum ComicsError: Error {
+enum NetworkError: Error {
     case networkError
     case serverError
     case parseJSONError
-    case comicsNumberError
 }
