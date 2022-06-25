@@ -57,10 +57,3 @@ actor ImageService: ObservableObject {
 
 extension ImageService: ImageDownloader {}
 
-actor MockImageService: ImageDownloader {
-    func downloadImage(fromURL url: URL) async throws -> UIImage {
-        return UIImage(named: "error")!
-    }
-
-    func add(_ image: UIImage, key: String) { }
-}

@@ -1,30 +1,40 @@
 import Foundation
 
 protocol ComicDownloader {
-    func downloadComicInfo(from url: URL) async throws -> XKCDComic
+    func fetchComicItem(withIndex index: Int) async throws -> ComicItem
 }
 
 struct ComicFetcher: ComicDownloader {
     
+    private let imageService: ImageDownloader = ImageService.shared
     private let decoder = JSONDecoder()
     
-    func downloadComicInfo(from url: URL) async throws -> XKCDComic {
-        let (data, response) = try await URLSession.shared.data(from: url)
+    
+    /// Fetch ComicItem from server
+    /// - Parameter index: Optional xkcd comic index (num). If not provided, fetches the most recent comic.
+    /// - Returns: ComicItem
+    func fetchComicItem(withIndex index: Int = 0) async throws -> ComicItem {
+        var url: URL
+        if index > 0 {
+            url = ComicEndpoint.version(number: index).url
+        } else {
+            url = ComicEndpoint.current.url
+        }
         
+        let (data, response) = try await URLSession.shared.data(from: url)
         guard (response as? HTTPURLResponse)?.statusCode == 200 else {
             throw NetworkError.serverError
         }
-        
         do {
-            let comics = try decoder.decode(XKCDComic.self, from: data)
-            return comics
+            let comicData = try decoder.decode(XKCDComic.self, from: data)
+            return ComicItem(downloader: imageService, comicData: comicData)
         } catch {
             throw NetworkError.parseJSONError
         }
     }
 }
 
-enum ComicsEndpoint {
+enum ComicEndpoint {
     private var baseURL: String { "https://xkcd.com/" }
     private var suffix: String { "info.0.json" }
     
@@ -39,17 +49,5 @@ enum ComicsEndpoint {
         case .version(let number):
             return url.appendingPathComponent("\(number)/\(suffix)")
         }
-    }
-}
-
-
-struct MockComicsFetcher: ComicDownloader {
-    func downloadComicInfo(from url: URL) async throws -> XKCDComic {
-        let comics = XKCDComic(
-            id: 614,
-            text: "If you don't have an extension cord I can get that too.  Because we're friends!  Right?",
-            imageUrl: URL(string: "https://imgs.xkcd.com/comics/woodpecker.png")!,
-            title: "Woodpecker")
-        return comics
     }
 }

@@ -2,13 +2,14 @@ import SwiftUI
 
 struct MainView: View {
 
-    @StateObject var imageService = ImageService.shared
-
-    @StateObject var comicsListViewModel = ComicListViewModel(imageService: ImageService.shared)
-//    @StateObject var comicsListViewModel = ComicListViewModel(store: ComicStore.shared)
-
+    #if DEBUG
+    @StateObject var comicsListViewModel = ComicGridViewModel(fetcher: MockFetcher())
+    #else
+    @StateObject var comicsListViewModel = ComicGridViewModel(fetcher: ComicFetcher())
+    #endif
+    
     var body: some View {
-        ComicListView(viewModel: comicsListViewModel)
+        ComicGridView(viewModel: comicsListViewModel)
     }
 }
 
