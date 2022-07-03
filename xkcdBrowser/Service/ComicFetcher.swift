@@ -2,6 +2,7 @@ import Foundation
 
 protocol ComicDownloader {
     func fetchComicItem(withIndex index: Int) async throws -> ComicItem
+    func fetchNextComicItems(from index: Int, count: Int) async throws -> [ComicItem]
 }
 
 struct ComicFetcher: ComicDownloader {
@@ -30,6 +31,25 @@ struct ComicFetcher: ComicDownloader {
             return ComicItem(downloader: imageService, comicData: comicData)
         } catch {
             throw NetworkError.parseJSONError
+        }
+    }
+    
+    func fetchNextComicItems(from index: Int, count: Int = 5) async throws -> [ComicItem] {
+        let stopIndex = index - count
+        
+        return try await withThrowingTaskGroup(of: ComicItem.self) { group -> [ComicItem] in
+            var items = [ComicItem]()
+            
+            for idx in (stopIndex...index).reversed() {
+                group.addTask {
+                    try await self.fetchComicItem(withIndex: idx)
+                }
+            }
+            for try await item in group {
+                items.append(item)
+            }
+            
+            return items
         }
     }
 }

@@ -19,7 +19,6 @@ struct PreviewData {
                 jsons.append(comic)
             }
         }
-        print(jsons.count)
     }
     
     func comic(with index: Int) -> XKCDComic {

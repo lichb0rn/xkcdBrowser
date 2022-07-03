@@ -10,18 +10,29 @@ actor MockImageService: ImageDownloader {
     private var cache: [String: State] = [:]
     
     func downloadImage(fromURL url: URL) async throws -> UIImage {
-        let fileName = urlToFilename(url)
-        
-        if let path = Bundle.main.path(forResource: fileName, ofType: "png") {
-            return UIImage(contentsOfFile: path)!
+        if let image = loadFromFile(url) {
+            return image
         } else {
-            throw NetworkError.parseJSONError
+            throw NetworkError.serverError
         }
     }
 
-    private func urlToFilename(_ url: URL) -> String {
-        return (url.lastPathComponent as NSString).deletingPathExtension
-    }
+
     
     func add(_ image: UIImage, key: String) { }
+}
+
+extension MockImageService {
+    nonisolated func loadFromFile(_ url: URL) -> UIImage? {
+        let fileName = urlToFilename(url)
+        
+        if let path = Bundle.main.path(forResource: fileName, ofType: "png") {
+            return UIImage(contentsOfFile: path)
+        }
+        return nil
+    }
+    
+    nonisolated private func urlToFilename(_ url: URL) -> String {
+        return (url.lastPathComponent as NSString).deletingPathExtension
+    }
 }

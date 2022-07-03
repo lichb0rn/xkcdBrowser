@@ -6,12 +6,16 @@ class ComicGridItemViewModel: ObservableObject {
 
     @Published var comic: ComicItem
 
-    var id: Int
+    private(set) var id: UUID
     var isFetching: Bool = true
+    var num: Int {
+        comic.num
+    }
     
     init(comic: ComicItem) {
         self.comic = comic
-        self.id = comic.num
+//        self.id = comic.num
+        self.id = UUID()
     }
 
     @MainActor

@@ -5,15 +5,17 @@ struct ComicGridItemView: View {
     @ObservedObject var viewModel: ComicGridItemViewModel
     
     @State private var opacity: Double = 0
-
     
     var body: some View {
         VStack(alignment: .center) {
-            if let comicInfo = viewModel.comic.comicData {
+            Group {
                 if !viewModel.isFetching, let comicImage = viewModel.comic.comicImage {
                     comicImage
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                        .clipped()
+                        .aspectRatio(1, contentMode: .fit)
                         .opacity(opacity)
                         .animation(.easeInOut(duration: 1), value: opacity)
                         .padding()
@@ -21,18 +23,17 @@ struct ComicGridItemView: View {
                             opacity = 1
                             timer.upstream.connect().cancel()
                         }
+                } else {
+                    waitingView
                 }
-                Text(comicInfo.title)
-                    .font(.body)
-                    .lineLimit(1)
-                
-                Text("#\(comicInfo.num)")
-                    .font(.footnote)
                 
             }
-            else {
-                waitingView
-            }
+            Text(viewModel.comic.comicData?.title ?? "Loading...")
+                .font(.body)
+                .lineLimit(1)
+            
+            Text("#\(viewModel.comic.comicData?.num ?? 0)")
+                .font(.footnote)
         }
         .border(.black, width: 2)
         .onAppear {
@@ -42,6 +43,9 @@ struct ComicGridItemView: View {
         }
         .onReceive(timer) { _ in
             loadingProgress = CGFloat.random(in: 0..<100)
+        }
+        .task {
+            await viewModel.fetchImage()
         }
     }
     
@@ -75,7 +79,7 @@ struct ComicGridItemView: View {
                 
                 Rectangle().frame(width: min(CGFloat(loadingProgress) * proxy.size.width, proxy.size.width),
                                   height: proxy.size.height)
-                    .foregroundColor(Color("xkcdBlue"))
+                .foregroundColor(Color("xkcdBlue"))
             }.cornerRadius(45.0)
         }
     }
@@ -83,7 +87,7 @@ struct ComicGridItemView: View {
 
 struct ComicsCardView_Previews: PreviewProvider {
     static var previews: some View {
-        let comicItem = ComicItem(downloader: MockImageService())
+        let comicItem = ComicItem.preview.first!
         let viewModel = ComicGridItemViewModel(comic: comicItem)
         
         return ComicGridItemView(viewModel: viewModel)

@@ -1,5 +1,5 @@
 import SwiftUI
-
+import Combine
 
 /// Grid ViewModel
 final class ComicGridViewModel: ObservableObject {
@@ -11,6 +11,7 @@ final class ComicGridViewModel: ObservableObject {
     private var fetcher: ComicDownloader
     private var isFetching: Bool = false
     private var maxIndex: Int = -1
+    private var lastIndexFetched: Int = -1
     
     init(fetcher: ComicDownloader) {
         self.fetcher = fetcher
@@ -22,6 +23,7 @@ final class ComicGridViewModel: ObservableObject {
         do {
             let latest = try await fetcher.fetchComicItem(withIndex: 0)
             maxIndex = latest.num
+            lastIndexFetched = latest.num
             let comicListViewModel = ComicGridItemViewModel(comic: latest)
             feed.append(comicListViewModel)
             Task {
@@ -32,20 +34,34 @@ final class ComicGridViewModel: ObservableObject {
         }
         isFetching = false
     }
-    
+
     @MainActor
-    func fetch(currentIndex: Int) async {
-        guard (1...maxIndex).contains(currentIndex) else { return }
+    func fetch(currentIndex: Int, prefetchCount: Int = 5) async {
+        guard (prefetchCount...maxIndex).contains(currentIndex) else { return }
         isFetching = true
+//        do {
+//            let nextIndex = currentIndex - 1
+//            let comicItem = try await fetcher.fetchComicItem(withIndex: nextIndex)
+//            let comicListViewModel = ComicGridItemViewModel(comic: comicItem)
+//            feed.append(comicListViewModel)
+//            Task {
+//                await comicListViewModel.fetchImage()
+//            }
+//        } catch {}
+        let nextIndex = lastIndexFetched - 1
         do {
-            let nextIndex = currentIndex - 1
-            let comicItem = try await fetcher.fetchComicItem(withIndex: nextIndex)
-            let comicListViewModel = ComicGridItemViewModel(comic: comicItem)
-            feed.append(comicListViewModel)
-            Task {
-                await comicListViewModel.fetchImage()
+            let comicItems = try await fetcher.fetchNextComicItems(from: nextIndex, count: prefetchCount)
+            let viewModels = comicItems.map { ComicGridItemViewModel(comic: $0) }
+            for viewModel in viewModels {
+                feed.append(viewModel)
+//                Task {
+//                    await viewModel.fetchImage()
+//                }
             }
-        } catch {}
+            lastIndexFetched -= prefetchCount
+        } catch {
+            print(error.localizedDescription)
+        }
         isFetching = false
     }
 }
