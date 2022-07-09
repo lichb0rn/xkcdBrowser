@@ -3,8 +3,7 @@ import SwiftUI
 struct ComicGridView: View {
     @ObservedObject var viewModel: ComicGridViewModel
     
-    @State private var isPresented: Bool = false
-    @State private var selectedIndex: Int?
+    @State private var selectedItem: ComicItem? = nil
     
     // List on iPhone and grid on iPad
     private let layout: [GridItem] = [
@@ -35,9 +34,8 @@ struct ComicGridView: View {
     var feedView: some View {
         ScrollView {
             LazyVGrid(columns: layout, spacing: spacing) {
-                ForEach(viewModel.feed) { item in
-                    NavigationLink(destination: ComicDetailsView(viewModel: ComicDetailsViewModel(comic: item))) {
-                        let itemViewModel = ComicGridItemViewModel(comic: item)
+                ForEach(viewModel.feed) { itemViewModel in
+                    NavigationLink(destination: ComicDetailsView(viewModel: ComicDetailsViewModel(comic: itemViewModel.comic))) {
                         ComicGridItemView(viewModel: itemViewModel)
                             .background(Color.white)
                             .padding(.horizontal, horizontalPadding)
@@ -45,12 +43,12 @@ struct ComicGridView: View {
                                 await viewModel.fetchNextComics()
                             }
                     }
-
                 }
             }
-            .task {
-                await viewModel.fetchLatests()
-            }
+
+        }
+        .task {
+            await viewModel.fetchLatests()
         }
     }
 }

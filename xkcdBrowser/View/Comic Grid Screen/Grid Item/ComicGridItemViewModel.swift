@@ -4,24 +4,29 @@ import SwiftUI
 /// ViewModel for a grid item
 class ComicGridItemViewModel: ObservableObject {
 
-    private var comic: ComicItem
+    private(set) var comic: ComicItem
 
+    let id: Int
+    
     @Published private(set) var isFetching: Bool = false
-    @Published private(set) var image: Image = Image("estimation")
     var num: String {
         "#\(comic.comicData.num)"
     }
     var title: String {
         comic.comicData.title
     }
-    
-    init(comic: ComicItem) {
-        self.comic = comic
-        
-        Task {
-            await fetchImage()
-        }
+    var image: Image? {
+        comic.comicImage
     }
+    
+    init(comic: ComicItem, id: Int) {
+        self.comic = comic
+        self.id = id
+//        Task {
+//            await fetchImage()
+//        }
+    }
+
 
     @MainActor
     func fetchImage() async {
@@ -29,9 +34,8 @@ class ComicGridItemViewModel: ObservableObject {
         
         isFetching = true
         await comic.fetchImage()
-        if let img = comic.comicImage {
-            self.image = img
-        }
         isFetching = false
     }
 }
+
+extension ComicGridItemViewModel: Identifiable {}

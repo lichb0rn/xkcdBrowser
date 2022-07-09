@@ -4,7 +4,7 @@ import Combine
 /// Grid ViewModel
 final class ComicGridViewModel: ObservableObject {
     
-    @Published var feed: [ComicItem] = []
+    @Published private(set) var feed: [ComicGridItemViewModel] = []
     @Published var hasError: Bool = false
     
     private var fetcher: ComicDownloader
@@ -23,7 +23,11 @@ final class ComicGridViewModel: ObservableObject {
             let latest = try await fetcher.fetchComicItem(withIndex: 0)
             maxIndex = latest.num
             lastIndexFetched = latest.num
-            feed.append(latest)
+            let viewModel = ComicGridItemViewModel(comic: latest, id: 0)
+            feed.append(viewModel)
+            Task {
+                await viewModel.fetchImage()
+            }
         } catch {
             hasError = true
         }
@@ -39,11 +43,22 @@ final class ComicGridViewModel: ObservableObject {
         let nextIndex = lastIndexFetched - 1
         do {
             let comicItems = try await fetcher.fetchNextComicItems(from: nextIndex, count: prefetchCount)
-            feed.append(contentsOf: comicItems)
+
+            let viewModels = comicItems.enumerated().map { (idx, item) in
+                ComicGridItemViewModel(comic: item, id: feed.count + idx)
+            }
+        
+            viewModels.forEach { viewModel in
+                feed.append(viewModel)
+                Task {
+                    await viewModel.fetchImage()
+                }
+            }
             lastIndexFetched -= prefetchCount
         } catch {
             print(error.localizedDescription)
         }
+        
         isFetching = false
     }
 }

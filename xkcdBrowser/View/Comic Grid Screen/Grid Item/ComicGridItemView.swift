@@ -12,8 +12,8 @@ struct ComicGridItemView: View {
     
     var body: some View {
         Group {
-            if !viewModel.isFetching {
-                comicImageView(viewModel.image)
+            if !viewModel.isFetching, let image = viewModel.image {
+                comicView(image)
             } else {
                 WaitingView()
             }
@@ -26,7 +26,8 @@ struct ComicGridItemView: View {
         }
     }
     
-    func comicImageView(_ image: Image) -> some View {
+    
+    func comicView(_ image: Image) -> some View {
         return VStack(alignment: .center) {
             image
                 .resizable()
@@ -56,7 +57,8 @@ struct ComicGridItemView: View {
 struct ComicsCardView_Previews: PreviewProvider {
     static var previews: some View {
         let comicItem = ComicItem.preview.first!
-        let viewModel = ComicGridItemViewModel(comic: comicItem)
+//        let viewModel = ComicGridItemViewModel(comic: comicItem)
+        let viewModel = ComicGridItemViewModel(comic: comicItem, id: 0)
 
         return ComicGridItemView(viewModel: viewModel)
     }

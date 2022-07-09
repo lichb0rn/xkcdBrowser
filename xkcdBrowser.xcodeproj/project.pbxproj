@@ -18,7 +18,6 @@
 		8968A62A2812A8CC00D84D3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8968A6292812A8CC00D84D3D /* Assets.xcassets */; };
 		8968A62D2812A8CC00D84D3D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8968A62C2812A8CC00D84D3D /* Preview Assets.xcassets */; };
 		8968A6362812AA0A00D84D3D /* XKCDModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8968A6352812AA0A00D84D3D /* XKCDModel.swift */; };
-		8968A6382812D77F00D84D3D /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8968A6372812D77F00D84D3D /* TodayView.swift */; };
 		896ECD5728794C2A00B5F21B /* ComicDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896ECD5628794C2A00B5F21B /* ComicDetailViewModel.swift */; };
 		8983BA4E2861F84800790A8C /* MockImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8983BA4D2861F84800790A8C /* MockImageService.swift */; };
 		8983BA78286201A400790A8C /* 617.json in Resources */ = {isa = PBXBuildFile; fileRef = 8983BA50286201A400790A8C /* 617.json */; };
@@ -63,10 +62,8 @@
 		8983BA9F286201A400790A8C /* 614.json in Resources */ = {isa = PBXBuildFile; fileRef = 8983BA77286201A400790A8C /* 614.json */; };
 		8983BAA12862059600790A8C /* PreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8983BAA02862059600790A8C /* PreviewData.swift */; };
 		8983BAA328620FCE00790A8C /* MockComicFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8983BAA228620FCE00790A8C /* MockComicFetcher.swift */; };
-		899B8F98281D12530054D803 /* ComicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899B8F97281D12530054D803 /* ComicView.swift */; };
 		899B8F9A281D16D50054D803 /* ControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899B8F99281D16D50054D803 /* ControlsView.swift */; };
 		899E465528421BAF004AEEC6 /* ComicDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899E465428421BAF004AEEC6 /* ComicDetailsView.swift */; };
-		89B3D9432838DDE000B884EA /* ComicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B3D9422838DDE000B884EA /* ComicViewModel.swift */; };
 		89D0E2962875AB1000C820F9 /* WaitingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D0E2952875AB1000C820F9 /* WaitingView.swift */; };
 		89D3E755284103E700306386 /* ComicFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D3E754284103E700306386 /* ComicFetcher.swift */; };
 		89D3E7582841059A00306386 /* ComicGridViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D3E7572841059A00306386 /* ComicGridViewModel.swift */; };
@@ -86,7 +83,6 @@
 		8968A6292812A8CC00D84D3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8968A62C2812A8CC00D84D3D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8968A6352812AA0A00D84D3D /* XKCDModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XKCDModel.swift; sourceTree = "<group>"; };
-		8968A6372812D77F00D84D3D /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
 		896ECD5628794C2A00B5F21B /* ComicDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicDetailViewModel.swift; sourceTree = "<group>"; };
 		8983BA4D2861F84800790A8C /* MockImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImageService.swift; sourceTree = "<group>"; };
 		8983BA50286201A400790A8C /* 617.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 617.json; sourceTree = "<group>"; };
@@ -131,10 +127,8 @@
 		8983BA77286201A400790A8C /* 614.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 614.json; sourceTree = "<group>"; };
 		8983BAA02862059600790A8C /* PreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewData.swift; sourceTree = "<group>"; };
 		8983BAA228620FCE00790A8C /* MockComicFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockComicFetcher.swift; sourceTree = "<group>"; };
-		899B8F97281D12530054D803 /* ComicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicView.swift; sourceTree = "<group>"; };
 		899B8F99281D16D50054D803 /* ControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsView.swift; sourceTree = "<group>"; };
 		899E465428421BAF004AEEC6 /* ComicDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicDetailsView.swift; sourceTree = "<group>"; };
-		89B3D9422838DDE000B884EA /* ComicViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicViewModel.swift; sourceTree = "<group>"; };
 		89D0E2952875AB1000C820F9 /* WaitingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingView.swift; sourceTree = "<group>"; };
 		89D3E754284103E700306386 /* ComicFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicFetcher.swift; sourceTree = "<group>"; };
 		89D3E7572841059A00306386 /* ComicGridViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicGridViewModel.swift; sourceTree = "<group>"; };
@@ -291,9 +285,6 @@
 		89D3E7522840FE7100306386 /* Latest tab */ = {
 			isa = PBXGroup;
 			children = (
-				89B3D9422838DDE000B884EA /* ComicViewModel.swift */,
-				8968A6372812D77F00D84D3D /* TodayView.swift */,
-				899B8F97281D12530054D803 /* ComicView.swift */,
 				899B8F99281D16D50054D803 /* ControlsView.swift */,
 			);
 			path = "Latest tab";
@@ -430,7 +421,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				895D91262813D363006D786F /* MainView.swift in Sources */,
-				899B8F98281D12530054D803 /* ComicView.swift in Sources */,
 				89D0E2962875AB1000C820F9 /* WaitingView.swift in Sources */,
 				891683542871656A00DFF195 /* ComicItem.swift in Sources */,
 				89D3E7582841059A00306386 /* ComicGridViewModel.swift in Sources */,
@@ -445,9 +435,7 @@
 				8983BA4E2861F84800790A8C /* MockImageService.swift in Sources */,
 				8968A6262812A8CA00D84D3D /* xkcdBrowserApp.swift in Sources */,
 				899B8F9A281D16D50054D803 /* ControlsView.swift in Sources */,
-				8968A6382812D77F00D84D3D /* TodayView.swift in Sources */,
 				8968A6362812AA0A00D84D3D /* XKCDModel.swift in Sources */,
-				89B3D9432838DDE000B884EA /* ComicViewModel.swift in Sources */,
 				895D91242813D332006D786F /* ComicGridView.swift in Sources */,
 				8983BAA12862059600790A8C /* PreviewData.swift in Sources */,
 				8983BAA328620FCE00790A8C /* MockComicFetcher.swift in Sources */,
