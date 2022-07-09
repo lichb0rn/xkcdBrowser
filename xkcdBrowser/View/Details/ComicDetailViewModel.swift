@@ -1,9 +1,8 @@
 import SwiftUI
 
 
-/// ViewModel for a grid item
-class ComicGridItemViewModel: ObservableObject {
-
+class ComicDetailsViewModel: ObservableObject {
+    
     private var comic: ComicItem
 
     @Published private(set) var isFetching: Bool = false
@@ -14,6 +13,9 @@ class ComicGridItemViewModel: ObservableObject {
     var title: String {
         comic.comicData.title
     }
+    var text: String {
+        comic.comicData.text
+    }
     
     init(comic: ComicItem) {
         self.comic = comic
@@ -22,7 +24,7 @@ class ComicGridItemViewModel: ObservableObject {
             await fetchImage()
         }
     }
-
+    
     @MainActor
     func fetchImage() async {
         guard !isFetching else { return }

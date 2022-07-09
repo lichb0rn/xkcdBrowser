@@ -4,8 +4,7 @@ import Combine
 /// Grid ViewModel
 final class ComicGridViewModel: ObservableObject {
     
-    @Published var feed: [ComicGridItemViewModel] = []
-    
+    @Published var feed: [ComicItem] = []
     @Published var hasError: Bool = false
     
     private var fetcher: ComicDownloader
@@ -24,40 +23,23 @@ final class ComicGridViewModel: ObservableObject {
             let latest = try await fetcher.fetchComicItem(withIndex: 0)
             maxIndex = latest.num
             lastIndexFetched = latest.num
-            let comicListViewModel = ComicGridItemViewModel(comic: latest)
-            feed.append(comicListViewModel)
-            Task {
-                await comicListViewModel.fetchImage()
-            }
+            feed.append(latest)
         } catch {
             hasError = true
         }
         isFetching = false
     }
-
+    
     @MainActor
-    func fetch(currentIndex: Int, prefetchCount: Int = 5) async {
-        guard (prefetchCount...maxIndex).contains(currentIndex) else { return }
+    func fetchNextComics(prefetchCount: Int = 10) async {
+        guard !isFetching else { return }
+        guard (prefetchCount...maxIndex).contains(lastIndexFetched) else { return }
+        
         isFetching = true
-//        do {
-//            let nextIndex = currentIndex - 1
-//            let comicItem = try await fetcher.fetchComicItem(withIndex: nextIndex)
-//            let comicListViewModel = ComicGridItemViewModel(comic: comicItem)
-//            feed.append(comicListViewModel)
-//            Task {
-//                await comicListViewModel.fetchImage()
-//            }
-//        } catch {}
         let nextIndex = lastIndexFetched - 1
         do {
             let comicItems = try await fetcher.fetchNextComicItems(from: nextIndex, count: prefetchCount)
-            let viewModels = comicItems.map { ComicGridItemViewModel(comic: $0) }
-            for viewModel in viewModels {
-                feed.append(viewModel)
-//                Task {
-//                    await viewModel.fetchImage()
-//                }
-            }
+            feed.append(contentsOf: comicItems)
             lastIndexFetched -= prefetchCount
         } catch {
             print(error.localizedDescription)

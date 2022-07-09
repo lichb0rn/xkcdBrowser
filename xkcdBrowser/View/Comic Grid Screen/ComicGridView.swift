@@ -35,22 +35,22 @@ struct ComicGridView: View {
     var feedView: some View {
         ScrollView {
             LazyVGrid(columns: layout, spacing: spacing) {
-                ForEach(viewModel.feed) { itemViewModel in
-                    ComicGridItemView(viewModel: itemViewModel)
-                        .background(Color.white)
-                        .padding(.horizontal, horizontalPadding)
-                        .task {
-                            await viewModel.fetch(currentIndex: itemViewModel.num)
-                        }
+                ForEach(viewModel.feed) { item in
+                    NavigationLink(destination: ComicDetailsView(viewModel: ComicDetailsViewModel(comic: item))) {
+                        let itemViewModel = ComicGridItemViewModel(comic: item)
+                        ComicGridItemView(viewModel: itemViewModel)
+                            .background(Color.white)
+                            .padding(.horizontal, horizontalPadding)
+                            .task {
+                                await viewModel.fetchNextComics()
+                            }
+                    }
+
                 }
             }
             .task {
                 await viewModel.fetchLatests()
             }
-            .refreshable {
-                await viewModel.fetchLatests()
-            }
-            
         }
     }
 }

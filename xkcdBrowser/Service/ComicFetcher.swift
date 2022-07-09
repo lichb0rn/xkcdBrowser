@@ -10,8 +10,10 @@ struct ComicFetcher: ComicDownloader {
     private let imageService: ImageDownloader = ImageService.shared
     private let decoder = JSONDecoder()
     
+    private var lastIndexFetched: Int = -1
     
-    /// Fetch ComicItem from server
+    
+    /// Fetch single comic from server
     /// - Parameter index: Optional xkcd comic index (num). If not provided, fetches the most recent comic.
     /// - Returns: ComicItem
     func fetchComicItem(withIndex index: Int = 0) async throws -> ComicItem {
@@ -34,7 +36,13 @@ struct ComicFetcher: ComicDownloader {
         }
     }
     
-    func fetchNextComicItems(from index: Int, count: Int = 5) async throws -> [ComicItem] {
+    
+    /// Fetch several comics from server
+    /// - Parameters:
+    ///   - index: current comic number
+    ///   - count: number of comics to fetch
+    /// - Returns: Array of Comic Items
+    func fetchNextComicItems(from index: Int, count: Int = 10) async throws -> [ComicItem] {
         let stopIndex = index - count
         
         return try await withThrowingTaskGroup(of: ComicItem.self) { group -> [ComicItem] in

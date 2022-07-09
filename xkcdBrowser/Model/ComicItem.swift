@@ -5,25 +5,43 @@ struct ComicItem {
     let id = UUID()
     let downloader: ImageDownloader
     
-    var comicData: XKCDComic?
+    private var isFetchingImage: Bool
+    var comicData: XKCDComic
     var comicImage: Image?
     
+    init(downloader: ImageDownloader, comicData: XKCDComic, comicImage: Image? = nil) {
+        self.downloader = downloader
+        self.isFetchingImage = false
+        self.comicData = comicData
+        self.comicImage = comicImage
+    }
+    
     var num: Int {
-        comicData?.num ?? 0
+        comicData.num
     }
     
     mutating func fetchImage() async {
-        guard let comicData = comicData else { return }
+        guard !isFetchingImage else { return }
+        isFetchingImage = true
         do {
             let uiImage = try await downloader.downloadImage(fromURL: comicData.imageUrl)
             comicImage = Image(uiImage: uiImage)
         } catch {
             print(error.localizedDescription)
         }
+        isFetchingImage = false
     }
 }
 
-extension ComicItem: Identifiable { }
+extension ComicItem: Identifiable, Hashable {
+    static func == (lhs: ComicItem, rhs: ComicItem) -> Bool {
+        lhs.num == rhs.num
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(num)
+    }
+}
 
 
 extension ComicItem {
