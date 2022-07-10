@@ -64,6 +64,7 @@
 		8983BAA328620FCE00790A8C /* MockComicFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8983BAA228620FCE00790A8C /* MockComicFetcher.swift */; };
 		899B8F9A281D16D50054D803 /* ControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899B8F99281D16D50054D803 /* ControlsView.swift */; };
 		899E465528421BAF004AEEC6 /* ComicDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899E465428421BAF004AEEC6 /* ComicDetailsView.swift */; };
+		89BFB9B0287AC6C0001403AD /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BFB9AF287AC6C0001403AD /* PopupView.swift */; };
 		89D0E2962875AB1000C820F9 /* WaitingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D0E2952875AB1000C820F9 /* WaitingView.swift */; };
 		89D3E755284103E700306386 /* ComicFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D3E754284103E700306386 /* ComicFetcher.swift */; };
 		89D3E7582841059A00306386 /* ComicGridViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D3E7572841059A00306386 /* ComicGridViewModel.swift */; };
@@ -129,6 +130,7 @@
 		8983BAA228620FCE00790A8C /* MockComicFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockComicFetcher.swift; sourceTree = "<group>"; };
 		899B8F99281D16D50054D803 /* ControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsView.swift; sourceTree = "<group>"; };
 		899E465428421BAF004AEEC6 /* ComicDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicDetailsView.swift; sourceTree = "<group>"; };
+		89BFB9AF287AC6C0001403AD /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		89D0E2952875AB1000C820F9 /* WaitingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingView.swift; sourceTree = "<group>"; };
 		89D3E754284103E700306386 /* ComicFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicFetcher.swift; sourceTree = "<group>"; };
 		89D3E7572841059A00306386 /* ComicGridViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicGridViewModel.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 			children = (
 				899E465428421BAF004AEEC6 /* ComicDetailsView.swift */,
 				896ECD5628794C2A00B5F21B /* ComicDetailViewModel.swift */,
+				89BFB9AF287AC6C0001403AD /* PopupView.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				8908CA1B2841EC610016A547 /* ComicGridItemViewModel.swift in Sources */,
 				89D3E755284103E700306386 /* ComicFetcher.swift in Sources */,
 				8983BA4E2861F84800790A8C /* MockImageService.swift in Sources */,
+				89BFB9B0287AC6C0001403AD /* PopupView.swift in Sources */,
 				8968A6262812A8CA00D84D3D /* xkcdBrowserApp.swift in Sources */,
 				899B8F9A281D16D50054D803 /* ControlsView.swift in Sources */,
 				8968A6362812AA0A00D84D3D /* XKCDModel.swift in Sources */,

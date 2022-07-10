@@ -5,14 +5,28 @@ struct ComicDetailsView: View {
     
     @ObservedObject var viewModel: ComicDetailsViewModel
     
+    @State private var showPopup: Bool = false
+    
     var body: some View {
-        VStack {
-            viewModel.image
-                .resizable()
-                .aspectRatio(contentMode: .fit)
+        ZStack {
+            VStack {
+                viewModel.image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                
+            }
+            .padding()
             
+            if showPopup {
+                GeometryReader { proxy in
+                    PopupView(text: viewModel.text, isShowing: $showPopup)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    
+                }
+                
+                
+            }
         }
-        .padding()
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
@@ -23,18 +37,21 @@ struct ComicDetailsView: View {
                 } label: {
                     Image(systemName: "chevron.backward")
                 }
-
+                .disabled(showPopup)
+                
             }
             
             ToolbarItem {
                 Button {
-                    print(viewModel.text)
+                    withAnimation {
+                        showPopup.toggle()
+                    }
                 } label: {
                     Image(systemName: "questionmark")
                 }
+                .disabled(showPopup)
             }
         })
-        
     }
 }
 
