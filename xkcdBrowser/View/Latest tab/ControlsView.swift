@@ -26,3 +26,13 @@ struct ControlsView: View {
         }
     }
 }
+
+
+struct ControlsView_Previews: PreviewProvider {
+    static var previews: some View {
+        ControlsView(index: .constant(100),
+                     leftEnabled: .constant(true),
+                     rightEnabled: .constant(true))
+        .previewLayout(.sizeThatFits)
+    }
+}

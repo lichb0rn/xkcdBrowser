@@ -3,7 +3,7 @@ import SwiftUI
 struct ComicGridView: View {
     @ObservedObject var viewModel: ComicGridViewModel
     
-    @State private var selectedItem: ComicItem? = nil
+    @State private var isRefreshing: Bool = false
     
     // List on iPhone and grid on iPad
     private let layout: [GridItem] = [
@@ -45,7 +45,9 @@ struct ComicGridView: View {
                     }
                 }
             }
-
+        }
+        .refreshable {
+            await viewModel.fetchLatests()
         }
         .task {
             await viewModel.fetchLatests()

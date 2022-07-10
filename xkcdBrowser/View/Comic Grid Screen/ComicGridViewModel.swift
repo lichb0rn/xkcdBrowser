@@ -61,4 +61,9 @@ final class ComicGridViewModel: ObservableObject {
         
         isFetching = false
     }
+    
+    func reset() {
+        feed.removeAll()
+        
+    }
 }
