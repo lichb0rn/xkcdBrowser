@@ -16,6 +16,9 @@ class ComicDetailsViewModel: ObservableObject {
     var text: String {
         comic.comicData.text
     }
+    var linkForShare: URL {
+        comic.comicData.imageUrl
+    }
     
     init(comic: ComicItem) {
         self.comic = comic

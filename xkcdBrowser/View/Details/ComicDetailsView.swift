@@ -16,7 +16,9 @@ struct ComicDetailsView: View {
                 
                 Spacer()
                 
-                ControlBar(text: viewModel.num, altTouched: $showPopup)
+                ControlBar(text: viewModel.num, altTapped: $showPopup) {
+                    shareComic()
+                }
             }
             .padding()
             
@@ -44,6 +46,14 @@ struct ComicDetailsView: View {
                 
             }
         })
+    }
+    
+    private func shareComic() {
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        
+        let share = UIActivityViewController(activityItems: [viewModel.linkForShare], applicationActivities: nil)
+        windowScene?.keyWindow?.rootViewController?.present(share, animated: true, completion: nil)
     }
 }
 

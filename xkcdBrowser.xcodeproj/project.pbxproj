@@ -150,6 +150,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		894932FE2882AC940012695A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				897061802882928800C19913 /* ControlBar.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		895599372856EE2F000D6893 /* Grid Item */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,6 +219,7 @@
 		8968A6342812A9F700D84D3D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				894932FE2882AC940012695A /* Components */,
 				89D3E7562841055F00306386 /* Comic Grid Screen */,
 				899E465328421B9A004AEEC6 /* Details */,
 				895599352856EADB000D6893 /* ErrorView.swift */,
@@ -283,7 +292,6 @@
 				899E465428421BAF004AEEC6 /* ComicDetailsView.swift */,
 				896ECD5628794C2A00B5F21B /* ComicDetailViewModel.swift */,
 				89BFB9AF287AC6C0001403AD /* PopupView.swift */,
-				897061802882928800C19913 /* ControlBar.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";

@@ -3,7 +3,8 @@ import SwiftUI
 struct ControlBar: View {
     
     var text: String
-    @Binding var altTouched: Bool
+    @Binding var altTapped: Bool
+    let onShareTap: () -> Void
     
     var body: some View {
         HStack {
@@ -16,13 +17,13 @@ struct ControlBar: View {
                 Spacer()
                 
                 Button {
-                    print("shared")
+                    onShareTap()
                 } label: {
                     Image(systemName: "square.and.arrow.up")
                 }
 
                 Button {
-                    altTouched.toggle()
+                    altTapped.toggle()
                 } label: {
                     Image(systemName: "questionmark")
                         .font(.headline)
