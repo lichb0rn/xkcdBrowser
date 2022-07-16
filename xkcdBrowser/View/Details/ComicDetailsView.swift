@@ -14,6 +14,9 @@ struct ComicDetailsView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                 
+                Spacer()
+                
+                ControlBar(text: viewModel.num, altTouched: $showPopup)
             }
             .padding()
             
@@ -39,17 +42,6 @@ struct ComicDetailsView: View {
                 }
                 .disabled(showPopup)
                 
-            }
-            
-            ToolbarItem {
-                Button {
-                    withAnimation {
-                        showPopup.toggle()
-                    }
-                } label: {
-                    Image(systemName: "questionmark")
-                }
-                .disabled(showPopup)
             }
         })
     }

@@ -11,10 +11,11 @@ struct PopupView: View {
             
             Text(text)
                 .padding(25)
+                .frame(maxWidth: 450)
                 .background(
                     Rectangle()
                         .foregroundColor(.white)
-                        .border(.black, width: 2)
+                    .border(.black, width: 2)
                         .padding()
                 )
         }

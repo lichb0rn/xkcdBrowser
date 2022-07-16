@@ -8,7 +8,7 @@ class ComicDetailsViewModel: ObservableObject {
     @Published private(set) var isFetching: Bool = false
     @Published private(set) var image: Image = Image("estimation")
     var num: String {
-        "#\(comic.comicData.num)"
+        "\(comic.comicData.num)"
     }
     var title: String {
         comic.comicData.title

@@ -22,9 +22,6 @@ class ComicGridItemViewModel: ObservableObject {
     init(comic: ComicItem, id: Int) {
         self.comic = comic
         self.id = id
-//        Task {
-//            await fetchImage()
-//        }
     }
 
 

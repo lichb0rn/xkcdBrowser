@@ -46,8 +46,8 @@ struct ComicGridItemView: View {
                 .font(.body)
                 .lineLimit(1)
             
-            Text(viewModel.num)
-                .font(.footnote)
+                Text(viewModel.num)
+                    .font(.footnote)
         }
     }
     
