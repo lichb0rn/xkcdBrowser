@@ -10,7 +10,7 @@ class ComicGridItemViewModel: ObservableObject {
     
     @Published private(set) var isFetching: Bool = false
     var num: String {
-        "#\(comic.comicData.num)"
+        "\(comic.comicData.num)"
     }
     var title: String {
         comic.comicData.title

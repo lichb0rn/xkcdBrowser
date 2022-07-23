@@ -28,11 +28,8 @@ struct ComicDetailsView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     
                 }
-                
-                
             }
         }
-        .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar(content: {
@@ -43,7 +40,10 @@ struct ComicDetailsView: View {
                     Image(systemName: "chevron.backward")
                 }
                 .disabled(showPopup)
-                
+            }
+            ToolbarItem(placement: .principal) {
+                Text(viewModel.title)
+                    .font(Settings.fontLarge)
             }
         })
     }

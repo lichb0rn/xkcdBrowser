@@ -14,6 +14,12 @@ struct ComicGridItemView: View {
         Group {
             if !viewModel.isFetching, let image = viewModel.image {
                 comicView(image)
+                    .overlay(alignment: .topTrailing) {
+                        BadgeView(text: viewModel.num,
+                                  textColor: .white,
+                                  badgeColor: Settings.backgroundColor)
+                        .offset(x: -10, y: 10)
+                    }
             } else {
                 WaitingView()
             }
@@ -28,38 +34,28 @@ struct ComicGridItemView: View {
     
     
     func comicView(_ image: Image) -> some View {
-        return VStack(alignment: .center) {
-            image
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                .clipped()
-                .aspectRatio(1, contentMode: .fit)
-                .opacity(opacity)
-                .animation(.easeInOut(duration: 1), value: opacity)
-                .padding()
-                .onAppear {
-                    opacity = 1
-                }
-            
-            Text(viewModel.title)
-                .font(.body)
-                .lineLimit(1)
-            
-                Text(viewModel.num)
-                    .font(.footnote)
-        }
+        image
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            .clipped()
+            .aspectRatio(1, contentMode: .fit)
+            .opacity(opacity)
+            .animation(.easeInOut(duration: 1), value: opacity)
+            .padding()
+            .onAppear {
+                opacity = 1
+            }
     }
     
-
+    
 }
 
 struct ComicsCardView_Previews: PreviewProvider {
     static var previews: some View {
         let comicItem = ComicItem.preview.first!
-//        let viewModel = ComicGridItemViewModel(comic: comicItem)
         let viewModel = ComicGridItemViewModel(comic: comicItem, id: 0)
-
-        return ComicGridItemView(viewModel: viewModel)
+        
+        return ComicGridItemView(viewModel: viewModel).padding()
     }
 }

@@ -63,7 +63,8 @@
 		8983BA9F286201A400790A8C /* 614.json in Resources */ = {isa = PBXBuildFile; fileRef = 8983BA77286201A400790A8C /* 614.json */; };
 		8983BAA12862059600790A8C /* PreviewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8983BAA02862059600790A8C /* PreviewData.swift */; };
 		8983BAA328620FCE00790A8C /* MockComicFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8983BAA228620FCE00790A8C /* MockComicFetcher.swift */; };
-		899B8F9A281D16D50054D803 /* ControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899B8F99281D16D50054D803 /* ControlsView.swift */; };
+		89935D4A288BC2AF0063E9FA /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89935D49288BC2AF0063E9FA /* BadgeView.swift */; };
+		89935D4C288BC99B0063E9FA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89935D4B288BC99B0063E9FA /* Settings.swift */; };
 		899E465528421BAF004AEEC6 /* ComicDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899E465428421BAF004AEEC6 /* ComicDetailsView.swift */; };
 		89BFB9B0287AC6C0001403AD /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BFB9AF287AC6C0001403AD /* PopupView.swift */; };
 		89D0E2962875AB1000C820F9 /* WaitingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D0E2952875AB1000C820F9 /* WaitingView.swift */; };
@@ -130,7 +131,8 @@
 		8983BA77286201A400790A8C /* 614.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 614.json; sourceTree = "<group>"; };
 		8983BAA02862059600790A8C /* PreviewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewData.swift; sourceTree = "<group>"; };
 		8983BAA228620FCE00790A8C /* MockComicFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockComicFetcher.swift; sourceTree = "<group>"; };
-		899B8F99281D16D50054D803 /* ControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsView.swift; sourceTree = "<group>"; };
+		89935D49288BC2AF0063E9FA /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
+		89935D4B288BC99B0063E9FA /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		899E465428421BAF004AEEC6 /* ComicDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicDetailsView.swift; sourceTree = "<group>"; };
 		89BFB9AF287AC6C0001403AD /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		89D0E2952875AB1000C820F9 /* WaitingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingView.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				897061802882928800C19913 /* ControlBar.swift */,
+				89935D49288BC2AF0063E9FA /* BadgeView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 				89D3E753284103B900306386 /* Service */,
 				8968A6342812A9F700D84D3D /* View */,
 				8968A6252812A8CA00D84D3D /* xkcdBrowserApp.swift */,
+				89935D4B288BC99B0063E9FA /* Settings.swift */,
 			);
 			path = xkcdBrowser;
 			sourceTree = "<group>";
@@ -223,7 +227,6 @@
 				89D3E7562841055F00306386 /* Comic Grid Screen */,
 				899E465328421B9A004AEEC6 /* Details */,
 				895599352856EADB000D6893 /* ErrorView.swift */,
-				89D3E7522840FE7100306386 /* Latest tab */,
 				895D91252813D363006D786F /* MainView.swift */,
 			);
 			path = View;
@@ -294,14 +297,6 @@
 				89BFB9AF287AC6C0001403AD /* PopupView.swift */,
 			);
 			path = Details;
-			sourceTree = "<group>";
-		};
-		89D3E7522840FE7100306386 /* Latest tab */ = {
-			isa = PBXGroup;
-			children = (
-				899B8F99281D16D50054D803 /* ControlsView.swift */,
-			);
-			path = "Latest tab";
 			sourceTree = "<group>";
 		};
 		89D3E753284103B900306386 /* Service */ = {
@@ -434,6 +429,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89935D4A288BC2AF0063E9FA /* BadgeView.swift in Sources */,
 				895D91262813D363006D786F /* MainView.swift in Sources */,
 				89D0E2962875AB1000C820F9 /* WaitingView.swift in Sources */,
 				891683542871656A00DFF195 /* ComicItem.swift in Sources */,
@@ -441,6 +437,7 @@
 				897061812882928800C19913 /* ControlBar.swift in Sources */,
 				895599362856EADB000D6893 /* ErrorView.swift in Sources */,
 				899E465528421BAF004AEEC6 /* ComicDetailsView.swift in Sources */,
+				89935D4C288BC99B0063E9FA /* Settings.swift in Sources */,
 				892FCE84283B96E60046C56F /* Errors.swift in Sources */,
 				89D3E75A284107B000306386 /* ComicGridItemView.swift in Sources */,
 				896ECD5728794C2A00B5F21B /* ComicDetailViewModel.swift in Sources */,
@@ -450,7 +447,6 @@
 				8983BA4E2861F84800790A8C /* MockImageService.swift in Sources */,
 				89BFB9B0287AC6C0001403AD /* PopupView.swift in Sources */,
 				8968A6262812A8CA00D84D3D /* xkcdBrowserApp.swift in Sources */,
-				899B8F9A281D16D50054D803 /* ControlsView.swift in Sources */,
 				8968A6362812AA0A00D84D3D /* XKCDModel.swift in Sources */,
 				895D91242813D332006D786F /* ComicGridView.swift in Sources */,
 				8983BAA12862059600790A8C /* PreviewData.swift in Sources */,

@@ -7,10 +7,7 @@ struct ControlBar: View {
     let onShareTap: () -> Void
     
     var body: some View {
-        HStack {
-            Label(text, systemImage: "number")
-                .font(.callout)
-            
+        HStack {            
             Spacer()
             
             HStack {
@@ -32,5 +29,12 @@ struct ControlBar: View {
             .buttonStyle(.bordered)
             Spacer()
         }
+    }
+}
+
+
+struct ControlBar_Previews: PreviewProvider {
+    static var previews: some View {
+        ControlBar(text: "1234", altTapped: .constant(false), onShareTap: {})
     }
 }

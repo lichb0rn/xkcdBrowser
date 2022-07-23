@@ -18,8 +18,14 @@ struct ComicGridView: View {
             ZStack {
                 if !viewModel.hasError {
                     feedView
-                        .navigationTitle("xkcd")
                         .navigationBarTitleDisplayMode(.inline)
+                        .toolbar {
+                            ToolbarItem(placement: .principal) {
+                                    Text("xkcd")
+                                        .font(Settings.fontLarge)
+                                        .foregroundColor(.white)
+                            }
+                        }
                 } else {
                     ErrorView()
                 }
