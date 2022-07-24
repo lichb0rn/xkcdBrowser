@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8908CA1B2841EC610016A547 /* ComicGridItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8908CA1A2841EC610016A547 /* ComicGridItemViewModel.swift */; };
 		891683542871656A00DFF195 /* ComicItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891683532871656A00DFF195 /* ComicItem.swift */; };
+		8920D7EB288C28C500CF6B6A /* RoundedButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8920D7EA288C28C500CF6B6A /* RoundedButtonStyle.swift */; };
 		892FCE84283B96E60046C56F /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892FCE83283B96E60046C56F /* Errors.swift */; };
 		893E20C42824F52B002E7A43 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893E20C32824F52B002E7A43 /* ImageService.swift */; };
 		895599362856EADB000D6893 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895599352856EADB000D6893 /* ErrorView.swift */; };
@@ -76,6 +77,7 @@
 /* Begin PBXFileReference section */
 		8908CA1A2841EC610016A547 /* ComicGridItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicGridItemViewModel.swift; sourceTree = "<group>"; };
 		891683532871656A00DFF195 /* ComicItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicItem.swift; sourceTree = "<group>"; };
+		8920D7EA288C28C500CF6B6A /* RoundedButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButtonStyle.swift; sourceTree = "<group>"; };
 		892FCE83283B96E60046C56F /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		893E20C32824F52B002E7A43 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		895599352856EADB000D6893 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 			children = (
 				897061802882928800C19913 /* ControlBar.swift */,
 				89935D49288BC2AF0063E9FA /* BadgeView.swift */,
+				8920D7EA288C28C500CF6B6A /* RoundedButtonStyle.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				8908CA1B2841EC610016A547 /* ComicGridItemViewModel.swift in Sources */,
 				89D3E755284103E700306386 /* ComicFetcher.swift in Sources */,
 				8983BA4E2861F84800790A8C /* MockImageService.swift in Sources */,
+				8920D7EB288C28C500CF6B6A /* RoundedButtonStyle.swift in Sources */,
 				89BFB9B0287AC6C0001403AD /* PopupView.swift in Sources */,
 				8968A6262812A8CA00D84D3D /* xkcdBrowserApp.swift in Sources */,
 				8968A6362812AA0A00D84D3D /* XKCDModel.swift in Sources */,

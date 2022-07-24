@@ -2,35 +2,38 @@ import SwiftUI
 
 struct ControlBar: View {
     
+    @State private var maxWidth: CGFloat = .zero
+    
+    
     var text: String
     @Binding var altTapped: Bool
     let onShareTap: () -> Void
     
     var body: some View {
-        HStack {            
-            Spacer()
-            
-            HStack {
-                Spacer()
-                
+        HStack {
                 Button {
                     onShareTap()
                 } label: {
                     Image(systemName: "square.and.arrow.up")
+                        
                 }
-
+                .buttonStyle(RoundedButtonStyle(foregroundColor: .white))
+                
+                
                 Button {
                     altTapped.toggle()
                 } label: {
-                    Image(systemName: "questionmark")
-                        .font(.headline)
+                    Text("ALT")
                 }
-            }
-            .buttonStyle(.bordered)
-            Spacer()
+                .buttonStyle(RoundedButtonStyle(foregroundColor: .white))
+                
         }
+        .fixedSize()
+        .frame(maxWidth: .infinity)
     }
 }
+
+
 
 
 struct ControlBar_Previews: PreviewProvider {
