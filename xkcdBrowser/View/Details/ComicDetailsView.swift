@@ -6,7 +6,6 @@ struct ComicDetailsView: View {
     @ObservedObject var viewModel: ComicDetailsViewModel
     
     @State private var showPopup: Bool = false
-    @State private var currentScale: CGFloat = 0
     
     var body: some View {
         ZStack {
@@ -15,23 +14,18 @@ struct ComicDetailsView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .scaleEffect(1 + currentScale)
-                    .gesture (
-                        MagnificationGesture()
-                            .onChanged { newScale in
-                                currentScale = newScale - 1
-                            }
-                            .onEnded { newScale in
-                                withAnimation(.easeInOut) {
-                                    currentScale = 0
-                                }
-                            }
-                    )
+                    .offset(panOffset)
+                    .gesture(doubleTapToZoom())
+                    .gesture(isScaled ? panGesture() : nil)
+                    .gesture(zoomGesture())
                 
                 Spacer()
                 
                 ControlBar(text: viewModel.num, altTapped: $showPopup) {
                     shareComic()
                 }
+                .opacity(currentScale > minScale ? 0 : 1)
+                
             }
             .padding()
             
@@ -61,6 +55,61 @@ struct ComicDetailsView: View {
         })
     }
     
+    // MARK: - Gestures
+    
+    // MARK: Zoom
+    private let maxScale: CGFloat = 1.5
+    private let minScale: CGFloat = 0
+    @State private var currentScale: CGFloat = 0
+    
+    // Pinch to zoom
+    private func zoomGesture() -> some Gesture {
+        MagnificationGesture()
+            .onChanged { newScale in
+                currentScale = newScale - maxScale
+            }
+            .onEnded { newScale in
+                withAnimation(.easeInOut) {
+                    currentScale = minScale
+                }
+            }
+    }
+    
+    // Double tap to zoom
+    private var isScaled: Bool {
+        currentScale == maxScale
+    }
+    
+    private func doubleTapToZoom() -> some Gesture {
+        TapGesture(count: 2)
+            .onEnded {
+                withAnimation(.easeInOut) {
+                    currentScale = isScaled ? minScale : maxScale
+                }
+            }
+    }
+    
+    // Pan gesture
+    @State private var initialPanOffset: CGSize = .zero
+    @GestureState private var gesturePanOffset: CGSize = .zero
+    
+    private var panOffset: CGSize {
+        (initialPanOffset + gesturePanOffset) * currentScale
+    }
+    
+    private func panGesture() -> some Gesture {
+        DragGesture()
+            .updating($gesturePanOffset) { newValue, gesturePanOffset, _ in
+                gesturePanOffset = newValue.translation / currentScale
+            }
+            .onEnded { finalValue in
+                initialPanOffset = initialPanOffset + (finalValue.translation / currentScale)
+            }
+    }
+    
+    
+    // MARK: - Share
+    
     private func shareComic() {
         let scenes = UIApplication.shared.connectedScenes
         let windowScene = scenes.first as? UIWindowScene
@@ -78,5 +127,24 @@ struct ComicsDetailsView_Previews: PreviewProvider {
         NavigationView {
             ComicDetailsView(viewModel: viewModel)
         }
+    }
+}
+
+
+extension CGSize {
+    var center: CGPoint {
+        CGPoint(x: width/2, y: height/2)
+    }
+    static func +(lhs: Self, rhs: Self) -> CGSize {
+        CGSize(width: lhs.width + rhs.width, height: lhs.height + rhs.height)
+    }
+    static func -(lhs: Self, rhs: Self) -> CGSize {
+        CGSize(width: lhs.width - rhs.width, height: lhs.height - rhs.height)
+    }
+    static func *(lhs: Self, rhs: CGFloat) -> CGSize {
+        CGSize(width: lhs.width * rhs, height: lhs.height * rhs)
+    }
+    static func /(lhs: Self, rhs: CGFloat) -> CGSize {
+        CGSize(width: lhs.width/rhs, height: lhs.height/rhs)
     }
 }
