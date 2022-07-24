@@ -6,6 +6,7 @@ struct ComicDetailsView: View {
     @ObservedObject var viewModel: ComicDetailsViewModel
     
     @State private var showPopup: Bool = false
+    @State private var currentScale: CGFloat = 0
     
     var body: some View {
         ZStack {
@@ -13,6 +14,18 @@ struct ComicDetailsView: View {
                 viewModel.image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                    .scaleEffect(1 + currentScale)
+                    .gesture (
+                        MagnificationGesture()
+                            .onChanged { newScale in
+                                currentScale = newScale - 1
+                            }
+                            .onEnded { newScale in
+                                withAnimation(.easeInOut) {
+                                    currentScale = 0
+                                }
+                            }
+                    )
                 
                 Spacer()
                 
