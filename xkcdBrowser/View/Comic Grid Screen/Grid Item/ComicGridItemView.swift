@@ -25,10 +25,12 @@ struct ComicGridItemView: View {
             }
         }
         .border(.black, width: 2)
+        .saturation(viewModel.isViewed ? 0.2 : 1)
         .onAppear {
             if !viewModel.isFetching {
                 opacity = 1
             }
+            print(viewModel.isViewed)
         }
     }
     
@@ -53,7 +55,8 @@ struct ComicGridItemView: View {
 
 struct ComicsCardView_Previews: PreviewProvider {
     static var previews: some View {
-        let comicItem = ComicItem.preview.first!
+        var comicItem = ComicItem.preview.first!
+        comicItem.isViewed = true
         let viewModel = ComicGridItemViewModel(comic: comicItem, id: 0)
         
         return ComicGridItemView(viewModel: viewModel).padding()

@@ -20,12 +20,15 @@ class ComicDetailsViewModel: ObservableObject {
         comic.comicData.imageUrl
     }
     
+    
     init(comic: ComicItem) {
         self.comic = comic
         
         Task {
             await fetchImage()
         }
+        
+        self.comic.isViewed = true
     }
     
     @MainActor
@@ -38,5 +41,9 @@ class ComicDetailsViewModel: ObservableObject {
             self.image = img
         }
         isFetching = false
+    }
+    
+    func toggleFavorite() {
+        comic.isFavorite.toggle()
     }
 }

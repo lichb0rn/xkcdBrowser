@@ -9,6 +9,9 @@ struct ComicItem {
     var comicData: XKCDComic
     var comicImage: Image?
     
+    var isViewed: Bool = false
+    var isFavorite: Bool = false
+    
     init(downloader: ImageDownloader, comicData: XKCDComic, comicImage: Image? = nil) {
         self.downloader = downloader
         self.isFetchingImage = false
