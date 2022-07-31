@@ -1,7 +1,7 @@
 import Foundation
 
 enum NetworkError: Error {
-    case networkError
-    case serverError
+    case noInternet
+    case badServerResponse
     case parseJSONError
 }

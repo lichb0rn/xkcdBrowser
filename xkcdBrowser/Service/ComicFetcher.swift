@@ -9,9 +9,7 @@ struct ComicFetcher: ComicDownloader {
     
     private let imageService: ImageDownloader = ImageService.shared
     private let decoder = JSONDecoder()
-    
-    private var lastIndexFetched: Int = -1
-    
+        
     
     /// Fetch single comic from server
     /// - Parameter index: Optional xkcd comic index (num). If not provided, fetches the most recent comic.
@@ -26,7 +24,7 @@ struct ComicFetcher: ComicDownloader {
         
         let (data, response) = try await URLSession.shared.data(from: url)
         guard (response as? HTTPURLResponse)?.statusCode == 200 else {
-            throw NetworkError.serverError
+            throw NetworkError.badServerResponse
         }
         do {
             let comicData = try decoder.decode(XKCDComic.self, from: data)

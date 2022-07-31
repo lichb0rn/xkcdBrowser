@@ -26,7 +26,7 @@ actor ImageService: ObservableObject {
             case .inProgress(let task):
                 return try await task.value
             case .failed:
-                throw NetworkError.networkError
+                throw NetworkError.noInternet
             }
         }
 
@@ -46,7 +46,7 @@ actor ImageService: ObservableObject {
             return image
         } catch {
             cache[key] = .failed
-            throw NetworkError.networkError
+            throw NetworkError.noInternet
         }
     }
 
