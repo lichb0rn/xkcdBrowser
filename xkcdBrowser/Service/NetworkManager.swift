@@ -1,11 +1,15 @@
 import Foundation
 
+protocol ComicDownloader {
+    func downloadItem<T: Decodable>(fromURL url: URL, ofType model: T.Type) async throws -> T
+    func downloadItems<T: Decodable>(fromURLs urls: [URL], ofType model: T.Type) async throws -> [T]
+}
 
 
-struct NetworkManager {
+struct NetworkManager: ComicDownloader {
     
     /// Download a single item of type `T`
-    static func downloadItem<T: Decodable>(fromURL url: URL, ofType model: T.Type) async throws -> T {
+    func downloadItem<T: Decodable>(fromURL url: URL, ofType model: T.Type) async throws -> T {
         let (data, response) = try await URLSession.shared.data(from: url)
         guard let response = response as? HTTPURLResponse,
               response.statusCode >= 200 && response.statusCode <= 299 else {
@@ -21,7 +25,7 @@ struct NetworkManager {
     }
     
     /// Download and array of items of type `T`
-    static func downloadItems<T: Decodable>(fromURLs urls: [URL], ofType model: T.Type) async throws -> [T] {
+    func downloadItems<T: Decodable>(fromURLs urls: [URL], ofType model: T.Type) async throws -> [T] {
         guard !urls.isEmpty else { return [] }
     
         return try await withThrowingTaskGroup(of: model, body: { group -> [T] in
@@ -29,7 +33,7 @@ struct NetworkManager {
             
             urls.forEach { url in
                 group.addTask(priority: .background) {
-                    try await NetworkManager.downloadItem(fromURL: url, ofType: model)
+                    try await self.downloadItem(fromURL: url, ofType: model)
                 }
             }
             

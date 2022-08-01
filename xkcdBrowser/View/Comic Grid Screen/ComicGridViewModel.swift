@@ -9,14 +9,14 @@ final class ComicGridViewModel: ObservableObject {
     @Published private(set) var feed: [ComicGridItemViewModel] = []
     @Published var hasError: Bool = false
     
-    private var fetcher: ComicDownloader
+    private var networkManager: ComicDownloader
     
     private var isFetching: Bool = false
     private var maxIndex: Int = -1
     private var lastIndexFetched: Int = -1
     
-    init(fetcher: ComicDownloader) {
-        self.fetcher = fetcher
+    init(networkManager: ComicDownloader) {
+        self.networkManager = networkManager
         
     }
     
@@ -24,7 +24,7 @@ final class ComicGridViewModel: ObservableObject {
     func fetchLatests() async {
         isFetching = true
         do {
-            let data = try await NetworkManager.downloadItem(fromURL: ComicEndpoint.current.url, ofType: XKCDComic.self)
+            let data = try await networkManager.downloadItem(fromURL: ComicEndpoint.current.url, ofType: XKCDComic.self)
             let latest = ComicItem(downloader: ImageService.shared, comicData: data)
             maxIndex = latest.num
             lastIndexFetched = latest.num
@@ -54,7 +54,7 @@ final class ComicGridViewModel: ObservableObject {
         }
         
         do {
-            let items = try await NetworkManager.downloadItems(fromURLs: urls, ofType: XKCDComic.self)
+            let items = try await networkManager.downloadItems(fromURLs: urls, ofType: XKCDComic.self)
             let comicItems = items.map { ComicItem(downloader: ImageService.shared, comicData: $0) }
             
             let viewModels = comicItems.enumerated().map { (idx, item) in

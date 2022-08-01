@@ -21,13 +21,20 @@ struct PreviewData {
         }
     }
     
-    func comic(with index: Int) -> XKCDComic {
+    func comic(withIndex index: Int) -> XKCDComic {
         if let comic = jsons.first(where: { $0.num == index }) {
             return comic
         } else {
             return jsons.last!
         }
-        
+    }
+    
+    func comic(withURL url: URL) -> XKCDComic {
+        if let comic = jsons.first(where: { $0.link == url }) {
+            return comic
+        } else {
+            return jsons.last!
+        }
     }
 }
 
