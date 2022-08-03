@@ -17,7 +17,7 @@ final class ComicGridViewModel: ObservableObject {
     
     init(networkManager: ComicDownloader, comicStore: Store = ComicStore.shared) {
         self.networkManager = networkManager
-        self.comicStore = com
+        self.comicStore = comicStore
     }
     
     @MainActor
@@ -77,6 +77,6 @@ final class ComicGridViewModel: ObservableObject {
     
     func reset() {
         feed.removeAll()
-        
     }
+    
 }
