@@ -1,23 +1,23 @@
 import SwiftUI
+import Combine
 import RealmSwift
 
 /// Grid ViewModel
 final class ComicGridViewModel: ObservableObject {
     
-//    @ObservedResults(ComicModel.self) var comics
-    
     @Published private(set) var feed: [ComicGridItemViewModel] = []
     @Published var hasError: Bool = false
     
-    private var networkManager: ComicDownloader
+    private let networkManager: ComicDownloader
+    private let comicStore: Store
     
     private var isFetching: Bool = false
     private var maxIndex: Int = -1
     private var lastIndexFetched: Int = -1
     
-    init(networkManager: ComicDownloader) {
+    init(networkManager: ComicDownloader, comicStore: Store = ComicStore.shared) {
         self.networkManager = networkManager
-        
+        self.comicStore = com
     }
     
     @MainActor

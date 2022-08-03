@@ -1,7 +1,7 @@
 import Foundation
 
 
-/// Mock struct to contain pre-downloaded comics for previews and testing
+/// Mock struct to contain pre-downloaded comics for preview and testing
 struct PreviewData {
     /// First file stars from 614 (614.json) and the last one is 633
     let startIndex = 614
