@@ -120,7 +120,7 @@ struct ComicDetailsView: View {
 }
 
 struct ComicsDetailsView_Previews: PreviewProvider {
-    static let comicItem = ComicItem.preview.first!
+    static let comicItem = Comic.preview.first!
     static let viewModel = ComicDetailsViewModel(comic: comicItem)
     
     static var previews: some View {

@@ -4,8 +4,8 @@ import SwiftUI
 
 
 // Data returned from server
-struct XKCDComic {
-    var num: Int
+struct ComicAPIEntity {
+    var id: Int
     var text: String = ""
     var title: String = ""
     var imageUrl: URL
@@ -14,17 +14,13 @@ struct XKCDComic {
     }
 }
 
-extension XKCDComic: Decodable {
+extension ComicAPIEntity: Decodable {
     private enum CodingKeys: String, CodingKey {
-        case num
+        case id = "num"
         case title
         case imageUrl = "img"
         case text = "alt"
     }
 }
 
-extension XKCDComic: Identifiable, Hashable {
-    var id: Int {
-        num
-    }
-}
+extension ComicAPIEntity: Identifiable, Hashable {}

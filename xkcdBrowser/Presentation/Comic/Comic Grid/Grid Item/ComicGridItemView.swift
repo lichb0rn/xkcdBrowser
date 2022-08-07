@@ -54,7 +54,7 @@ struct ComicGridItemView: View {
 
 struct ComicsCardView_Previews: PreviewProvider {
     static var previews: some View {
-        var comicItem = ComicItem.preview.first!
+        var comicItem = Comic.preview.first!
         comicItem.isViewed = true
         let viewModel = ComicGridItemViewModel(comic: comicItem, id: 0)
         

@@ -7,7 +7,7 @@ struct PreviewData {
     let startIndex = 614
     let endIndex = 633
     
-    var jsons: [XKCDComic] = []
+    var jsons: [ComicAPIEntity] = []
     
     init() {
         self.load()
@@ -21,15 +21,15 @@ struct PreviewData {
         }
     }
     
-    func comic(withIndex index: Int) -> XKCDComic {
-        if let comic = jsons.first(where: { $0.num == index }) {
+    func comic(withIndex index: Int) -> ComicAPIEntity {
+        if let comic = jsons.first(where: { $0.id == index }) {
             return comic
         } else {
             return jsons.last!
         }
     }
     
-    func comic(withURL url: URL) -> XKCDComic {
+    func comic(withURL url: URL) -> ComicAPIEntity {
         if let comic = jsons.first(where: { $0.link == url }) {
             return comic
         } else {
@@ -39,11 +39,11 @@ struct PreviewData {
 }
 
 struct JSONPreviewLoader {
-    static func load(fileName: String) -> XKCDComic? {
+    static func load(fileName: String) -> ComicAPIEntity? {
         if let path = Bundle.main.path(forResource: fileName, ofType: "json") {
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path))
-                return try JSONDecoder().decode(XKCDComic.self, from: data)
+                return try JSONDecoder().decode(ComicAPIEntity.self, from: data)
             } catch {
                 print("Could not load \(fileName)")
             }

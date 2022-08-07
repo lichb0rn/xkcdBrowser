@@ -24,10 +24,10 @@ final class ComicGridViewModel: ObservableObject {
     func fetchLatests() async {
         isFetching = true
         do {
-            let data = try await fetcher.downloadItem(fromURL: ComicEndpoint.current.url, ofType: XKCDComic.self)
-            let latest = ComicItem(downloader: ImageService.shared, comicData: data)
-            maxIndex = latest.num
-            lastIndexFetched = latest.num
+            let data = try await fetcher.downloadItem(fromURL: ComicEndpoint.current.url, ofType: ComicAPIEntity.self)
+            let latest = Comic(downloader: ImageService.shared, comicData: data)
+            maxIndex = latest.comicID
+            lastIndexFetched = latest.comicID
             let viewModel = ComicGridItemViewModel(comic: latest, id: 0)
             feed.append(viewModel)
             Task {
@@ -54,8 +54,8 @@ final class ComicGridViewModel: ObservableObject {
         }
         
         do {
-            let items = try await fetcher.downloadItems(fromURLs: urls, ofType: XKCDComic.self)
-            let comicItems = items.map { ComicItem(downloader: ImageService.shared, comicData: $0) }
+            let items = try await fetcher.downloadItems(fromURLs: urls, ofType: ComicAPIEntity.self)
+            let comicItems = items.map { Comic(downloader: ImageService.shared, comicData: $0) }
             
             let viewModels = comicItems.enumerated().map { (idx, item) in
                 ComicGridItemViewModel(comic: item, id: feed.count + idx)

@@ -3,12 +3,12 @@ import SwiftUI
 
 class ComicDetailsViewModel: ObservableObject {
     
-    private var comic: ComicItem
+    private var comic: Comic
 
     @Published private(set) var isFetching: Bool = false
     @Published private(set) var image: Image = Image("estimation")
     var num: String {
-        "\(comic.comicData.num)"
+        "\(comic.comicData.id)"
     }
     var title: String {
         comic.comicData.title
@@ -21,7 +21,7 @@ class ComicDetailsViewModel: ObservableObject {
     }
     
     
-    init(comic: ComicItem) {
+    init(comic: Comic) {
         self.comic = comic
         
         Task {
