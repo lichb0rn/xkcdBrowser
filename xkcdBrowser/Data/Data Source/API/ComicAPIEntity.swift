@@ -1,6 +1,6 @@
 
 import Foundation
-import SwiftUI
+
 
 
 // Data returned from server

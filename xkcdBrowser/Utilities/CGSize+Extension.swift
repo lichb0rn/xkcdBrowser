@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 extension CGSize {
     var center: CGPoint {

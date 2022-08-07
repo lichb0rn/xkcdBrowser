@@ -1,26 +1,27 @@
 import Foundation
 
+
 protocol Fetching {
     func downloadItem<T: Decodable>(fromURL url: URL, ofType model: T.Type) async throws -> T
     func downloadItems<T: Decodable>(fromURLs urls: [URL], ofType model: T.Type) async throws -> [T]
 }
 
 
-struct APIFetcher: Fetching {
+extension Fetching {
     
     /// Download a single item of type `T`
     func downloadItem<T: Decodable>(fromURL url: URL, ofType model: T.Type) async throws -> T {
         let (data, response) = try await URLSession.shared.data(from: url)
         guard let response = response as? HTTPURLResponse,
               response.statusCode >= 200 && response.statusCode <= 299 else {
-            throw NetworkError.badServerResponse
+            throw APIServiceError.badServerResponse
         }
         
         do {
             let decoded = try JSONDecoder().decode(model, from: data)
             return decoded
         } catch {
-            throw NetworkError.parseJSONError
+            throw APIServiceError.decodingError
         }
     }
     

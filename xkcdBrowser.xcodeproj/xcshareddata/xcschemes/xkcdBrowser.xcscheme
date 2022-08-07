@@ -29,6 +29,28 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       enableThreadSanitizer = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "89057A9A28A02715003B87B8"
+               BuildableName = "xkcdBrowserTests.xctest"
+               BlueprintName = "xkcdBrowserTests"
+               ReferencedContainer = "container:xkcdBrowser.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "8973034E28A03E5F00A44761"
+               BuildableName = "xkcdBrowserUnitTests.xctest"
+               BlueprintName = "xkcdBrowserUnitTests"
+               ReferencedContainer = "container:xkcdBrowser.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

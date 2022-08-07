@@ -26,14 +26,14 @@ actor ImageService: ObservableObject {
             case .inProgress(let task):
                 return try await task.value
             case .failed:
-                throw NetworkError.noInternet
+                throw APIServiceError.requestError
             }
         }
 
         let downloadTask: Task<UIImage, Error> = Task.detached {
             let data = try await URLSession.shared.data(from: url).0
             guard let image = UIImage(data: data) else {
-                throw NetworkError.parseJSONError
+                throw APIServiceError.decodingError
             }
             return image
         }
@@ -46,7 +46,7 @@ actor ImageService: ObservableObject {
             return image
         } catch {
             cache[key] = .failed
-            throw NetworkError.noInternet
+            throw APIServiceError.requestError
         }
     }
 

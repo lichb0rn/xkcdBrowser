@@ -50,7 +50,7 @@ final class ComicGridViewModel: ObservableObject {
         
         var urls: [URL] = []
         for index in stride(from: nextIndex, to: nextLastIndex, by: -1) {
-            urls.append(ComicEndpoint.version(number: index).url)
+            urls.append(ComicEndpoint.byIndex(index).url)
         }
         
         do {
