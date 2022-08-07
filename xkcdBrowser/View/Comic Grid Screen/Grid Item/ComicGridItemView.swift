@@ -30,7 +30,6 @@ struct ComicGridItemView: View {
             if !viewModel.isFetching {
                 opacity = 1
             }
-//            print(viewModel.isViewed)
         }
     }
     

@@ -66,10 +66,10 @@ struct ComicGridView: View {
 struct ComicsListView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ComicGridView(viewModel: ComicGridViewModel(networkManager: MockNetworkManager()))
+            ComicGridView(viewModel: ComicGridViewModel(fetcher: MockAPIFetcher()))
                 .previewDevice("iPhone 13 Pro")
             
-            ComicGridView(viewModel: ComicGridViewModel(networkManager: MockNetworkManager()))
+            ComicGridView(viewModel: ComicGridViewModel(fetcher: MockAPIFetcher()))
                 .previewDevice("iPad Pro (11-inch)")
         }
     }

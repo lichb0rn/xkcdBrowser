@@ -1,12 +1,12 @@
 import Foundation
 
-protocol ComicDownloader {
+protocol Fetching {
     func downloadItem<T: Decodable>(fromURL url: URL, ofType model: T.Type) async throws -> T
     func downloadItems<T: Decodable>(fromURLs urls: [URL], ofType model: T.Type) async throws -> [T]
 }
 
 
-struct NetworkManager: ComicDownloader {
+struct APIFetcher: Fetching {
     
     /// Download a single item of type `T`
     func downloadItem<T: Decodable>(fromURL url: URL, ofType model: T.Type) async throws -> T {

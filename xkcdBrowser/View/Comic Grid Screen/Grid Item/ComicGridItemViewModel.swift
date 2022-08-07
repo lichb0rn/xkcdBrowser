@@ -8,6 +8,7 @@ class ComicGridItemViewModel: ObservableObject {
 
     let id: Int
 
+    @Published var isViewed: Bool = false
     @Published private(set) var isFetching: Bool = false
     var num: String {
         "\(comic.comicData.num)"
@@ -19,9 +20,7 @@ class ComicGridItemViewModel: ObservableObject {
         comic.comicImage
     }
     
-    var isViewed: Bool {
-        comic.isViewed
-    }
+
     
     init(comic: ComicItem, id: Int) {
         self.comic = comic

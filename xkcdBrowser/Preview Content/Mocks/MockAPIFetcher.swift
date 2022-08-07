@@ -1,6 +1,6 @@
 import Foundation
 
-struct MockNetworkManager: ComicDownloader {
+struct MockAPIFetcher: Fetching {
     let previewData = PreviewData()
     
     func downloadItem<T: Decodable>(fromURL url: URL, ofType model: T.Type) async throws -> T {
