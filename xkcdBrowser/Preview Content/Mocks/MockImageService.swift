@@ -13,7 +13,7 @@ actor MockImageService: ImageDownloader {
         if let image = loadFromFile(url) {
             return image
         } else {
-            throw APIServiceError.badServerResponse
+            throw NetworkError.badServerResponse
         }
     }
 

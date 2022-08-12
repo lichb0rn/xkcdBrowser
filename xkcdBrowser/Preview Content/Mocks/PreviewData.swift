@@ -1,49 +1,67 @@
 import Foundation
 
 
-/// Mock struct to contain pre-downloaded comics for preview and testing
+/// Struct to contain pre-downloaded comics for preview and testing
 struct PreviewData {
-    /// First file stars from 614 (614.json) and the last one is 633
+    // First file stars from 614 (614.json) and the last one is 633
     let startIndex = 614
     let endIndex = 633
     
-    var jsons: [ComicAPIEntity] = []
+    // Keeping borth `raw` data and decoded JSON for different puproses (preview and testing)
+    var decodedJSON: [ComicAPIEntity] = []
+    var data: [Data] = []
     
     init() {
-        self.load()
+        self.loadRawData()
+        self.decode()
     }
     
-    mutating func load() {
+    mutating func loadRawData() {
         for idx in startIndex...endIndex {
-            if let comic = JSONPreviewLoader.load(fileName: "\(idx)")  {
-                jsons.append(comic)
+            if let comicData = JSONPreviewLoader.load(fileName: "\(idx)")  {
+                data.append(comicData)
             }
         }
     }
     
-    func comic(withIndex index: Int) -> ComicAPIEntity {
-        if let comic = jsons.first(where: { $0.id == index }) {
-            return comic
-        } else {
-            return jsons.last!
+    mutating func decode() {
+        decodedJSON = data.compactMap {
+            do {
+                return try JSONDecoder().decode(ComicAPIEntity.self, from: $0)
+            } catch {
+                return nil
+            }
         }
     }
     
-    func comic(withURL url: URL) -> ComicAPIEntity {
-        if let comic = jsons.first(where: { $0.link == url }) {
+    func comicData() -> Data {
+        return data.last!
+    }
+    
+    func comic(withIndex index: Int) -> ComicAPIEntity {
+        if let comic = decodedJSON.first(where: { $0.id == index }) {
             return comic
         } else {
-            return jsons.last!
+            return decodedJSON.last!
+        }
+    }
+
+    
+    func comic(withURL url: URL) -> ComicAPIEntity {
+        if let comic = decodedJSON.first(where: { $0.link == url }) {
+            return comic
+        } else {
+            return decodedJSON.last!
         }
     }
 }
 
 struct JSONPreviewLoader {
-    static func load(fileName: String) -> ComicAPIEntity? {
+    static func load(fileName: String) -> Data? {
         if let path = Bundle.main.path(forResource: fileName, ofType: "json") {
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path))
-                return try JSONDecoder().decode(ComicAPIEntity.self, from: data)
+                return data
             } catch {
                 print("Could not load \(fileName)")
             }

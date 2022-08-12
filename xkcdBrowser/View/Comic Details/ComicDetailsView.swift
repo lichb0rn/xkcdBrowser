@@ -3,14 +3,15 @@ import SwiftUI
 struct ComicDetailsView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    @ObservedObject var viewModel: ComicDetailsViewModel
+    let comic: Comic
     
     @State private var showPopup: Bool = false
+    @State private var image: Image = Image("estimation")
     
     var body: some View {
         ZStack {
             VStack {
-                viewModel.image
+                image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .scaleEffect(1 + currentScale)
@@ -21,7 +22,7 @@ struct ComicDetailsView: View {
                 
                 Spacer()
                 
-                ControlBar(text: viewModel.num, altTapped: $showPopup) {
+                ControlBar(text: "\(comic.id)", altTapped: $showPopup) {
                     shareComic()
                 }
                 .opacity(currentScale > minScale ? 0 : 1)
@@ -31,7 +32,7 @@ struct ComicDetailsView: View {
             
             if showPopup {
                 GeometryReader { proxy in
-                    PopupView(text: viewModel.text, isShowing: $showPopup)
+                    PopupView(text: comic.description, isShowing: $showPopup)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     
                 }
@@ -49,10 +50,18 @@ struct ComicDetailsView: View {
                 .disabled(showPopup)
             }
             ToolbarItem(placement: .principal) {
-                Text(viewModel.title)
+                Text(comic.description)
                     .font(Settings.fontLarge)
             }
         })
+        .task {
+            do {
+                let uiimage = try await ImageService.shared.downloadImage(fromURL: comic.imageURL)
+                image = Image(uiImage: uiimage)
+            } catch {
+                image = Image("error")
+            }
+        }
     }
     
     // MARK: - Gestures
@@ -113,19 +122,20 @@ struct ComicDetailsView: View {
     private func shareComic() {
         let scenes = UIApplication.shared.connectedScenes
         let windowScene = scenes.first as? UIWindowScene
+        let link = comic.imageURL
         
-        let share = UIActivityViewController(activityItems: [viewModel.linkForShare], applicationActivities: nil)
+        let share = UIActivityViewController(activityItems: [link], applicationActivities: nil)
         windowScene?.keyWindow?.rootViewController?.present(share, animated: true, completion: nil)
     }
 }
 
 struct ComicsDetailsView_Previews: PreviewProvider {
-    static let comicItem = Comic.preview.first!
-    static let viewModel = ComicDetailsViewModel(comic: comicItem)
+    static let comicItem = PreviewData().decodedJSON.last!
+    static let comic = Comic(comicData: comicItem)
     
     static var previews: some View {
         NavigationView {
-            ComicDetailsView(viewModel: viewModel)
+            ComicDetailsView(comic: comic)
         }
     }
 }

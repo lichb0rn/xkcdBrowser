@@ -8,7 +8,7 @@ struct MockAPIFetcher: Fetching {
     }
     
     func downloadItems<T: Decodable>(fromURLs urls: [URL], ofType model: T.Type) async throws -> [T] {
-        let items: [T] = previewData.jsons as! [T]
+        let items: [T] = previewData.decodedJSON as! [T]
         return items.reversed()
     }
 }

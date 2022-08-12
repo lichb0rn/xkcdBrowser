@@ -28,7 +28,7 @@ final class ComicDBEntity: Object, ObjectKeyIdentifiable {
 extension ComicDBEntity {
     static var preview: [ComicDBEntity] = {
         let previewData = PreviewData()
-        var items: [ComicDBEntity] = previewData.jsons.map { comic in
+        var items: [ComicDBEntity] = previewData.decodedJSON.map { comic in
             var item = ComicDBEntity(xkcd: comic)
             item.image = UIImage(contentsOfFile: comic.imageUrl.absoluteString)
             return item
