@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct ComicGridItemView: View {
-    
     private let comic: Comic
     
     @State private var opacity: Double = 0

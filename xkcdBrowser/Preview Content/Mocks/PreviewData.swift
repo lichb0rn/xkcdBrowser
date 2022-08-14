@@ -47,12 +47,11 @@ struct PreviewData {
     }
 
     
-    func comic(withURL url: URL) -> ComicAPIEntity {
-        if let comic = decodedJSON.first(where: { $0.link == url }) {
+    func comic(withURL url: URL) -> ComicAPIEntity? {
+        if let comic = decodedJSON.first(where: { $0.id == Int(url.pathComponents[1]) }) {
             return comic
-        } else {
-            return decodedJSON.last!
         }
+        return nil
     }
 }
 

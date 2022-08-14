@@ -50,7 +50,7 @@ struct ComicDetailsView: View {
                 .disabled(showPopup)
             }
             ToolbarItem(placement: .principal) {
-                Text(comic.description)
+                Text(comic.title)
                     .font(Settings.fontLarge)
             }
         })

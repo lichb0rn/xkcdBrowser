@@ -5,16 +5,13 @@ import Combine
 final class StoreTests: XCTestCase {
     
     var sut: ComicStore!
-    var networking: MockNetworking!
-    var fetcher: Fetching!
+    var fetcher: MockAPIFetcher!
     var previewData: PreviewData!
     
     override func setUpWithError() throws {
         try super.setUpWithError()
         previewData = PreviewData()
-        networking = MockNetworking()
-        fetcher = Fetcher(networking: networking)
-        
+        fetcher = MockAPIFetcher(preview: previewData)
         sut = ComicStore(fetcher: fetcher)
     }
 
@@ -23,8 +20,12 @@ final class StoreTests: XCTestCase {
         
         sut = nil
         fetcher = nil
-        networking = nil
         previewData = nil
+    }
+    
+    func coldStart() async -> Comic {
+        await sut.fetch()
+        return sut.comics.last!
     }
     
     func test_onLoad_stateIsIdle() {
@@ -32,22 +33,48 @@ final class StoreTests: XCTestCase {
     }
     
     func test_fetchLatestComic() async throws {
-        let comicData = previewData.comicData()
-        networking.result = .success(comicData)
-        let expectedComic = Comic(comicData: try! JSONDecoder().decode(ComicAPIEntity.self, from: comicData))
+        let expectedComic = previewData.decodedJSON.last!
         
-        await sut.fetchLatest()
+        await sut.fetch()
         
         let receivedComic = try XCTUnwrap(sut.comics.last)
         
         XCTAssertEqual(sut.state, .completed)
         XCTAssertEqual(receivedComic.id, expectedComic.id)
     }
+    
+    func test_prefetchMultipleComics() async throws {
+        let fetched = await coldStart()
+        
+        await sut.fetch(currentIndex: fetched.id)
+        
+        XCTAssertEqual(sut.comics.count, 11) // Latest comic + 10 from prefetchCount = 11
+    }
+
+    func test_notFetching_ifNoNeed() async throws {
+        let fetched = await coldStart()
+        
+        // Default prefetch margin is 5, index should be greater not to trigger prefetch
+        await sut.fetch(currentIndex: fetched.id + 7)
+        
+        XCTAssertEqual(sut.comics.count, 1)
+    }
+    
+    func test_store_HasNoDuplicates() async {
+        var latest = await coldStart()
+        await sut.fetch(currentIndex: latest.id)
+        latest = sut.comics.last!
+        await sut.fetch(currentIndex: latest.id)
+        
+        let hasNoDuplicates = sut.comics.count == Set(sut.comics).count
+        
+        XCTAssertTrue(hasNoDuplicates, "Comics publisher has duplicate items")
+    }
 
     func test_fetchFailed_stateIsError() async {
-        networking.result = .failure(NetworkError.requestError)
+        fetcher.shouldThrow = true
         
-        await sut.fetchLatest()
+        await sut.fetch()
         
         XCTAssertEqual(sut.state, .error)
     }

@@ -36,6 +36,9 @@ struct ComicGridView: View {
                         ComicGridItemView(comic: comic)
                             .background(Color.white)
                             .padding(.horizontal, horizontalPadding)
+                            .task {
+                                await store.fetch(currentIndex: comic.id)
+                            }
                     }
                 }
             }

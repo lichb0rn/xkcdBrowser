@@ -274,9 +274,10 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		894ADAA628A1550100BE2024 /* Mocks */ = {
+		894AD27528A7741100BF4544 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				894ADAA728A156DB00BE2024 /* MockNetworking.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -334,8 +335,8 @@
 		8973035028A03E5F00A44761 /* xkcdBrowserUnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				894AD27528A7741100BF4544 /* Mocks */,
 				89057AA628A02737003B87B8 /* Data */,
-				894ADAA628A1550100BE2024 /* Mocks */,
 			);
 			path = xkcdBrowserUnitTests;
 			sourceTree = "<group>";
@@ -345,7 +346,6 @@
 			children = (
 				8983BA4D2861F84800790A8C /* MockImageService.swift */,
 				8983BAA02862059600790A8C /* PreviewData.swift */,
-				894ADAA728A156DB00BE2024 /* MockNetworking.swift */,
 				8983BAA228620FCE00790A8C /* MockAPIFetcher.swift */,
 			);
 			path = Mocks;

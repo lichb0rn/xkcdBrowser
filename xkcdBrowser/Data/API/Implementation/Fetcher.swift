@@ -38,20 +38,22 @@ struct Fetcher: Fetching {
     
     func downloadItems<T: Decodable>(fromURLs urls: [URL], ofType model: T.Type) async throws -> [T] {
         guard !urls.isEmpty else { return [] }
-    
-        return try await withThrowingTaskGroup(of: model, body: { group -> [T] in
-            var items: [T] = []
+        
+        let results = try await withThrowingTaskGroup(of: model) { group in
             
             urls.forEach { url in
-                group.addTask(priority: .background) {
-                    try await self.downloadItem(fromURL: url, ofType: model)
+                group.addTask(priority: .userInitiated) {
+                    return try await self.downloadItem(fromURL: url, ofType: model)
                 }
             }
             
+            var items: [T] = []
             for try await item in group {
                 items.append(item)
             }
             return items
-        })
+        }
+
+        return results
     }
 }

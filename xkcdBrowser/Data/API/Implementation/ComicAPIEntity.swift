@@ -3,15 +3,12 @@ import Foundation
 
 
 
-// Data returned from server
+// Data returned from the xkcd server
 struct ComicAPIEntity {
     var id: Int
     var text: String = ""
     var title: String = ""
     var imageUrl: URL
-    var link: URL {
-        imageUrl.deletingLastPathComponent()
-    }
 }
 
 extension ComicAPIEntity: Decodable {

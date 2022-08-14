@@ -34,17 +34,6 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "89057A9A28A02715003B87B8"
-               BuildableName = "xkcdBrowserTests.xctest"
-               BlueprintName = "xkcdBrowserTests"
-               ReferencedContainer = "container:xkcdBrowser.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "8973034E28A03E5F00A44761"
                BuildableName = "xkcdBrowserUnitTests.xctest"
                BlueprintName = "xkcdBrowserUnitTests"
@@ -57,6 +46,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      enableThreadSanitizer = "YES"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
