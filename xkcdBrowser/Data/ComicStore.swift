@@ -1,20 +1,15 @@
 import Foundation
+import UIKit
 
 
 final class ComicStore: ObservableObject {
-    enum StoreState {
-        case idle
-        case fetching
-        case completed
-        case error
-    }
-    
     
     @Published private(set) var comics: [Comic] = []
-    @Published private(set) var state: StoreState = .idle
+    @Published private(set) var showError: Bool = false
     
     private let fetcher: Fetching
     private var isFetching: Bool = false
+    private let imageDownloader: ImageDownloader
     
     // The latest comic num, i.e 2657. Never less than 1.
     private var latestIndex: Int = -1
@@ -24,8 +19,9 @@ final class ComicStore: ObservableObject {
     private let prefetchMargin: Int
     
 
-    init(fetcher: Fetching = Fetcher(), prefetchCount: Int = 10, prefetchMargin: Int = 5) {
+    init(prefetchCount: Int = 10, prefetchMargin: Int = 5, fetcher: Fetching = Fetcher(), imageDownloader: ImageDownloader = ImageService.shared) {
         self.fetcher = fetcher
+        self.imageDownloader = imageDownloader
         self.prefetchCount = prefetchCount
         self.prefetchMargin = prefetchMargin
     }
@@ -42,18 +38,35 @@ final class ComicStore: ObservableObject {
         await fetchMany(count: prefetchCount)
     }
     
+    func downloadImage(for comic: Comic) async -> UIImage? {
+        do {
+            let uiImage = try await imageDownloader.downloadImage(fromURL: comic.imageURL)
+            return uiImage
+        } catch {
+            return nil
+        }
+    }
+    
+    func markAsViewed(_ comic: Comic) {
+        if let index = comics.firstIndex(of: comic) {
+            comics[index].markViewed()
+        }
+    }
+    
     @MainActor
     private func fetchLatest() async {
-        state = .fetching
+        isFetching = true
+        defer {
+            isFetching = false
+        }
         do {
             let data = try await fetcher.downloadItem(fromURL: ComicEndpoint.current.url, ofType: ComicAPIEntity.self)
             let comic = Comic(comicData: data)
             latestIndex = comic.id
             comics.append(comic)
-            state = .completed
         } catch {
             print(error.localizedDescription)
-            state = .error
+            showError = true
         }
     }
     

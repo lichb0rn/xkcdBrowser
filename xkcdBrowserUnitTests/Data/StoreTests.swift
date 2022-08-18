@@ -28,8 +28,8 @@ final class StoreTests: XCTestCase {
         return sut.comics.last!
     }
     
-    func test_onLoad_stateIsIdle() {
-        XCTAssertEqual(sut.state, .idle)
+    func test_onLoad_storeIsEmpty() {
+        XCTAssertTrue(sut.comics.isEmpty)
     }
     
     func test_fetchLatestComic() async throws {
@@ -37,9 +37,8 @@ final class StoreTests: XCTestCase {
         
         await sut.fetch()
         
-        let receivedComic = try XCTUnwrap(sut.comics.last)
+        let receivedComic = try XCTUnwrap(sut.comics.last!)
         
-        XCTAssertEqual(sut.state, .completed)
         XCTAssertEqual(receivedComic.id, expectedComic.id)
     }
     
@@ -71,11 +70,11 @@ final class StoreTests: XCTestCase {
         XCTAssertTrue(hasNoDuplicates, "Comics publisher has duplicate items")
     }
 
-    func test_fetchFailed_stateIsError() async {
+    func test_fetchFailed_showErrorIsTrue() async {
         fetcher.shouldThrow = true
         
         await sut.fetch()
         
-        XCTAssertEqual(sut.state, .error)
+        XCTAssertTrue(sut.showError)
     }
 }

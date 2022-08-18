@@ -5,8 +5,6 @@ struct WaitingView: View {
     var body: some View {
         VStack(alignment: .center) {
             
-            Spacer()
-            
             Text("Loading: \(progressString)%...")
                 .foregroundColor(.black)
                 .font(.headline)

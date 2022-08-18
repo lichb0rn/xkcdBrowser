@@ -17,6 +17,10 @@ struct Comic {
         self.description = comicData.text
         self.imageURL = comicData.imageUrl
     }
+    
+    mutating func markViewed() {
+        isViewed = true
+    }
 }
 
 extension Comic: Identifiable, Hashable {}

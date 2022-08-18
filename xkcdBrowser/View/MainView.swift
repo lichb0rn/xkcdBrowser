@@ -8,7 +8,16 @@ struct MainView: View {
 //    @StateObject var store = ComicStore()
 //    #endif
     
-    @StateObject var store = ComicStore()
+    @StateObject var store: ComicStore
+    @State private var showSplashScreen = true
+    
+    private let appContainer: AppContainer
+    
+    init() {
+        appContainer = AppContainer()
+        let store = appContainer.initStore()
+        self._store = StateObject(wrappedValue: store)
+    }
     
     var body: some View {
         contentView.environmentObject(store)
@@ -18,16 +27,30 @@ struct MainView: View {
     }
     
     @ViewBuilder private var contentView: some View {
-        switch store.state {
-        case .completed:
-            ComicGridView()
-        case .fetching:
-            WaitingView()
-        case .error:
-            ErrorView()
-        default:
-            WaitingView()
+        if showSplashScreen {
+            SplashScreen()
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        showSplashScreen = false
+                    }
+                }
+        } else {
+            Group {
+                if store.showError {
+                    ErrorView()
+                } else {
+                    ComicGridView()
+                        .environmentObject(store)
+                }
+            }
         }
     }
 }
 
+
+
+struct MainView_Previews: PreviewProvider {
+    static var previews: some View {
+        return MainView()
+    }
+}

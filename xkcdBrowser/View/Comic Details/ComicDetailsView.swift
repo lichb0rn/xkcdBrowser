@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ComicDetailsView: View {
+    @EnvironmentObject var store: ComicStore
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     let comic: Comic
@@ -19,6 +20,9 @@ struct ComicDetailsView: View {
                     .gesture(doubleTapToZoom())
                     .gesture(isScaled ? panGesture() : nil)
                     .gesture(zoomGesture())
+                    .onAppear {
+                        store.markAsViewed(comic)
+                    }
                 
                 Spacer()
                 
@@ -55,12 +59,7 @@ struct ComicDetailsView: View {
             }
         })
         .task {
-            do {
-                let uiimage = try await ImageService.shared.downloadImage(fromURL: comic.imageURL)
-                image = Image(uiImage: uiimage)
-            } catch {
-                image = Image("error")
-            }
+            await getImage()
         }
     }
     
@@ -118,7 +117,6 @@ struct ComicDetailsView: View {
     
     
     // MARK: - Share
-    
     private func shareComic() {
         let scenes = UIApplication.shared.connectedScenes
         let windowScene = scenes.first as? UIWindowScene
@@ -126,6 +124,15 @@ struct ComicDetailsView: View {
         
         let share = UIActivityViewController(activityItems: [link], applicationActivities: nil)
         windowScene?.keyWindow?.rootViewController?.present(share, animated: true, completion: nil)
+    }
+    
+    
+    private func getImage() async {
+        if let uiImage = await store.downloadImage(for: comic) {
+            image = Image(uiImage: uiImage)
+        } else {
+            image = Image("error")
+        }
     }
 }
 
