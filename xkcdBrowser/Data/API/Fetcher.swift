@@ -48,6 +48,7 @@ struct Fetcher: Fetching {
             }
             
             var items: [T] = []
+            items.reserveCapacity(urls.count)
             for try await item in group {
                 items.append(item)
             }

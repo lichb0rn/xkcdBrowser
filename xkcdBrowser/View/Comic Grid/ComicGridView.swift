@@ -5,18 +5,31 @@ struct ComicGridView: View {
     
     var body: some View {
         NavigationView {
-            feedView
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .principal) {
-                        Text("xkcd")
-                            .font(Settings.fontLarge)
-                            .foregroundColor(.white)
+            ScrollView {
+                LazyVGrid(columns: layout, spacing: spacing) {
+                    ForEach(store.comics) { comic in
+                        NavigationLink(destination: ComicDetailsView(comic: comic)) {
+                                ComicGridItemView(comic: comic)
+                                    .background(Color.white)
+                                    .padding(.horizontal, horizontalPadding)
+                                    .task {
+                                        await store.fetch(currentIndex: comic.id)
+                                }
+                        }
                     }
                 }
-                .background(
-                    Color("background")
-                )
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("xkcd")
+                        .font(Settings.fontLarge)
+                        .foregroundColor(.white)
+                }
+            }
+            .background(
+                Color("background")
+            )
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
@@ -25,25 +38,8 @@ struct ComicGridView: View {
     private let layout: [GridItem] = [
         GridItem(.adaptive(minimum: 300, maximum: .infinity), spacing: 4)
     ]
-    
     private let spacing: CGFloat = 8
     private let horizontalPadding: CGFloat = 4
-    var feedView: some View {
-        ScrollView {
-            LazyVGrid(columns: layout, spacing: spacing) {
-                ForEach(store.comics) { comic in
-                    NavigationLink(destination: ComicDetailsView(comic: comic)) {
-                        ComicGridItemView(comic: comic)
-                            .background(Color.white)
-                            .padding(.horizontal, horizontalPadding)
-                            .task {
-                                await store.fetch(currentIndex: comic.id)
-                            }
-                    }
-                }
-            }
-        }
-    }
 }
 
 

@@ -35,12 +35,12 @@ final class ComicStore: ObservableObject {
     func fetch(currentIndex: Int) async {
         guard currentIndex < latestIndex + prefetchMargin else { return }
 
-        await fetchMany(count: prefetchCount)
+        await fetchMoreIfNeeded(count: prefetchCount)
     }
     
-    func downloadImage(for comic: Comic) async -> UIImage? {
+    func downloadImage(for comic: Comic, ofSize size: CGSize) async -> UIImage? {
         do {
-            let uiImage = try await imageDownloader.downloadImage(fromURL: comic.imageURL)
+            let uiImage = try await imageDownloader.downloadImage(fromURL: comic.imageURL, ofSize: size)
             return uiImage
         } catch {
             return nil
@@ -52,32 +52,36 @@ final class ComicStore: ObservableObject {
             comics[index].markViewed()
         }
     }
+}
+
+// Private methods
+extension ComicStore {
     
-    @MainActor
     private func fetchLatest() async {
         isFetching = true
         defer {
             isFetching = false
         }
+
         do {
             let data = try await fetcher.downloadItem(fromURL: ComicEndpoint.current.url, ofType: ComicAPIEntity.self)
             let comic = Comic(comicData: data)
             latestIndex = comic.id
-            comics.append(comic)
+            await updateUI(with: [comic])
         } catch {
             print(error.localizedDescription)
             showError = true
         }
     }
     
-    @MainActor
-    private func fetchMany(count: Int) async {
+    
+    private func fetchMoreIfNeeded(count: Int) async {
         guard !isFetching else { return }
         isFetching = true
         defer {
             isFetching = false
         }
-        
+
         let urls = getURLs(startIndex: latestIndex - 1, count: count)
         do {
             let data = try await fetcher.downloadItems(fromURLs: urls, ofType: ComicAPIEntity.self)
@@ -85,13 +89,19 @@ final class ComicStore: ObservableObject {
                 .map({ Comic(comicData: $0) })
                 .sorted(by: { $0.id > $1.id })
             
-            comics.append(contentsOf: items)
+            await updateUI(with: items)
             latestIndex = latestIndex - count
         } catch {
             print(error.localizedDescription)
         }
     }
     
+    
+    @MainActor private func updateUI(with contents: [Comic]) {
+        comics.append(contentsOf: contents)
+    }
+    
+    // Getting URLs by comic num
     private func getURLs(startIndex: Int, count: Int, reversed: Bool = true) -> [URL] {
         let end = startIndex - count
         let step = reversed ? -1 : 1

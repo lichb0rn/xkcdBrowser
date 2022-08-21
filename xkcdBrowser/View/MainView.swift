@@ -1,12 +1,6 @@
 import SwiftUI
 
 struct MainView: View {
-//
-//    #if DEBUG
-//    @StateObject var store = ComicStore(fetcher: Fetcher(networking: MockNetworking()))
-//    #else
-//    @StateObject var store = ComicStore()
-//    #endif
     
     @StateObject var store: ComicStore
     @State private var showSplashScreen = true

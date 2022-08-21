@@ -9,7 +9,7 @@ actor MockImageService: ImageDownloader {
     
     private var cache: [String: State] = [:]
     
-    func downloadImage(fromURL url: URL) async throws -> UIImage {
+    func downloadImage(fromURL url: URL, ofSize size: CGSize) async throws -> UIImage {
         if let image = loadFromFile(url) {
             return image
         } else {
@@ -19,7 +19,7 @@ actor MockImageService: ImageDownloader {
 
 
     
-    func add(_ image: UIImage, key: String) { }
+    func add(_ image: UIImage, key: URL) { }
 }
 
 extension MockImageService {

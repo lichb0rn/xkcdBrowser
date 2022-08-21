@@ -3,17 +3,14 @@ import SwiftUI
 struct ComicGridItemView: View {
     @EnvironmentObject var store: ComicStore
     
-    private let comic: Comic
+    let comic: Comic
     
     @State private var opacity: Double = 0
     @State private var image: Image = Image("estimation")
-    
-    init(comic: Comic) {
-        self.comic = comic
-    }
+    @State private var isLoading: Bool = true
     
     var body: some View {
-        comicView(image)
+        content
             .overlay(alignment: .topTrailing) {
                 BadgeView(text: "\(comic.id)",
                           textColor: .white,
@@ -22,34 +19,32 @@ struct ComicGridItemView: View {
             }
             .border(comic.isViewed ? .gray : .black, width: 2)
             .task {
-                await getImage()
+                await getImage(ofSize: CGSize(width: 200, height: 200))
             }
-            .onChange(of: image) { _ in
-                opacity = 1
-            }
-    }
-    
-    func comicView(_ image: Image) -> some View {
-        image
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-            .clipped()
-            .aspectRatio(1, contentMode: .fit)
-            .opacity(opacity)
-            .animation(.easeInOut(duration: 1), value: opacity)
-            .padding()
             .onAppear {
                 opacity = comic.isViewed ? 0.7 : 1
             }
+            .onDisappear {
+                
+            }
     }
     
-    private func getImage() async {
-        if let uiImage = await store.downloadImage(for: comic) {
+    @ViewBuilder var content: some View {
+        if isLoading {
+            ProgressView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else {
+            GridItemImage(image: image)
+        }
+    }
+    
+    private func getImage(ofSize size: CGSize) async {
+        if let uiImage = await store.downloadImage(for: comic, ofSize: size) {
             image = Image(uiImage: uiImage)
         } else {
             image = Image("error")
         }
+        isLoading = false
     }
 }
 
@@ -61,3 +56,4 @@ struct ComicsCardView_Previews: PreviewProvider {
         return ComicGridItemView(comic: comicItem).environmentObject(ComicStore(fetcher: MockAPIFetcher())).padding()
     }
 }
+

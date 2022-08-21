@@ -31,7 +31,7 @@ private struct SplashAnimation: ViewModifier {
 }
 
 struct SplashScreen: View {
-    let images = ["error", "estimation", "servierProblem", "xkcd-people" ]
+    let images = ["error", "estimation", "serverProblem", "xkcd-people" ]
     
     var body: some View {
         ZStack {

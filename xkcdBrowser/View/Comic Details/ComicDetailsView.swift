@@ -128,7 +128,7 @@ struct ComicDetailsView: View {
     
     
     private func getImage() async {
-        if let uiImage = await store.downloadImage(for: comic) {
+        if let uiImage = await store.downloadImage(for: comic, ofSize: .zero) {
             image = Image(uiImage: uiImage)
         } else {
             image = Image("error")
