@@ -1,7 +1,7 @@
 import SwiftUI
 
 // A type that represents data in the grid
-struct Comic {
+struct Comic: Codable {
     let id: Int
     let title: String
     let description: String

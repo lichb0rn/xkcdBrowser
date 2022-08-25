@@ -10,6 +10,7 @@ final class ComicStore: ObservableObject {
     private let fetcher: Fetching
     private var isFetching: Bool = false
     private let imageDownloader: ImageDownloader
+    private var dbManager: DBManaging
     
     // The latest comic num, i.e 2657. Never less than 1.
     private var latestIndex: Int = -1
@@ -19,11 +20,12 @@ final class ComicStore: ObservableObject {
     private let prefetchMargin: Int
     
 
-    init(prefetchCount: Int = 10, prefetchMargin: Int = 5, fetcher: Fetching = Fetcher(), imageDownloader: ImageDownloader = ImageService.shared) {
+    init(prefetchCount: Int = 10, prefetchMargin: Int = 5, fetcher: Fetching = Fetcher(), imageDownloader: ImageDownloader = ImageService.shared, dbManager: DBManaging = DiskStorage()) {
         self.fetcher = fetcher
         self.imageDownloader = imageDownloader
         self.prefetchCount = prefetchCount
         self.prefetchMargin = prefetchMargin
+        self.dbManager = dbManager
     }
     
     func fetch() async {
@@ -91,6 +93,11 @@ extension ComicStore {
             
             await updateUI(with: items)
             latestIndex = latestIndex - count
+            
+            DispatchQueue.global(qos: .background).async { [weak self] in
+                self?.saveToDisk(items)
+            }
+            
         } catch {
             print(error.localizedDescription)
         }
@@ -111,5 +118,9 @@ extension ComicStore {
             urls.append(ComicEndpoint.byIndex(index).url)
         }
         return urls
+    }
+    
+    private func saveToDisk(_ items: [Comic]) {
+        items.forEach { dbManager.save($0) }
     }
 }

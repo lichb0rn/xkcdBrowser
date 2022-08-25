@@ -49,7 +49,10 @@ struct Fetcher: Fetching {
             
             var items: [T] = []
             items.reserveCapacity(urls.count)
-            for try await item in group {
+//            for await item in group {
+//                items.append(item)
+//            }
+            for try await item in group.compactMap({$0}) {
                 items.append(item)
             }
             return items

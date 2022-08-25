@@ -10,8 +10,6 @@ actor ImageService {
     static let shared = ImageService()
     private init() {}
     
-    private var limit: Int = 100
-    
     enum State {
         case inProgress(Task<UIImage, Error>)
         case completed(UIImage)
