@@ -6,9 +6,7 @@ final class ComicStore: ObservableObject {
     
     @Published private(set) var comics: [Comic] = []
     @Published private(set) var showError: Bool = false
-    
-//    private let fetcher: Fetching
-//    private var dbManager: Storage
+
     
     private var isFetching: Bool = false
     private let imageDownloader: ImageDownloader
@@ -21,18 +19,7 @@ final class ComicStore: ObservableObject {
     // How far in advance should the next comics be fetched, should be less than prefetchCount
     private let prefetchMargin: Int
     
-
-//    init(prefetchCount: Int = 10, prefetchMargin: Int = 5, fetcher: Fetching = Fetcher(), imageDownloader: ImageDownloader = ImageService(), dbManager: Storage = DiskStorage()) {
-//        self.fetcher = fetcher
-//        self.imageDownloader = imageDownloader
-//        self.prefetchCount = prefetchCount
-//        self.prefetchMargin = prefetchMargin
-//        self.dbManager = dbManager
-//    }
-//
     init(prefetchCount: Int = 10, prefetchMargin: Int = 5, comicService: ComicDataSource, imageDownloader: ImageDownloader = ImageService()) {
-//        self.fetcher = fetcher
-//        self.dbManager = dbManager
         self.imageDownloader = imageDownloader
         self.prefetchCount = prefetchCount
         self.prefetchMargin = prefetchMargin
@@ -52,15 +39,6 @@ final class ComicStore: ObservableObject {
         await fetchMoreIfNeeded(count: prefetchCount)
     }
     
-    func downloadImage(for comic: Comic, ofSize size: CGSize) async -> UIImage? {
-        do {
-            let uiImage = try await imageDownloader.downloadImage(fromURL: comic.imageURL, ofSize: size)
-            return uiImage
-        } catch {
-            return nil
-        }
-    }
-    
     func markAsViewed(_ comic: Comic) {
         if let index = comics.firstIndex(of: comic) {
 //            await MainActor.run {
@@ -76,27 +54,18 @@ final class ComicStore: ObservableObject {
 }
 
 // --------------------------------------
-// MARK: - Networking
+// MARK: - Networking and Storage
 // --------------------------------------
 extension ComicStore {
+    func downloadImage(for comic: Comic, ofSize size: CGSize) async -> UIImage? {
+        do {
+            let uiImage = try await imageDownloader.downloadImage(fromURL: comic.imageURL, ofSize: size)
+            return uiImage
+        } catch {
+            return nil
+        }
+    }
     
-//    private func fetchLatest() async {
-//        isFetching = true
-//        defer {
-//            isFetching = false
-//        }
-//
-//        do {
-//            let data = try await fetcher.downloadItem(fromURL: ComicEndpoint.current.url, ofType: ComicAPIEntity.self)
-//            let comic = Comic(comicData: data)
-//            latestIndex = comic.id
-//            merge(newItems: [comic])
-//            await updateUI(with: [comic])
-//        } catch {
-//            print(error.localizedDescription)
-//            showError = true
-//        }
-//    }
     private func fetchLatest() async {
         isFetching = true
         defer {
@@ -112,32 +81,6 @@ extension ComicStore {
         }
     }
     
-    
-//    private func fetchMoreIfNeeded(count: Int) async {
-//        guard !isFetching else { return }
-//        isFetching = true
-//        defer {
-//            isFetching = false
-//        }
-//
-//        let urls = getURLs(startIndex: latestIndex - 1, count: count)
-//        do {
-//            let data = try await fetcher.downloadItems(fromURLs: urls, ofType: ComicAPIEntity.self)
-//            let items = data
-//                .map({ Comic(comicData: $0) })
-//                .sorted(by: { $0.id > $1.id })
-//
-//            await updateUI(with: items)
-//            latestIndex = latestIndex - count
-//
-//            DispatchQueue.global(qos: .background).async { [weak self] in
-//                self?.saveToDisk(items)
-//            }
-//
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//    }
     private func fetchMoreIfNeeded(count: Int) async {
         guard !isFetching else { return }
         isFetching = true
@@ -145,9 +88,10 @@ extension ComicStore {
             isFetching = false
         }
         
-        let urlsToFetch = getURLs(startIndex: latestIndex - 1, count: 10)
+        let urlsToFetch = getURLs(startIndex: latestIndex - 1, count: count)
         do {
             let items = try await comicService.comics(urlsToFetch)
+//            let sorted = items.sorted(by: { $0.id > $1.id })
             latestIndex = items.last?.id ?? 1
             updateUI(with: items)
         } catch {
@@ -162,11 +106,10 @@ extension ComicStore {
         let step = reversed ? -1 : 1
         var urls: [URL] = []
     
+        // Fetching from larger index to smaller
         for index in stride(from: startIndex, to: end, by: step) {
             urls.append(ComicEndpoint.byIndex(index).url)
         }
         return urls
     }
-    
-
 }

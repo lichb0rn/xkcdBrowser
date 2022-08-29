@@ -58,14 +58,11 @@ actor ComicService: ComicDataSource {
             let fileName = DiskStorage.fileName(url)
             // Checking if we have a cached version
             if !storedIndexes.contains(fileName) {
-                print(storedIndexes)
                 // If we don't, throw a error and fetch from the server in the `catch` block
                 throw DataSourceError.cacheMiss
             }
             let data = try await storage.load(fileName)
             let comic = try JSONDecoder().decode(Comic.self, from: data)
-            
-            print("RETURNED from CACHE: \(comic.id)")
             
             return comic
         } catch {
@@ -96,10 +93,10 @@ actor ComicService: ComicDataSource {
             for try await comic in group {
                 items.append(comic)
             }
-            return items
+            return items.sorted(by: { $0.id > $1.id })
         }
         
-        return results.sorted(by: { $0.id > $1.id })
+        return results
     }
 
     func clear() async {

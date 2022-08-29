@@ -70,7 +70,7 @@ final class StoreTests: XCTestCase {
         
         XCTAssertEqual(count, 1)
     }
-    
+
     func test_store_HasNoDuplicates() async {
         var latest = await coldStart()
         await sut.fetch(currentIndex: latest.id)

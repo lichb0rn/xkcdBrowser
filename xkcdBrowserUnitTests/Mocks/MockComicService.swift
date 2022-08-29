@@ -27,8 +27,7 @@ actor MockComicService: ComicDataSource {
         guard !error else {
             throw NetworkError.badServerResponse
         }
-        
-        return data
+        return data.filter { urls.contains($0.comicURL) }.sorted(by: { $0.id > $1.id })
     }
     
     func clear() async {
