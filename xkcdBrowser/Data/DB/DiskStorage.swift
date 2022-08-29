@@ -1,12 +1,21 @@
 import Foundation
 
 
-protocol DBManaging {
-    func load() -> [Comic]
-    func save(_ item: Comic)
+protocol Storage {
+    func load(_ name: String) async throws -> Data
+    func save(_ entity: Data, _ fileName: String) async throws
+    func remove(_ name: String) async throws
+
+    func persistedFiles() async throws -> [URL]
 }
 
-class DiskStorage: DBManaging {
+
+@ComicService
+class DiskStorage: Storage {
+
+    
+    typealias StorageEntity = Data
+    typealias PersistedIndices = URL
     
     private var folder: URL
     
@@ -21,35 +30,38 @@ class DiskStorage: DBManaging {
             fatalError("Could not create database directory")
         }
         folder = databaseFolder
+        print(folder)
     }
     
-    func save(_ item: Comic) {
+    func load(_ name: String) throws -> Data {
+        return try Data(contentsOf: folder.appendingPathComponent(name))
+    }
+    
+    func save(_ data: Data, _ fileName: String) throws {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
-        
-        print("FOLDER: \(folder)")
-        
-        do {
-            let data = try encoder.encode(item)
-            try data.write(to: folder.appendingPathComponent(item.title + ".json"), options: .atomic)
-        } catch {
-            print(error.localizedDescription)
-        }
+        try data.write(to: folder.appendingPathComponent(fileName))
     }
     
-    func load() -> [Comic] {
+    func remove(_ name: String) throws {
+        try FileManager.default.removeItem(at: folder.appendingPathComponent(name))
+    }
+    
+    func persistedFiles() throws -> [URL] {
         guard let dirEnumerator = FileManager.default.enumerator(at: folder, includingPropertiesForKeys: []) else {
-            return []
+            throw DataSourceError.directoryDoesNotExist
         }
         
-        var items: [Comic?] = []
+        var result = [URL]()
         for case let fileURL as URL in dirEnumerator {
-            if let data = try? Data(contentsOf: fileURL) {
-                items.append(try? JSONDecoder().decode(Comic.self, from: data))
-            }
+            result.append(fileURL)
         }
-        
-        return items.compactMap { $0 }
+        return result
+    }
+    
+    // Not doing any mutation here, so it can be nonisolated
+    nonisolated static func fileName(_ url: URL) -> String {
+        return url.deletingLastPathComponent().lastPathComponent.appending(".json")
     }
 }
 

@@ -9,14 +9,20 @@ struct MainView: View {
     
     init() {
         appContainer = AppContainer()
-        let store = appContainer.initStore()
+        var store: ComicStore
+        store = appContainer.initStore()
         self._store = StateObject(wrappedValue: store)
     }
     
     var body: some View {
         contentView.environmentObject(store)
             .task {
-                await store.fetch()
+                do{
+                    try await ComicService.shared.setUp(fetcher: Fetcher(), storage: DiskStorage())
+                    await store.fetch()
+                } catch {
+                    print(error.localizedDescription)
+                }
             }
     }
     

@@ -5,31 +5,39 @@ import Combine
 final class StoreTests: XCTestCase {
     
     var sut: ComicStore!
-    var fetcher: MockAPIFetcher!
+    var mockStorageService: MockComicService!
     var previewData: PreviewData!
     
-    override func setUpWithError() throws {
-        try super.setUpWithError()
+    @MainActor
+    override func setUp() async throws {
+        try await super.setUp()
         previewData = PreviewData()
-        fetcher = MockAPIFetcher(preview: previewData)
-        sut = ComicStore(fetcher: fetcher)
+        mockStorageService = MockComicService()
+        
+        for json in previewData.decodedJSON {
+            let comic = Comic(comicData: json, url: ComicEndpoint.byIndex(json.id).url)
+            await mockStorageService.store(comic: comic, forKey: comic.comicURL)
+        }
+        
+        sut = ComicStore(comicService: mockStorageService)
     }
 
-    override func tearDownWithError() throws {
+    override func tearDown() async throws {
         try super.tearDownWithError()
-        
         sut = nil
-        fetcher = nil
+        mockStorageService = nil
         previewData = nil
     }
     
     func coldStart() async -> Comic {
         await sut.fetch()
-        return sut.comics.last!
+        return await sut.comics.last!
     }
     
-    func test_onLoad_storeIsEmpty() {
-        XCTAssertTrue(sut.comics.isEmpty)
+    func test_onLoad_storeIsEmpty() async {
+        let empty: Bool = await sut.comics.isEmpty
+        
+        XCTAssertTrue(empty)
     }
     
     func test_fetchLatestComic() async throws {
@@ -37,9 +45,9 @@ final class StoreTests: XCTestCase {
         
         await sut.fetch()
         
-        let receivedComic = try XCTUnwrap(sut.comics.last!)
+        let receivedComic = await sut.comics.last
         
-        XCTAssertEqual(receivedComic.id, expectedComic.id)
+        XCTAssertEqual(try XCTUnwrap(receivedComic).id, expectedComic.id)
     }
     
     func test_prefetchMultipleComics() async throws {
@@ -47,7 +55,9 @@ final class StoreTests: XCTestCase {
         
         await sut.fetch(currentIndex: fetched.id)
         
-        XCTAssertEqual(sut.comics.count, 11) // Latest comic + 10 from prefetchCount = 11
+        let count = await sut.comics.count
+        
+        XCTAssertEqual(count, 11) // Latest comic + 10 from prefetchCount = 11
     }
 
     func test_notFetching_ifNoNeed() async throws {
@@ -56,25 +66,28 @@ final class StoreTests: XCTestCase {
         // Default prefetch margin is 5, index should be greater not to trigger prefetch
         await sut.fetch(currentIndex: fetched.id + 7)
         
-        XCTAssertEqual(sut.comics.count, 1)
+        let count = await sut.comics.count
+        
+        XCTAssertEqual(count, 1)
     }
     
     func test_store_HasNoDuplicates() async {
         var latest = await coldStart()
         await sut.fetch(currentIndex: latest.id)
-        latest = sut.comics.last!
+        latest = await sut.comics.last!
         await sut.fetch(currentIndex: latest.id)
         
-        let hasNoDuplicates = sut.comics.count == Set(sut.comics).count
+        let hasNoDuplicates = await sut.comics.count == Set(sut.comics).count
         
         XCTAssertTrue(hasNoDuplicates, "Comics publisher has duplicate items")
     }
 
     func test_fetchFailed_showErrorIsTrue() async {
-        fetcher.shouldThrow = true
+        await mockStorageService.shouldThrow()
         
         await sut.fetch()
+        let isError = await sut.showError
         
-        XCTAssertTrue(sut.showError)
+        XCTAssertTrue(isError)
     }
 }

@@ -11,6 +11,7 @@
 		89024DB228969D0D00FFF139 /* ComicEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89024DB128969D0D00FFF139 /* ComicEndpoints.swift */; };
 		89057A9628A01EBA003B87B8 /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89057A9528A01EBA003B87B8 /* Fetcher.swift */; };
 		891683542871656A00DFF195 /* Comic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891683532871656A00DFF195 /* Comic.swift */; };
+		891D6BE028BBC257005B6BBD /* MockComicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891D6BDF28BBC257005B6BBD /* MockComicService.swift */; };
 		8920D7EB288C28C500CF6B6A /* RoundedButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8920D7EA288C28C500CF6B6A /* RoundedButtonStyle.swift */; };
 		8928AD4628A4202E002351AE /* MockNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894ADAA728A156DB00BE2024 /* MockNetworking.swift */; };
 		892DA90328A37CF800B785A6 /* ComicStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892DA90228A37CF800B785A6 /* ComicStore.swift */; };
@@ -76,6 +77,7 @@
 		89935D4A288BC2AF0063E9FA /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89935D49288BC2AF0063E9FA /* BadgeView.swift */; };
 		89935D4C288BC99B0063E9FA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89935D4B288BC99B0063E9FA /* Settings.swift */; };
 		899E465528421BAF004AEEC6 /* ComicDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899E465428421BAF004AEEC6 /* ComicDetailsView.swift */; };
+		89B9636128BA4529009F4604 /* ComicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B9636028BA4529009F4604 /* ComicService.swift */; };
 		89BFB9B0287AC6C0001403AD /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BFB9AF287AC6C0001403AD /* PopupView.swift */; };
 		89D0E2962875AB1000C820F9 /* WaitingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D0E2952875AB1000C820F9 /* WaitingView.swift */; };
 		89D27DFE28AFF231001B51A9 /* GridItemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D27DFD28AFF231001B51A9 /* GridItemImage.swift */; };
@@ -97,6 +99,7 @@
 		89024DB128969D0D00FFF139 /* ComicEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicEndpoints.swift; sourceTree = "<group>"; };
 		89057A9528A01EBA003B87B8 /* Fetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fetcher.swift; sourceTree = "<group>"; };
 		891683532871656A00DFF195 /* Comic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comic.swift; sourceTree = "<group>"; };
+		891D6BDF28BBC257005B6BBD /* MockComicService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockComicService.swift; sourceTree = "<group>"; };
 		8920D7EA288C28C500CF6B6A /* RoundedButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButtonStyle.swift; sourceTree = "<group>"; };
 		892DA90228A37CF800B785A6 /* ComicStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicStore.swift; sourceTree = "<group>"; };
 		892DA90528A37DA900B785A6 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
@@ -164,6 +167,7 @@
 		89935D49288BC2AF0063E9FA /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
 		89935D4B288BC99B0063E9FA /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		899E465428421BAF004AEEC6 /* ComicDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicDetailsView.swift; sourceTree = "<group>"; };
+		89B9636028BA4529009F4604 /* ComicService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicService.swift; sourceTree = "<group>"; };
 		89BFB9AF287AC6C0001403AD /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		89D0E2952875AB1000C820F9 /* WaitingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingView.swift; sourceTree = "<group>"; };
 		89D27DFD28AFF231001B51A9 /* GridItemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridItemImage.swift; sourceTree = "<group>"; };
@@ -246,6 +250,7 @@
 			children = (
 				894A5D2E2896583D00C8AAB8 /* ComicDBEntity.swift */,
 				8966C0E028983E5E00C5DE94 /* DiskStorage.swift */,
+				89B9636028BA4529009F4604 /* ComicService.swift */,
 			);
 			path = DB;
 			sourceTree = "<group>";
@@ -273,6 +278,7 @@
 			isa = PBXGroup;
 			children = (
 				894ADAA728A156DB00BE2024 /* MockNetworking.swift */,
+				891D6BDF28BBC257005B6BBD /* MockComicService.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -581,6 +587,7 @@
 				89D3E75A284107B000306386 /* ComicGridItemView.swift in Sources */,
 				893E20C42824F52B002E7A43 /* ImageService.swift in Sources */,
 				895EBB7028AE15F2005DFF67 /* AppContainer.swift in Sources */,
+				89B9636128BA4529009F4604 /* ComicService.swift in Sources */,
 				89024DB228969D0D00FFF139 /* ComicEndpoints.swift in Sources */,
 				8966C0E128983E5E00C5DE94 /* DiskStorage.swift in Sources */,
 				8900DBC928953B30003041E7 /* CGSize+Extension.swift in Sources */,
@@ -605,6 +612,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				892DA90828A391CC00B785A6 /* StoreTests.swift in Sources */,
+				891D6BE028BBC257005B6BBD /* MockComicService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

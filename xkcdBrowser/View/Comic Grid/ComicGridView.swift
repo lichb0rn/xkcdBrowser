@@ -9,11 +9,11 @@ struct ComicGridView: View {
                 LazyVGrid(columns: layout, spacing: spacing) {
                     ForEach(store.comics) { comic in
                         NavigationLink(destination: ComicDetailsView(comic: comic)) {
-                                ComicGridItemView(comic: comic)
-                                    .background(Color.white)
-                                    .padding(.horizontal, horizontalPadding)
-                                    .task {
-                                        await store.fetch(currentIndex: comic.id)
+                            ComicGridItemView(comic: comic)
+                                .background(Color.white)
+                                .padding(.horizontal, horizontalPadding)
+                                .task {
+                                    await store.fetch(currentIndex: comic.id)
                                 }
                         }
                     }
@@ -49,13 +49,12 @@ struct ComicsListView_Previews: PreviewProvider {
     static let mockFetcher = Fetcher(networking: MockNetworking())
     
     static var previews: some View {
-        Group {
-            ComicGridView().environmentObject(ComicStore(fetcher: mockFetcher))
-                .previewDevice("iPhone 13 Pro")
-            
-            ComicGridView().environmentObject(ComicStore(fetcher: mockFetcher))
-                .previewDevice("iPad Pro (11-inch)")
+        Task {
+            try await ComicService.shared.setUp(fetcher: mockFetcher, storage: DiskStorage())
         }
+        return ComicGridView().environmentObject(ComicStore(comicService: ComicService.shared))
+            .previewDevice("iPhone 13 Pro")
+        
     }
 }
 

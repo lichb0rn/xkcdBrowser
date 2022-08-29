@@ -138,7 +138,7 @@ struct ComicDetailsView: View {
 
 struct ComicsDetailsView_Previews: PreviewProvider {
     static let comicItem = PreviewData().decodedJSON.last!
-    static let comic = Comic(comicData: comicItem)
+    static let comic = Comic(comicData: comicItem, url: ComicEndpoint.byIndex(comicItem.id).url)
     
     static var previews: some View {
         NavigationView {

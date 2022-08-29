@@ -51,9 +51,14 @@ struct ComicGridItemView: View {
 struct ComicsCardView_Previews: PreviewProvider {
     static var previews: some View {
         let comicData = PreviewData().decodedJSON.last!
-        var comicItem = Comic(comicData: comicData)
+        var comicItem = Comic(comicData: comicData, url: ComicEndpoint.byIndex(comicData.id).url)
         comicItem.markViewed()
-        return ComicGridItemView(comic: comicItem).environmentObject(ComicStore(fetcher: MockAPIFetcher())).padding()
+        
+        Task {
+            try await ComicService.shared.setUp(fetcher: Fetcher(networking: MockNetworking()), storage: DiskStorage())
+        }
+        
+        return ComicGridItemView(comic: comicItem).environmentObject(ComicStore(comicService: ComicService.shared)).padding()
     }
 }
 

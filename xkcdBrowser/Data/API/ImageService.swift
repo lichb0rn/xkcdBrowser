@@ -6,10 +6,7 @@ protocol ImageDownloader: Actor {
 }
 
 
-actor ImageService {
-    static let shared = ImageService()
-    private init() {}
-    
+actor ImageService {    
     enum State {
         case inProgress(Task<UIImage, Error>)
         case completed(UIImage)
