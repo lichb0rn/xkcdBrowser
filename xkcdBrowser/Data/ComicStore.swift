@@ -41,10 +41,7 @@ final class ComicStore: ObservableObject {
     
     func markAsViewed(_ comic: Comic) {
         if let index = comics.firstIndex(of: comic) {
-//            await MainActor.run {
                 comics[index].markViewed()
-//            }
-
         }
     }
     
@@ -91,7 +88,6 @@ extension ComicStore {
         let urlsToFetch = getURLs(startIndex: latestIndex - 1, count: count)
         do {
             let items = try await comicService.comics(urlsToFetch)
-//            let sorted = items.sorted(by: { $0.id > $1.id })
             latestIndex = items.last?.id ?? 1
             updateUI(with: items)
         } catch {

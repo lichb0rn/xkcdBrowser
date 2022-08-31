@@ -90,4 +90,15 @@ final class StoreTests: XCTestCase {
         
         XCTAssertTrue(isError)
     }
+    
+    func test_viewed_comic_marked() async throws {
+        let comic = await coldStart()
+        let id = comic.id
+        
+        await sut.markAsViewed(comic)
+        
+        let viewed = await sut.comics.first(where: { $0.isViewed == true })
+        let viewedId = try XCTUnwrap(viewed).id
+        XCTAssertEqual(id, viewedId)
+    }
 }
