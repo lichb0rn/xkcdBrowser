@@ -33,7 +33,7 @@ actor ComicService: ComicDataSource {
     func setUp(fetcher: Fetching, storage: Storage) async throws {
         self.fetcher = fetcher
         self.storage = storage
-        for file in try await storage.persistedFiles() {
+        for file in try await storage.persistedEntities() {
             storedIndexes.insert(file.lastPathComponent)
         }
     }

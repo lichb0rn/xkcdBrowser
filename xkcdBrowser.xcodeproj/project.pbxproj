@@ -10,8 +10,8 @@
 		8900DBC928953B30003041E7 /* CGSize+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8900DBC828953B30003041E7 /* CGSize+Extension.swift */; };
 		89024DB228969D0D00FFF139 /* ComicEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89024DB128969D0D00FFF139 /* ComicEndpoints.swift */; };
 		89057A9628A01EBA003B87B8 /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89057A9528A01EBA003B87B8 /* Fetcher.swift */; };
+		891353D828BF2B36008A896A /* MockComicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891D6BDF28BBC257005B6BBD /* MockComicService.swift */; };
 		891683542871656A00DFF195 /* Comic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891683532871656A00DFF195 /* Comic.swift */; };
-		891D6BE028BBC257005B6BBD /* MockComicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891D6BDF28BBC257005B6BBD /* MockComicService.swift */; };
 		8920D7EB288C28C500CF6B6A /* RoundedButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8920D7EA288C28C500CF6B6A /* RoundedButtonStyle.swift */; };
 		8928AD4628A4202E002351AE /* MockNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 894ADAA728A156DB00BE2024 /* MockNetworking.swift */; };
 		892DA90328A37CF800B785A6 /* ComicStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892DA90228A37CF800B785A6 /* ComicStore.swift */; };
@@ -23,7 +23,7 @@
 		895599362856EADB000D6893 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895599352856EADB000D6893 /* ErrorView.swift */; };
 		895D91242813D332006D786F /* ComicGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895D91232813D332006D786F /* ComicGridView.swift */; };
 		895D91262813D363006D786F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895D91252813D363006D786F /* MainView.swift */; };
-		895EBB7028AE15F2005DFF67 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895EBB6F28AE15F2005DFF67 /* AppContainer.swift */; };
+		895EBB7028AE15F2005DFF67 /* AppFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895EBB6F28AE15F2005DFF67 /* AppFactory.swift */; };
 		8966C0E128983E5E00C5DE94 /* DiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8966C0E028983E5E00C5DE94 /* DiskStorage.swift */; };
 		8968A6262812A8CA00D84D3D /* xkcdBrowserApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8968A6252812A8CA00D84D3D /* xkcdBrowserApp.swift */; };
 		8968A62A2812A8CC00D84D3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8968A6292812A8CC00D84D3D /* Assets.xcassets */; };
@@ -111,7 +111,7 @@
 		895599352856EADB000D6893 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		895D91232813D332006D786F /* ComicGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicGridView.swift; sourceTree = "<group>"; };
 		895D91252813D363006D786F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		895EBB6F28AE15F2005DFF67 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		895EBB6F28AE15F2005DFF67 /* AppFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFactory.swift; sourceTree = "<group>"; };
 		8966C0E028983E5E00C5DE94 /* DiskStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskStorage.swift; sourceTree = "<group>"; };
 		8968A6222812A8CA00D84D3D /* xkcdBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xkcdBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8968A6252812A8CA00D84D3D /* xkcdBrowserApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xkcdBrowserApp.swift; sourceTree = "<group>"; };
@@ -205,7 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				89935D4B288BC99B0063E9FA /* Settings.swift */,
-				895EBB6F28AE15F2005DFF67 /* AppContainer.swift */,
+				895EBB6F28AE15F2005DFF67 /* AppFactory.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -278,7 +278,6 @@
 			isa = PBXGroup;
 			children = (
 				894ADAA728A156DB00BE2024 /* MockNetworking.swift */,
-				891D6BDF28BBC257005B6BBD /* MockComicService.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -345,6 +344,7 @@
 		8983BA4C2861F83600790A8C /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				891D6BDF28BBC257005B6BBD /* MockComicService.swift */,
 				8983BA4D2861F84800790A8C /* MockImageService.swift */,
 				8983BAA02862059600790A8C /* PreviewData.swift */,
 				8983BAA228620FCE00790A8C /* MockAPIFetcher.swift */,
@@ -586,7 +586,7 @@
 				89935D4C288BC99B0063E9FA /* Settings.swift in Sources */,
 				89D3E75A284107B000306386 /* ComicGridItemView.swift in Sources */,
 				893E20C42824F52B002E7A43 /* ImageService.swift in Sources */,
-				895EBB7028AE15F2005DFF67 /* AppContainer.swift in Sources */,
+				895EBB7028AE15F2005DFF67 /* AppFactory.swift in Sources */,
 				89B9636128BA4529009F4604 /* ComicService.swift in Sources */,
 				89024DB228969D0D00FFF139 /* ComicEndpoints.swift in Sources */,
 				8966C0E128983E5E00C5DE94 /* DiskStorage.swift in Sources */,
@@ -596,6 +596,7 @@
 				89BFB9B0287AC6C0001403AD /* PopupView.swift in Sources */,
 				8968A6262812A8CA00D84D3D /* xkcdBrowserApp.swift in Sources */,
 				89D27DFE28AFF231001B51A9 /* GridItemImage.swift in Sources */,
+				891353D828BF2B36008A896A /* MockComicService.swift in Sources */,
 				8968A6362812AA0A00D84D3D /* ComicAPIEntity.swift in Sources */,
 				895D91242813D332006D786F /* ComicGridView.swift in Sources */,
 				8983BAA12862059600790A8C /* PreviewData.swift in Sources */,
@@ -612,7 +613,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				892DA90828A391CC00B785A6 /* StoreTests.swift in Sources */,
-				891D6BE028BBC257005B6BBD /* MockComicService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

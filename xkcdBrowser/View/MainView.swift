@@ -5,12 +5,12 @@ struct MainView: View {
     @StateObject var store: ComicStore
     @State private var showSplashScreen = true
     
-    private let appContainer: AppContainer
+    private let appFactory: AppFactory
     
     init() {
-        appContainer = AppContainer()
+        appFactory = AppFactory()
         var store: ComicStore
-        store = appContainer.initStore()
+        store = appFactory.initStore()
         self._store = StateObject(wrappedValue: store)
     }
     
@@ -18,7 +18,8 @@ struct MainView: View {
         contentView.environmentObject(store)
             .task {
                 do{
-                    try await ComicService.shared.setUp(fetcher: Fetcher(), storage: DiskStorage())
+//                    try await ComicService.shared.setUp(fetcher: Fetcher(), storage: DiskStorage())
+                    try await appFactory.initProdStorageService()
                     await store.fetch()
                 } catch {
                     print(error.localizedDescription)

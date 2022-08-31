@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-final class AppContainer {
+final class AppFactory {
     
     @MainActor func initStore() -> ComicStore {
         let prefetchMargin: Int
@@ -15,15 +15,14 @@ final class AppContainer {
         }
         
 #if DEBUG
-        //        return ComicStore(prefetchCount: prefetchCount, prefetchMargin: prefetchMargin, fetcher: MockAPIFetcher())
-        return ComicStore(prefetchCount: prefetchCount, prefetchMargin: prefetchMargin, comicService: ComicService.shared)
+        return createStoreWithMocks()
 #else
         return ComicStore(prefetchCount: prefetchCount, prefetchMargin: prefetchMargin)
 #endif
     }
     
-    
-    func initDatabase() async ->  ComicService {
+    @discardableResult
+    func initProdStorageService() async throws->  ComicService {
         
         let diskStorage = await DiskStorage()
         let fetcher = Fetcher()
@@ -34,5 +33,18 @@ final class AppContainer {
             fatalError("Could not set up database")
         }
         
+    }
+
+    @MainActor private func createStoreWithMocks() -> ComicStore {
+        let previewData = PreviewData()
+        let mockStorageService = MockComicService()
+        for json in previewData.decodedJSON {
+            let comic = Comic(comicData: json, url: ComicEndpoint.byIndex(json.id).url)
+            Task {
+                await mockStorageService.store(comic: comic, forKey: comic.comicURL)
+            }
+        }
+        
+        return ComicStore(comicService: mockStorageService)
     }
 }

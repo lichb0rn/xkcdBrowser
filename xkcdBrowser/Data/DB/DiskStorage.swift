@@ -3,20 +3,15 @@ import Foundation
 
 protocol Storage {
     func load(_ name: String) async throws -> Data
-    func save(_ entity: Data, _ fileName: String) async throws
+    func save(_ entity: Data, _ name: String) async throws
     func remove(_ name: String) async throws
 
-    func persistedFiles() async throws -> [URL]
+    func persistedEntities() async throws -> [URL]
 }
 
 
 @ComicService
-class DiskStorage: Storage {
-
-    
-    typealias StorageEntity = Data
-    typealias PersistedIndices = URL
-    
+class DiskStorage: Storage {    
     private var folder: URL
     
     init() {
@@ -47,7 +42,7 @@ class DiskStorage: Storage {
         try FileManager.default.removeItem(at: folder.appendingPathComponent(name))
     }
     
-    func persistedFiles() throws -> [URL] {
+    func persistedEntities() throws -> [URL] {
         guard let dirEnumerator = FileManager.default.enumerator(at: folder, includingPropertiesForKeys: []) else {
             throw DataSourceError.directoryDoesNotExist
         }
