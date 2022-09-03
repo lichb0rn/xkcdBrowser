@@ -77,11 +77,33 @@
 		89935D4A288BC2AF0063E9FA /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89935D49288BC2AF0063E9FA /* BadgeView.swift */; };
 		89935D4C288BC99B0063E9FA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89935D4B288BC99B0063E9FA /* Settings.swift */; };
 		899E465528421BAF004AEEC6 /* ComicDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899E465428421BAF004AEEC6 /* ComicDetailsView.swift */; };
+		89B0046B28BF560C00122E7C /* ComicServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B0046A28BF560C00122E7C /* ComicServiceTests.swift */; };
+		89B0046D28BF56AF00122E7C /* MockDiskStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B0046C28BF56AF00122E7C /* MockDiskStorage.swift */; };
 		89B9636128BA4529009F4604 /* ComicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B9636028BA4529009F4604 /* ComicService.swift */; };
 		89BFB9B0287AC6C0001403AD /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BFB9AF287AC6C0001403AD /* PopupView.swift */; };
 		89D0E2962875AB1000C820F9 /* WaitingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D0E2952875AB1000C820F9 /* WaitingView.swift */; };
 		89D27DFE28AFF231001B51A9 /* GridItemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D27DFD28AFF231001B51A9 /* GridItemImage.swift */; };
 		89D3E75A284107B000306386 /* ComicGridItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D3E759284107B000306386 /* ComicGridItemView.swift */; };
+		89E4242C28C3370C00ADA5DB /* 633.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4241828C3370B00ADA5DB /* 633.json */; };
+		89E4242D28C3370C00ADA5DB /* 618.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4241928C3370B00ADA5DB /* 618.json */; };
+		89E4242E28C3370C00ADA5DB /* 625.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4241A28C3370B00ADA5DB /* 625.json */; };
+		89E4242F28C3370C00ADA5DB /* 631.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4241B28C3370B00ADA5DB /* 631.json */; };
+		89E4243028C3370C00ADA5DB /* 626.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4241C28C3370B00ADA5DB /* 626.json */; };
+		89E4243128C3370C00ADA5DB /* 621.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4241D28C3370B00ADA5DB /* 621.json */; };
+		89E4243228C3370C00ADA5DB /* 624.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4241E28C3370B00ADA5DB /* 624.json */; };
+		89E4243328C3370C00ADA5DB /* 622.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4241F28C3370B00ADA5DB /* 622.json */; };
+		89E4243428C3370C00ADA5DB /* 627.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4242028C3370B00ADA5DB /* 627.json */; };
+		89E4243528C3370C00ADA5DB /* 629.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4242128C3370B00ADA5DB /* 629.json */; };
+		89E4243628C3370C00ADA5DB /* 617.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4242228C3370B00ADA5DB /* 617.json */; };
+		89E4243728C3370C00ADA5DB /* 632.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4242328C3370B00ADA5DB /* 632.json */; };
+		89E4243828C3370C00ADA5DB /* 620.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4242428C3370C00ADA5DB /* 620.json */; };
+		89E4243928C3370C00ADA5DB /* 614.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4242528C3370C00ADA5DB /* 614.json */; };
+		89E4243A28C3370C00ADA5DB /* 623.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4242628C3370C00ADA5DB /* 623.json */; };
+		89E4243B28C3370C00ADA5DB /* 616.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4242728C3370C00ADA5DB /* 616.json */; };
+		89E4243C28C3370C00ADA5DB /* 619.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4242828C3370C00ADA5DB /* 619.json */; };
+		89E4243D28C3370C00ADA5DB /* 628.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4242928C3370C00ADA5DB /* 628.json */; };
+		89E4243E28C3370C00ADA5DB /* 630.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4242A28C3370C00ADA5DB /* 630.json */; };
+		89E4243F28C3370C00ADA5DB /* 615.json in Resources */ = {isa = PBXBuildFile; fileRef = 89E4242B28C3370C00ADA5DB /* 615.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -167,11 +189,33 @@
 		89935D49288BC2AF0063E9FA /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
 		89935D4B288BC99B0063E9FA /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		899E465428421BAF004AEEC6 /* ComicDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicDetailsView.swift; sourceTree = "<group>"; };
+		89B0046A28BF560C00122E7C /* ComicServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicServiceTests.swift; sourceTree = "<group>"; };
+		89B0046C28BF56AF00122E7C /* MockDiskStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDiskStorage.swift; sourceTree = "<group>"; };
 		89B9636028BA4529009F4604 /* ComicService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicService.swift; sourceTree = "<group>"; };
 		89BFB9AF287AC6C0001403AD /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		89D0E2952875AB1000C820F9 /* WaitingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingView.swift; sourceTree = "<group>"; };
 		89D27DFD28AFF231001B51A9 /* GridItemImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridItemImage.swift; sourceTree = "<group>"; };
 		89D3E759284107B000306386 /* ComicGridItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComicGridItemView.swift; sourceTree = "<group>"; };
+		89E4241828C3370B00ADA5DB /* 633.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 633.json; sourceTree = "<group>"; };
+		89E4241928C3370B00ADA5DB /* 618.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 618.json; sourceTree = "<group>"; };
+		89E4241A28C3370B00ADA5DB /* 625.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 625.json; sourceTree = "<group>"; };
+		89E4241B28C3370B00ADA5DB /* 631.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 631.json; sourceTree = "<group>"; };
+		89E4241C28C3370B00ADA5DB /* 626.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 626.json; sourceTree = "<group>"; };
+		89E4241D28C3370B00ADA5DB /* 621.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 621.json; sourceTree = "<group>"; };
+		89E4241E28C3370B00ADA5DB /* 624.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 624.json; sourceTree = "<group>"; };
+		89E4241F28C3370B00ADA5DB /* 622.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 622.json; sourceTree = "<group>"; };
+		89E4242028C3370B00ADA5DB /* 627.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 627.json; sourceTree = "<group>"; };
+		89E4242128C3370B00ADA5DB /* 629.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 629.json; sourceTree = "<group>"; };
+		89E4242228C3370B00ADA5DB /* 617.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 617.json; sourceTree = "<group>"; };
+		89E4242328C3370B00ADA5DB /* 632.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 632.json; sourceTree = "<group>"; };
+		89E4242428C3370C00ADA5DB /* 620.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 620.json; sourceTree = "<group>"; };
+		89E4242528C3370C00ADA5DB /* 614.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 614.json; sourceTree = "<group>"; };
+		89E4242628C3370C00ADA5DB /* 623.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 623.json; sourceTree = "<group>"; };
+		89E4242728C3370C00ADA5DB /* 616.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 616.json; sourceTree = "<group>"; };
+		89E4242828C3370C00ADA5DB /* 619.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 619.json; sourceTree = "<group>"; };
+		89E4242928C3370C00ADA5DB /* 628.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 628.json; sourceTree = "<group>"; };
+		89E4242A28C3370C00ADA5DB /* 630.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 630.json; sourceTree = "<group>"; };
+		89E4242B28C3370C00ADA5DB /* 615.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 615.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				892DA90728A391CC00B785A6 /* StoreTests.swift */,
+				89B0046A28BF560C00122E7C /* ComicServiceTests.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -277,7 +322,9 @@
 		894AD27528A7741100BF4544 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				89E4241728C336EF00ADA5DB /* Cached Data */,
 				894ADAA728A156DB00BE2024 /* MockNetworking.swift */,
+				89B0046C28BF56AF00122E7C /* MockDiskStorage.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -415,6 +462,33 @@
 				89D27DFD28AFF231001B51A9 /* GridItemImage.swift */,
 			);
 			path = "Comic Grid";
+			sourceTree = "<group>";
+		};
+		89E4241728C336EF00ADA5DB /* Cached Data */ = {
+			isa = PBXGroup;
+			children = (
+				89E4242528C3370C00ADA5DB /* 614.json */,
+				89E4242B28C3370C00ADA5DB /* 615.json */,
+				89E4242728C3370C00ADA5DB /* 616.json */,
+				89E4242228C3370B00ADA5DB /* 617.json */,
+				89E4241928C3370B00ADA5DB /* 618.json */,
+				89E4242828C3370C00ADA5DB /* 619.json */,
+				89E4242428C3370C00ADA5DB /* 620.json */,
+				89E4241D28C3370B00ADA5DB /* 621.json */,
+				89E4241F28C3370B00ADA5DB /* 622.json */,
+				89E4242628C3370C00ADA5DB /* 623.json */,
+				89E4241E28C3370B00ADA5DB /* 624.json */,
+				89E4241A28C3370B00ADA5DB /* 625.json */,
+				89E4241C28C3370B00ADA5DB /* 626.json */,
+				89E4242028C3370B00ADA5DB /* 627.json */,
+				89E4242928C3370C00ADA5DB /* 628.json */,
+				89E4242128C3370B00ADA5DB /* 629.json */,
+				89E4242A28C3370C00ADA5DB /* 630.json */,
+				89E4241B28C3370B00ADA5DB /* 631.json */,
+				89E4242328C3370B00ADA5DB /* 632.json */,
+				89E4241828C3370B00ADA5DB /* 633.json */,
+			);
+			path = "Cached Data";
 			sourceTree = "<group>";
 		};
 		89F6E89228A625F8002BEE9F /* Supplementay Views */ = {
@@ -563,6 +637,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89E4243D28C3370C00ADA5DB /* 628.json in Resources */,
+				89E4243828C3370C00ADA5DB /* 620.json in Resources */,
+				89E4243428C3370C00ADA5DB /* 627.json in Resources */,
+				89E4242E28C3370C00ADA5DB /* 625.json in Resources */,
+				89E4243F28C3370C00ADA5DB /* 615.json in Resources */,
+				89E4243928C3370C00ADA5DB /* 614.json in Resources */,
+				89E4243C28C3370C00ADA5DB /* 619.json in Resources */,
+				89E4243E28C3370C00ADA5DB /* 630.json in Resources */,
+				89E4242C28C3370C00ADA5DB /* 633.json in Resources */,
+				89E4243728C3370C00ADA5DB /* 632.json in Resources */,
+				89E4243328C3370C00ADA5DB /* 622.json in Resources */,
+				89E4243628C3370C00ADA5DB /* 617.json in Resources */,
+				89E4242F28C3370C00ADA5DB /* 631.json in Resources */,
+				89E4243A28C3370C00ADA5DB /* 623.json in Resources */,
+				89E4243128C3370C00ADA5DB /* 621.json in Resources */,
+				89E4242D28C3370C00ADA5DB /* 618.json in Resources */,
+				89E4243228C3370C00ADA5DB /* 624.json in Resources */,
+				89E4243B28C3370C00ADA5DB /* 616.json in Resources */,
+				89E4243028C3370C00ADA5DB /* 626.json in Resources */,
+				89E4243528C3370C00ADA5DB /* 629.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,6 +707,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				892DA90828A391CC00B785A6 /* StoreTests.swift in Sources */,
+				89B0046D28BF56AF00122E7C /* MockDiskStorage.swift in Sources */,
+				89B0046B28BF560C00122E7C /* ComicServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,40 +9,33 @@ struct PreviewData {
     
     // Keeping borth `raw` data and decoded JSON for different puproses (preview and testing)
     var decodedJSON: [ComicAPIEntity] = []
-    var data: [Data] = []
+    var data: [String:Data] = [:]
     
     init() {
         self.loadRawData()
-        self.decode()
     }
     
     mutating func loadRawData() {
         for idx in startIndex...endIndex {
             if let comicData = JSONPreviewLoader.load(fileName: "\(idx)")  {
-                data.append(comicData)
-            }
-        }
-    }
-    
-    mutating func decode() {
-        decodedJSON = data.compactMap {
-            do {
-                return try JSONDecoder().decode(ComicAPIEntity.self, from: $0)
-            } catch {
-                return nil
+                let key = "\(idx).json"
+                data[key] = comicData
+                if let json = try? JSONDecoder().decode(ComicAPIEntity.self, from: comicData) {
+                    decodedJSON.append(json)
+                }
             }
         }
     }
     
     func comicData() -> Data {
-        return data.last!
+        return data.randomElement()!.value
     }
     
     func comic(withIndex index: Int) -> ComicAPIEntity {
         if let comic = decodedJSON.first(where: { $0.id == index }) {
             return comic
         } else {
-            return decodedJSON.last!
+            return decodedJSON.first!
         }
     }
 

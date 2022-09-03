@@ -9,8 +9,7 @@ struct MainView: View {
     
     init() {
         appFactory = AppFactory()
-        var store: ComicStore
-        store = appFactory.initStore()
+        let store = appFactory.initStore()
         self._store = StateObject(wrappedValue: store)
     }
     
@@ -18,7 +17,6 @@ struct MainView: View {
         contentView.environmentObject(store)
             .task {
                 do{
-//                    try await ComicService.shared.setUp(fetcher: Fetcher(), storage: DiskStorage())
                     try await appFactory.initProdStorageService()
                     await store.fetch()
                 } catch {

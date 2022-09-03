@@ -17,7 +17,7 @@ final class AppFactory {
 #if DEBUG
         return createStoreWithMocks()
 #else
-        return ComicStore(prefetchCount: prefetchCount, prefetchMargin: prefetchMargin)
+        return ComicStore(prefetchCount: prefetchCount, prefetchMargin: prefetchMargin, comicService: ComicService.shared)
 #endif
     }
     
@@ -37,14 +37,14 @@ final class AppFactory {
 
     @MainActor private func createStoreWithMocks() -> ComicStore {
         let previewData = PreviewData()
-        let mockStorageService = MockComicService()
+        let mockComicService = MockComicService()
         for json in previewData.decodedJSON {
             let comic = Comic(comicData: json, url: ComicEndpoint.byIndex(json.id).url)
             Task {
-                await mockStorageService.store(comic: comic, forKey: comic.comicURL)
+                await mockComicService.store(comic: comic, forKey: comic.comicURL)
             }
         }
         
-        return ComicStore(comicService: mockStorageService)
+        return ComicStore(comicService: mockComicService)
     }
 }

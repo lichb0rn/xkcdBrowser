@@ -10,7 +10,7 @@ final class ComicStore: ObservableObject {
     
     private var isFetching: Bool = false
     private let imageDownloader: ImageDownloader
-    private let comicService: ComicDataSource
+    private let comicService: ComicCacheService
     
     // The latest comic num, i.e 2657. Never less than 1.
     private var latestIndex: Int = -1
@@ -19,7 +19,7 @@ final class ComicStore: ObservableObject {
     // How far in advance should the next comics be fetched, should be less than prefetchCount
     private let prefetchMargin: Int
     
-    init(prefetchCount: Int = 10, prefetchMargin: Int = 5, comicService: ComicDataSource, imageDownloader: ImageDownloader = ImageService()) {
+    init(prefetchCount: Int = 10, prefetchMargin: Int = 5, comicService: ComicCacheService, imageDownloader: ImageDownloader = ImageService()) {
         self.imageDownloader = imageDownloader
         self.prefetchCount = prefetchCount
         self.prefetchMargin = prefetchMargin

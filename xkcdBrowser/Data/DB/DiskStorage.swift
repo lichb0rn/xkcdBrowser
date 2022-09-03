@@ -7,6 +7,7 @@ protocol Storage {
     func remove(_ name: String) async throws
 
     func persistedEntities() async throws -> [URL]
+    func entityName(_ url: URL) -> String
 }
 
 
@@ -33,8 +34,6 @@ class DiskStorage: Storage {
     }
     
     func save(_ data: Data, _ fileName: String) throws {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
         try data.write(to: folder.appendingPathComponent(fileName))
     }
     
@@ -44,7 +43,7 @@ class DiskStorage: Storage {
     
     func persistedEntities() throws -> [URL] {
         guard let dirEnumerator = FileManager.default.enumerator(at: folder, includingPropertiesForKeys: []) else {
-            throw DataSourceError.directoryDoesNotExist
+            throw ComicCacheError.directoryDoesNotExist
         }
         
         var result = [URL]()
@@ -55,7 +54,7 @@ class DiskStorage: Storage {
     }
     
     // Not doing any mutation here, so it can be nonisolated
-    nonisolated static func fileName(_ url: URL) -> String {
+    nonisolated func entityName(_ url: URL) -> String {
         return url.deletingLastPathComponent().lastPathComponent.appending(".json")
     }
 }

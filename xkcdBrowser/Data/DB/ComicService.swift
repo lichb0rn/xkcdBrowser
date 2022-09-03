@@ -1,6 +1,6 @@
 import Foundation
 
-enum DataSourceError: Error {
+enum ComicCacheError: Error {
     case fileDoesNotExist
     case directoryDoesNotExist
     case cacheMiss
@@ -12,7 +12,7 @@ enum DataSourceError: Error {
     I could make Storage an actor itself, but in this case I don't have 'actor hopping'.
  */
 
-protocol ComicDataSource: Actor {
+protocol ComicCacheService: Actor {
     func store(comic: Comic, forKey: URL) async
     func comic(_ url: URL) async throws -> Comic
     func comics(_ urls: [URL]) async throws -> [Comic]
@@ -20,7 +20,7 @@ protocol ComicDataSource: Actor {
 }
 
 @globalActor
-actor ComicService: ComicDataSource {
+actor ComicService: ComicCacheService {
     static let shared = ComicService()
     
     private var storage: Storage!
@@ -30,6 +30,8 @@ actor ComicService: ComicDataSource {
     
     private init() { }
     
+    // Having a shared instance is a requirement for @globalActor
+    // But we still want dependency injection
     func setUp(fetcher: Fetching, storage: Storage) async throws {
         self.fetcher = fetcher
         self.storage = storage
@@ -43,11 +45,11 @@ actor ComicService: ComicDataSource {
             return
         }
         
-        let fileName = DiskStorage.fileName(key)
+        let entityName = storage.entityName(key)
 
         do {
-            try await storage.save(data, fileName)
-            storedIndexes.insert(fileName)
+            try await storage.save(data, entityName)
+            storedIndexes.insert(entityName)
         } catch {
             print(error.localizedDescription)
         }
@@ -55,13 +57,13 @@ actor ComicService: ComicDataSource {
     
     func comic(_ url: URL) async throws -> Comic {
         do {
-            let fileName = DiskStorage.fileName(url)
+            let entityName = storage.entityName(url)
             // Checking if we have a cached version
-            if !storedIndexes.contains(fileName) {
+            if !storedIndexes.contains(entityName) {
                 // If we don't, throw a error and fetch from the server in the `catch` block
-                throw DataSourceError.cacheMiss
+                throw ComicCacheError.cacheMiss
             }
-            let data = try await storage.load(fileName)
+            let data = try await storage.load(entityName)
             let comic = try JSONDecoder().decode(Comic.self, from: data)
             
             return comic
@@ -93,6 +95,7 @@ actor ComicService: ComicDataSource {
             for try await comic in group {
                 items.append(comic)
             }
+            // ToDo: sorting should be made by DB
             return items.sorted(by: { $0.id > $1.id })
         }
         
@@ -106,14 +109,4 @@ actor ComicService: ComicDataSource {
         storedIndexes.removeAll()
     }
     
-}
-
-extension Set {
-    // Get uniq elements for set A and for sequence B
-    func uniqSubsets<S>(_ s: S) -> (Set<Element>, Set<Element>) where S : Sequence, S.Element == Element {
-        let uniqForSelf = self.intersection(s)
-        let uniqForOther = Set(s).subtracting(self)
-        
-        return (uniqForSelf, uniqForOther)
-    }
 }
