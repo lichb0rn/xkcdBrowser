@@ -15,11 +15,11 @@ final class StoreTests: XCTestCase {
         mockStorageService = MockComicService()
         
         for json in previewData.decodedJSON {
-            let comic = Comic(comicData: json, url: ComicEndpoint.byIndex(json.id).url)
+            let comic = Comic(entity: json, url: ComicEndpoint.byIndex(json.id).url)
             await mockStorageService.store(comic: comic, forKey: comic.comicURL)
         }
         
-        sut = ComicStore(comicService: mockStorageService)
+        sut = ComicStore(prefetchCount: 10, prefetchMargin: 5, comicService: mockStorageService)
     }
 
     override func tearDown() async throws {

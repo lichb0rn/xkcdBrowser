@@ -7,7 +7,7 @@ struct PreviewData {
     let startIndex = 614
     let endIndex = 633
     
-    // Keeping borth `raw` data and decoded JSON for different puproses (preview and testing)
+    // Keeping both `raw` data and decoded JSON for different puproses (preview and testing)
     var decodedJSON: [ComicAPIEntity] = []
     var data: [String:Data] = [:]
     

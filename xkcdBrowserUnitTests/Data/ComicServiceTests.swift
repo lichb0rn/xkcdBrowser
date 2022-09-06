@@ -21,15 +21,19 @@ final class ComicServiceTests: XCTestCase {
 
     override func tearDownWithError() throws {
         sut = nil
-        fetcher = nil
-        diskStorage = nil
+          previewData = nil
         try super.tearDownWithError()
     }
-
+    
+    func populateCache() async {
+        diskStorage.populateWithTestData()
+        try? await sut.setUp(fetcher: fetcher, storage: diskStorage)
+    }
+    
     func test_comicService_canStore() async throws {
         let json = try XCTUnwrap(previewData.decodedJSON.randomElement())
         let key = URL(string: "https://comicstore.test")!
-        let comic = Comic(comicData: json, url: key)
+        let comic = Comic(entity: json, url: key)
         
         await sut.store(comic: comic, forKey: key)
         
@@ -39,7 +43,7 @@ final class ComicServiceTests: XCTestCase {
     func test_comicService_return_singleComic_FromCache() async throws {
         let index = previewData.startIndex
         let cachedURL = ComicEndpoint.byIndex(index).url
-        diskStorage.populateWithTestData()
+        await populateCache()
         
         let cachedComic = try await sut.comic(cachedURL)
         
@@ -47,17 +51,20 @@ final class ComicServiceTests: XCTestCase {
         XCTAssertTrue(diskStorage.loadCalled)
         XCTAssertFalse(fetcher.downloadCalled)
     }
+
     
     func test_comicService_return_singleComic_FromServer() async throws {
         let index = previewData.startIndex
-        let cachedURL = ComicEndpoint.byIndex(index).url
+        let url = ComicEndpoint.byIndex(index).url
+        await sut.clear()
         
-        let cachedComic = try await sut.comic(cachedURL)
+        let fetchedComic = try await sut.comic(url)
         
-        XCTAssertEqual(cachedComic.id, index)
+        XCTAssertEqual(fetchedComic.id, index)
         XCTAssertFalse(diskStorage.loadCalled)
         XCTAssertTrue(fetcher.downloadCalled)
     }
+
     
     func test_comicService_return_multipleComics() async throws {
         var urls: [URL] = []
@@ -66,17 +73,15 @@ final class ComicServiceTests: XCTestCase {
             let url = ComicEndpoint.byIndex(idx).url
             urls.append(url)
         }
-        diskStorage.populateWithTestData()
+        await populateCache()
         
         let cachedComics = try await sut.comics(urls)
         
         XCTAssertEqual(cachedComics.count, fetchCount)
-        XCTAssertTrue(diskStorage.loadCalled)
-        XCTAssertFalse(fetcher.downloadCalled)
     }
     
     func test_comicService_clearCache() async {
-        diskStorage.populateWithTestData()
+        await populateCache()
         let initialCacheCount = diskStorage.inMemoryStore.count
         
         await sut.clear()
@@ -87,4 +92,5 @@ final class ComicServiceTests: XCTestCase {
         XCTAssertEqual(afterClearingCacheCount, 0)
         XCTAssertTrue(diskStorage.removeCalled)
     }
+    
 }

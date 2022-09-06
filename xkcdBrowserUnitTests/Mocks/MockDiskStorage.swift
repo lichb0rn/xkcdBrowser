@@ -5,6 +5,7 @@ class MockDiskStorage: Storage {
     
     let previewData: PreviewData
     var inMemoryStore: [String : Data] = [:]
+    var shouldReturnEmptyCache: Bool = true
     
     var loadCalled: Bool = false
     var saveCalled: Bool = false
@@ -19,30 +20,30 @@ class MockDiskStorage: Storage {
         guard !shouldFail else { throw ComicCacheError.fileDoesNotExist }
         
         guard let d = inMemoryStore[name] else {
-            throw ComicCacheError.fileDoesNotExist
+            throw NSError(domain: "storage", code: 9999)
         }
         loadCalled = true
         return d
     }
     
     func save(_ entity: Data, _ name: String) async throws {
-        guard !shouldFail else { throw ComicCacheError.fileDoesNotExist }
+        guard !shouldFail else { throw NSError(domain: "storage", code: 9997) }
         
         inMemoryStore[name] = entity
         saveCalled = true
     }
     
     func remove(_ name: String) async throws {
-        guard !shouldFail else { throw ComicCacheError.fileDoesNotExist }
+        guard !shouldFail else { throw NSError(domain: "storage", code: 9998) }
         
         inMemoryStore[name] = nil
         removeCalled = true
     }
     
     func persistedEntities() async throws -> [URL] {
-        guard !shouldFail else { throw ComicCacheError.fileDoesNotExist }
+        guard !shouldFail else { throw NSError(domain: "storage", code: 10000) }
         
-        return previewData.data.keys.map { URL(string: $0)! }
+        return inMemoryStore.keys.map { URL(string: $0)! }
     }
     
     func entityName(_ url: URL) -> String {

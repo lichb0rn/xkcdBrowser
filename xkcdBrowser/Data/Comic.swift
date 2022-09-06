@@ -12,11 +12,11 @@ struct Comic: Codable {
     var isFavorite: Bool = false
     
     
-    init(comicData: ComicAPIEntity, url: URL) {
-        self.id = comicData.id
-        self.title = comicData.title
-        self.description = comicData.text
-        self.imageURL = comicData.imageUrl
+    init(entity: ComicAPIEntity, url: URL) {
+        self.id = entity.id
+        self.title = entity.title
+        self.description = entity.text
+        self.imageURL = entity.imageUrl
         self.comicURL = url
     }
     

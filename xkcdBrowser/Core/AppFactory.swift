@@ -7,15 +7,16 @@ final class AppFactory {
         let prefetchMargin: Int
         let prefetchCount: Int
         if UIDevice.current.userInterfaceIdiom == .pad {
-            prefetchCount = 30
-            prefetchMargin = 10
+            prefetchCount = Settings.iPadPrefetchCount
+            prefetchMargin = Settings.iPadPrefetchMargin
         } else {
-            prefetchCount = 10
-            prefetchMargin = 5
+            prefetchCount = Settings.iPhonePrefetchCount
+            prefetchMargin = Settings.iPhonePrefetchMargin
         }
         
 #if DEBUG
-        return createStoreWithMocks()
+        return createStoreWithMocks(prefetchCount: prefetchCount, prefetchMargin: prefetchMargin)
+//        return ComicStore(prefetchCount: prefetchCount, prefetchMargin: prefetchMargin, comicService: ComicService.shared)
 #else
         return ComicStore(prefetchCount: prefetchCount, prefetchMargin: prefetchMargin, comicService: ComicService.shared)
 #endif
@@ -35,16 +36,20 @@ final class AppFactory {
         
     }
 
-    @MainActor private func createStoreWithMocks() -> ComicStore {
+    // ToDo: Refactor here
+    // The app should start with the `real` ComicService but with mocked fetcher
+    @MainActor private func createStoreWithMocks(prefetchCount: Int, prefetchMargin: Int) -> ComicStore {
         let previewData = PreviewData()
         let mockComicService = MockComicService()
         for json in previewData.decodedJSON {
-            let comic = Comic(comicData: json, url: ComicEndpoint.byIndex(json.id).url)
+            let comic = Comic(entity: json, url: ComicEndpoint.byIndex(json.id).url)
             Task {
                 await mockComicService.store(comic: comic, forKey: comic.comicURL)
             }
         }
         
-        return ComicStore(comicService: mockComicService)
+        return ComicStore(prefetchCount: prefetchCount,
+                          prefetchMargin: prefetchMargin,
+                          comicService: mockComicService)
     }
 }

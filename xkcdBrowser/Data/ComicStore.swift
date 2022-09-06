@@ -19,7 +19,7 @@ final class ComicStore: ObservableObject {
     // How far in advance should the next comics be fetched, should be less than prefetchCount
     private let prefetchMargin: Int
     
-    init(prefetchCount: Int = 10, prefetchMargin: Int = 5, comicService: ComicCacheService, imageDownloader: ImageDownloader = ImageService()) {
+    init(prefetchCount: Int, prefetchMargin: Int, comicService: ComicCacheService, imageDownloader: ImageDownloader = ImageService()) {
         self.imageDownloader = imageDownloader
         self.prefetchCount = prefetchCount
         self.prefetchMargin = prefetchMargin
@@ -40,8 +40,13 @@ final class ComicStore: ObservableObject {
     }
     
     func markAsViewed(_ comic: Comic) {
+        var mutated = comic
+        mutated.markViewed()
         if let index = comics.firstIndex(of: comic) {
-                comics[index].markViewed()
+            comics[index] = mutated
+            Task {
+                await comicService.store(comic: mutated, forKey: mutated.comicURL)
+            }
         }
     }
     

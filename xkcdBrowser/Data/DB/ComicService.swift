@@ -8,8 +8,8 @@ enum ComicCacheError: Error {
 
 
 /*
-    I need Global Actor here to execute Storage code in the ComicDatabase context.
-    I could make Storage an actor itself, but in this case I don't have 'actor hopping'.
+    We need Global Actor here to execute Storage code in the ComicDatabase context.
+    We could make Storage an actor itself, but in this case we don't have 'actor hopping'.
  */
 
 protocol ComicCacheService: Actor {
@@ -25,7 +25,7 @@ actor ComicService: ComicCacheService {
     
     private var storage: Storage!
     private var fetcher: Fetching!
-    // Keeping track of store comic ids on disk, so we don't need to refetch them
+    // Keeping track of stored comics on disk, so we don't need to refetch them
     private var storedIndexes = Set<String>()
     
     private init() { }
@@ -55,6 +55,12 @@ actor ComicService: ComicCacheService {
         }
     }
     
+    private func loadFromDisk(_ entityName: String) async throws -> Comic {
+        let data = try await storage.load(entityName)
+        let comic = try JSONDecoder().decode(Comic.self, from: data)
+        return comic
+    }
+    
     func comic(_ url: URL) async throws -> Comic {
         do {
             let entityName = storage.entityName(url)
@@ -63,19 +69,22 @@ actor ComicService: ComicCacheService {
                 // If we don't, throw a error and fetch from the server in the `catch` block
                 throw ComicCacheError.cacheMiss
             }
-            let data = try await storage.load(entityName)
-            let comic = try JSONDecoder().decode(Comic.self, from: data)
-            
-            return comic
+            return try await loadFromDisk(entityName)
         } catch {
-            let jsonData = try await fetcher.downloadItem(fromURL: url, ofType: ComicAPIEntity.self)
+            let apiEntity = try await fetcher.downloadItem(fromURL: url, ofType: ComicAPIEntity.self)
             
-            // Since the latest comic url differes from all other we need to reconstructed it from the comic id
-            let comicURL = ComicEndpoint.byIndex(jsonData.id).url
-            let comic = Comic(comicData: jsonData, url: comicURL)
+            // Since the latest comic url differs from all other we need to reconstruct it from the comic id
+            let comicURL = ComicEndpoint.byIndex(apiEntity.id).url
             
-            await store(comic: comic, forKey: comicURL)
-            return comic
+            // And re-check if it's been cached
+            let entityName = storage.entityName(comicURL)
+            if !storedIndexes.contains(entityName) {
+                let comic = Comic(entity: apiEntity, url: comicURL)
+                await store(comic: comic, forKey: comicURL)
+                return comic
+            } else {
+                return try await loadFromDisk(entityName)
+            }
         }
     }
     
