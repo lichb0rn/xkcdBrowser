@@ -15,10 +15,17 @@ final class AppFactory {
         }
         
 #if DEBUG
-        return createStoreWithMocks(prefetchCount: prefetchCount, prefetchMargin: prefetchMargin)
-//        return ComicStore(prefetchCount: prefetchCount, prefetchMargin: prefetchMargin, comicService: ComicService.shared)
+        return createStoreWithMocks(prefetchCount: prefetchCount,
+                                    prefetchMargin: prefetchMargin)
+//        return ComicStore(prefetchCount: prefetchCount,
+//                          prefetchMargin: prefetchMargin,
+//                          comicService: ComicService.shared,
+//                          imageDownloader: ImageService(fetcher: Fetcher()))
 #else
-        return ComicStore(prefetchCount: prefetchCount, prefetchMargin: prefetchMargin, comicService: ComicService.shared)
+        return ComicStore(prefetchCount: prefetchCount,
+                          prefetchMargin: prefetchMargin,
+                          comicService: ComicService.shared,
+                          imageDownloader: ImageService(fetcher: Fetcher()))
 #endif
     }
     
@@ -35,7 +42,7 @@ final class AppFactory {
         }
         
     }
-
+    
     // ToDo: Refactor here
     // The app should start with the `real` ComicService but with mocked fetcher
     @MainActor private func createStoreWithMocks(prefetchCount: Int, prefetchMargin: Int) -> ComicStore {
@@ -50,6 +57,7 @@ final class AppFactory {
         
         return ComicStore(prefetchCount: prefetchCount,
                           prefetchMargin: prefetchMargin,
-                          comicService: mockComicService)
+                          comicService: mockComicService,
+                          imageDownloader: ImageService(fetcher: Fetcher()))
     }
 }

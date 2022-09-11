@@ -58,7 +58,12 @@ struct ComicsCardView_Previews: PreviewProvider {
             try await ComicService.shared.setUp(fetcher: Fetcher(networking: MockNetworking()), storage: DiskStorage())
         }
         
-        return ComicGridItemView(comic: comicItem).environmentObject(ComicStore(prefetchCount: 10, prefetchMargin: 5, comicService: ComicService.shared)).padding()
+        return ComicGridItemView(comic: comicItem)
+            .padding()
+            .environmentObject(ComicStore(prefetchCount: 10,
+                                          prefetchMargin: 5,
+                                          comicService: ComicService.shared,
+                                          imageDownloader: ImageService(fetcher: Fetcher())))
     }
 }
 

@@ -52,9 +52,11 @@ struct ComicsListView_Previews: PreviewProvider {
         Task {
             try await ComicService.shared.setUp(fetcher: mockFetcher, storage: DiskStorage())
         }
-        return ComicGridView().environmentObject(ComicStore(prefetchCount: 10,
-                                                            prefetchMargin: 5,
-                                                            comicService: ComicService.shared))
+        return ComicGridView()
+            .environmentObject(ComicStore(prefetchCount: 10,
+                                          prefetchMargin: 5,
+                                          comicService: ComicService.shared,
+                                          imageDownloader: ImageService(fetcher: Fetcher())))
             .previewDevice("iPhone 13 Pro")
         
     }

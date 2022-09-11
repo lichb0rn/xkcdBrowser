@@ -19,7 +19,7 @@ final class ComicStore: ObservableObject {
     // How far in advance should the next comics be fetched, should be less than prefetchCount
     private let prefetchMargin: Int
     
-    init(prefetchCount: Int, prefetchMargin: Int, comicService: ComicCacheService, imageDownloader: ImageDownloader = ImageService()) {
+    init(prefetchCount: Int, prefetchMargin: Int, comicService: ComicCacheService, imageDownloader: ImageDownloader) {
         self.imageDownloader = imageDownloader
         self.prefetchCount = prefetchCount
         self.prefetchMargin = prefetchMargin

@@ -11,6 +11,13 @@ class MockAPIFetcher: Fetching {
         self.previewData = preview
     }
     
+    func downloadItem(fromURL url: URL) async throws -> Data {
+        downloadCalled = true
+        if shouldThrow { throw exceptionToThrow }
+        
+        return previewData.data.values.first!
+    }
+    
     func downloadItem<T: Decodable>(fromURL url: URL, ofType model: T.Type) async throws -> T {
         downloadCalled = true
         if shouldThrow { throw exceptionToThrow }

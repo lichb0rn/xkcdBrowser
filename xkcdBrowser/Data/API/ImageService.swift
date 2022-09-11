@@ -14,7 +14,12 @@ actor ImageService {
         case failed
     }
     
+    private let fetcher: Fetching
     private var cache: [URL: State] = [:]
+    
+    init(fetcher: Fetching) {
+        self.fetcher = fetcher
+    }
     
     func downloadImage(fromURL url: URL, ofSize size: CGSize) async throws -> UIImage {
         if let cached = cache[url] {
@@ -34,7 +39,7 @@ actor ImageService {
         }
         
         let downloadTask: Task<UIImage, Error> = Task.detached(priority: .userInitiated) {
-            let data = try await URLSession.shared.data(from: url).0
+            let data = try await self.fetcher.downloadItem(fromURL: url)
             
             if size == .zero {
                 guard let image = UIImage(data: data) else {

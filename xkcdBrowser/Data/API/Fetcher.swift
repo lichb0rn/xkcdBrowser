@@ -1,6 +1,7 @@
 import Foundation
 
 protocol Fetching {
+    func downloadItem(fromURL url: URL) async throws -> Data
     func downloadItem<T: Decodable>(fromURL url: URL, ofType model: T.Type) async throws -> T
     func downloadItems<T: Decodable>(fromURLs urls: [URL], ofType model: T.Type) async throws -> [T]
 }
@@ -19,6 +20,15 @@ struct Fetcher: Fetching {
     
     init(networking: Networking = URLSession.shared) {
         self.networking = networking
+    }
+    
+    func downloadItem(fromURL url: URL) async throws -> Data {
+        let (data, response) = try await networking.data(from: url)
+        guard let response = response as? HTTPURLResponse,
+              response.statusCode >= 200 && response.statusCode <= 299 else {
+            throw NetworkError.badServerResponse
+        }
+        return data
     }
     
     func downloadItem<T: Decodable>(fromURL url: URL, ofType model: T.Type) async throws -> T {
