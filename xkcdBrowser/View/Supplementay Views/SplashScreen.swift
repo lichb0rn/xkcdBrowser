@@ -1,45 +1,44 @@
 import SwiftUI
 
-private struct SplashAnimation: ViewModifier {
-    @State private var isAnimating: Bool = true
-    
-    let finalXPosition: CGFloat
-    let finalYPosition: CGFloat
-    let delay: Double
-    
-    let screenHeight = UIScreen.main.bounds.size.height
-    let screenWidth  = UIScreen.main.bounds.size.width
-    
-    func body(content: Content) -> some View {
-        content
-            .offset(
-                x: isAnimating ? 300 : .zero,
-                y: isAnimating ? -700 : finalYPosition
-            )
-            .rotationEffect(
-                isAnimating ? .zero :
-                    Angle(degrees: Double.random(in: -50...50))
-            )
-            .animation( Animation.interpolatingSpring(
-                mass: 0.2,
-                stiffness: 80,
-                damping: 5,
-                initialVelocity: 0.0)
-                .delay(delay), value: isAnimating)
-            .onAppear { isAnimating = false }
-    }
-}
-
 struct SplashScreen: View {
-    let images = ["error", "estimation", "serverProblem", "xkcd-people" ]
+    enum AnimationPhase {
+        case normal
+        case small
+        case large
+        
+        var scale: Double {
+            switch self {
+            case .normal: return 1
+            case .small: return 0.7
+            case .large: return 10
+            }
+        }
+    }
+    @State private var phase: AnimationPhase = .normal
+    @State private var opacity: Double = 1
+    private let delay: Double = 0.5
     
     var body: some View {
         ZStack {
             Color("background").edgesIgnoringSafeArea(.all)
-            
-            ForEach(images.indices) { idx in
-                comicCard(images[idx])
-                    .modifier(SplashAnimation(finalXPosition: 0, finalYPosition: 300, delay: Double(idx) * 0.5))
+
+            comicCard("xkcd-people")
+                .scaleEffect(phase.scale)
+                .opacity(opacity)
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                withAnimation(.spring()) {
+                    phase = .small
+                    opacity = 0.7
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                        withAnimation(.spring()){
+                            phase = .large
+                            opacity = 0
+                        }
+                    }
+                }
             }
         }
     }
