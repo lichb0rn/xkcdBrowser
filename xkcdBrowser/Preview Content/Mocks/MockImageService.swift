@@ -18,7 +18,7 @@ actor MockImageService: ImageDownloader {
     }
 
     func add(_ image: UIImage, key: URL) { }
-    func clear() async { }
+    func clearDiskCache() async { }
 }
 
 extension MockImageService {

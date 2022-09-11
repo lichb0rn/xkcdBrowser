@@ -14,7 +14,8 @@ struct MainView: View {
     }
     
     var body: some View {
-        contentView.environmentObject(store)
+        contentView
+            .environmentObject(store)
             .task {
                 do{
                     try await appFactory.initProdStorageService()
@@ -25,22 +26,25 @@ struct MainView: View {
             }
     }
     
+    
     @ViewBuilder private var contentView: some View {
         if showSplashScreen {
             SplashScreen()
                 .onAppear {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + Settings.splashScreenDuration) {
                         showSplashScreen = false
                     }
                 }
         } else {
-            Group {
-                if store.showError {
-                    ErrorView()
-                } else {
+            if store.showError {
+                ErrorView()
+            } else {
+                NavigationView {
                     ComicGridView()
                         .environmentObject(store)
+                        .navigationBarTitleDisplayMode(.inline)
                 }
+                .navigationViewStyle(StackNavigationViewStyle())
             }
         }
     }

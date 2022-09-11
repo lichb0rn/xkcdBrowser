@@ -19,9 +19,12 @@ final class ComicStoreTests: XCTestCase {
             await mockStorageService.store(comic: comic, forKey: comic.comicURL)
         }
         
-        sut = ComicStore(prefetchCount: 10, prefetchMargin: 5, comicService: mockStorageService)
+        sut = ComicStore(prefetchCount: 10,
+                         prefetchMargin: 5,
+                         comicService: mockStorageService,
+                         imageDownloader: ImageService(fetcher: Fetcher()))
     }
-
+    
     override func tearDown() async throws {
         try super.tearDownWithError()
         sut = nil
@@ -59,7 +62,7 @@ final class ComicStoreTests: XCTestCase {
         
         XCTAssertEqual(count, 11) // Latest comic + 10 from prefetchCount = 11
     }
-
+    
     func test_notFetching_ifNoNeed() async throws {
         let fetched = await coldStart()
         
@@ -70,7 +73,7 @@ final class ComicStoreTests: XCTestCase {
         
         XCTAssertEqual(count, 1)
     }
-
+    
     func test_store_HasNoDuplicates() async {
         var latest = await coldStart()
         await sut.fetch(currentIndex: latest.id)
@@ -81,7 +84,7 @@ final class ComicStoreTests: XCTestCase {
         
         XCTAssertTrue(hasNoDuplicates, "Comics publisher has duplicate items")
     }
-
+    
     func test_fetchFailed_showErrorIsTrue() async {
         await mockStorageService.shouldThrow()
         

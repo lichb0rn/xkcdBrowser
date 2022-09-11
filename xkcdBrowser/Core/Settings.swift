@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct Settings {
+    // Startup
+    static let splashScreenDuration: Double = 1.5
+    
     // Fonts
     static let fontMedium: Font = .custom("ChalkboardSE-Light", size: 16)
     static let fontLarge: Font = .custom("ChalkboardSE-Light", size: 20)

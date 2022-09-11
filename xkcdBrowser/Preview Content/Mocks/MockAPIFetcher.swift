@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 class MockAPIFetcher: Fetching {
     let previewData: PreviewData
@@ -15,7 +16,9 @@ class MockAPIFetcher: Fetching {
         downloadCalled = true
         if shouldThrow { throw exceptionToThrow }
         
-        return previewData.data.values.first!
+        let img = UIImage(named: "xkcd-people")!.pngData()!
+        
+        return img
     }
     
     func downloadItem<T: Decodable>(fromURL url: URL, ofType model: T.Type) async throws -> T {

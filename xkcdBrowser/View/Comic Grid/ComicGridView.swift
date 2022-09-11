@@ -3,35 +3,52 @@ import SwiftUI
 struct ComicGridView: View {
     @EnvironmentObject var store: ComicStore
     
+    @State private var showBottomSheet: Bool = false
+    
     var body: some View {
-        NavigationView {
-            ScrollView {
-                LazyVGrid(columns: layout, spacing: spacing) {
-                    ForEach(store.comics) { comic in
-                        NavigationLink(destination: ComicDetailsView(comic: comic)) {
-                            ComicGridItemView(comic: comic)
-                                .background(Color.white)
-                                .padding(.horizontal, horizontalPadding)
-                                .task {
-                                    await store.fetch(currentIndex: comic.id)
-                                }
-                        }
+        ScrollView {
+            LazyVGrid(columns: layout, spacing: spacing) {
+                ForEach(store.comics) { comic in
+                    NavigationLink(destination: ComicDetailsView(comic: comic)) {
+                        ComicGridItemView(comic: comic)
+                            .background(Color.white)
+                            .padding(.horizontal, horizontalPadding)
+                            .task {
+                                await store.fetch(currentIndex: comic.id)
+                            }
                     }
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("xkcd")
-                        .font(Settings.fontLarge)
-                        .foregroundColor(.white)
+                    Button(action: {
+                        // easter egg
+                    }) {
+                        Text("xkcd")
+                            .font(Settings.fontLarge)
+                            .foregroundColor(.white)
+                    }
+                }
+                
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        showBottomSheet = true
+                    } label: {
+                        Image(systemName: "gear")
+                            .foregroundColor(.white)
+                    }
+                    
                 }
             }
-            .background(
-                Color("background")
-            )
+            .confirmationDialog("", isPresented: $showBottomSheet) {
+                Button("Clear cache", role: .destructive) {
+                    print("clear")
+                }
+            }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
+        .background(
+            Color("background")
+        )
     }
     
     // List on iPhone and grid on iPad
