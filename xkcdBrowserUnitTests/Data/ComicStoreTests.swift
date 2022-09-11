@@ -2,7 +2,7 @@ import XCTest
 import Combine
 @testable import xkcdBrowser
 
-final class StoreTests: XCTestCase {
+final class ComicStoreTests: XCTestCase {
     
     var sut: ComicStore!
     var mockStorageService: MockComicService!

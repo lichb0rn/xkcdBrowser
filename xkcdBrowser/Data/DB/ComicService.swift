@@ -9,7 +9,7 @@ enum ComicCacheError: Error {
 
 /*
     We need Global Actor here to execute Storage code in the ComicDatabase context.
-    We could make Storage an actor itself, but in this case we don't have 'actor hopping'.
+    I could make Storage an actor itself, but in this case we don't have 'actor hopping'.
  */
 
 protocol ComicCacheService: Actor {

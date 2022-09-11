@@ -3,6 +3,7 @@ import UIKit
 protocol ImageDownloader: Actor {
     func downloadImage(fromURL url: URL, ofSize size: CGSize) async throws -> UIImage
     func add(_ image: UIImage, key: URL)
+    func clear() async
 }
 
 
@@ -63,6 +64,10 @@ actor ImageService {
     
     func add(_ image: UIImage, key: URL) {
         cache[key] = cache[key, default: .completed(image)]
+    }
+    
+    func clear() async {
+        
     }
     
     private func getFileName(_ url: URL) -> URL? {
