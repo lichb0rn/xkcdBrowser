@@ -4,9 +4,9 @@ struct ControlBar: View {
     
     @State private var maxWidth: CGFloat = .zero
     
-    
     var text: String
     @Binding var altTapped: Bool
+    @Binding var favoriteTapped: Bool
     let onShareTap: () -> Void
     
     var body: some View {
@@ -26,6 +26,17 @@ struct ControlBar: View {
                     Text("ALT")
                 }
                 .buttonStyle(RoundedButtonStyle(foregroundColor: .white))
+            
+            Button {
+                favoriteTapped.toggle()
+            } label: {
+                if favoriteTapped {
+                    Image(systemName: "heart.slash.fill")
+                } else {
+                    Image(systemName: "heart.fill")
+                }
+            }
+            .buttonStyle(RoundedButtonStyle(foregroundColor: .white))
                 
         }
         .fixedSize()
@@ -38,6 +49,6 @@ struct ControlBar: View {
 
 struct ControlBar_Previews: PreviewProvider {
     static var previews: some View {
-        ControlBar(text: "1234", altTapped: .constant(false), onShareTap: {})
+        ControlBar(text: "1234", altTapped: .constant(false), favoriteTapped: .constant(true), onShareTap: {})
     }
 }

@@ -26,13 +26,14 @@ struct MainView: View {
             }
     }
     
-    
     @ViewBuilder private var contentView: some View {
         if showSplashScreen {
             SplashScreen()
                 .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + Settings.splashScreenDuration) {
-                        showSplashScreen = false
+                        withAnimation {
+                            showSplashScreen = false
+                        }
                     }
                 }
         } else {

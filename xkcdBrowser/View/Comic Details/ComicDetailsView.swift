@@ -7,6 +7,7 @@ struct ComicDetailsView: View {
     let comic: Comic
     
     @State private var showPopup: Bool = false
+    @State private var isFavorite: Bool = false
     @State private var image: Image = Image("estimation")
     
     var body: some View {
@@ -20,16 +21,21 @@ struct ComicDetailsView: View {
                     .gesture(doubleTapToZoom())
                     .gesture(isScaled ? panGesture() : nil)
                     .gesture(zoomGesture())
-                    .onAppear {
-                        store.markAsViewed(comic)
+                    .task {
+                        await store.markAsViewed(comic)
                     }
                 
                 Spacer()
                 
-                ControlBar(text: "\(comic.id)", altTapped: $showPopup) {
+                ControlBar(text: "\(comic.id)", altTapped: $showPopup, favoriteTapped: $isFavorite) {
                     shareComic()
                 }
                 .opacity(currentScale > minScale ? 0 : 1)
+                .onChange(of: isFavorite) { newValue in
+                    Task {
+                        await store.markFavorite(comic, newValue: newValue)
+                    }
+                }
                 
             }
             .padding()
@@ -38,7 +44,6 @@ struct ComicDetailsView: View {
                 GeometryReader { proxy in
                     PopupView(text: comic.description, isShowing: $showPopup)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    
                 }
             }
         }
@@ -58,6 +63,9 @@ struct ComicDetailsView: View {
                     .font(Settings.fontLarge)
             }
         })
+        .onAppear {
+            isFavorite = comic.isFavorite
+        }
         .task {
             await getImage()
         }

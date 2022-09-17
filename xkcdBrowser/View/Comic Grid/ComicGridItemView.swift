@@ -24,9 +24,6 @@ struct ComicGridItemView: View {
             .onAppear {
                 opacity = comic.isViewed ? 0.7 : 1
             }
-            .onDisappear {
-                
-            }
     }
     
     @ViewBuilder var content: some View {
@@ -39,6 +36,7 @@ struct ComicGridItemView: View {
     }
     
     private func getImage(ofSize size: CGSize) async {
+        isLoading = true
         if let uiImage = await store.downloadImage(for: comic, ofSize: size) {
             image = Image(uiImage: uiImage)
         } else {

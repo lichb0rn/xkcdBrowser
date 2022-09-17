@@ -100,8 +100,21 @@ final class ComicStoreTests: XCTestCase {
         
         await sut.markAsViewed(comic)
         
-        let viewed = await sut.comics.first(where: { $0.isViewed == true })
-        let viewedId = try XCTUnwrap(viewed).id
-        XCTAssertEqual(id, viewedId)
+        let marked = await sut.comics.first(where: { $0.id == id })
+        let unwrapped = try XCTUnwrap(marked)
+        
+        XCTAssertTrue(unwrapped.isViewed)
+    }
+    
+    func test_favorite_comic_marked() async throws {
+        let comic = await coldStart()
+        let id = comic.id
+        
+        await sut.markFavorite(comic, newValue: true)
+        
+        let marked = await sut.comics.first(where: { $0.id == id })
+        let unwrapped = try XCTUnwrap(marked)
+        
+        XCTAssertTrue(unwrapped.isFavorite)
     }
 }

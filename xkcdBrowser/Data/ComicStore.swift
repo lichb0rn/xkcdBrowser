@@ -39,14 +39,22 @@ final class ComicStore: ObservableObject {
         await fetchMoreIfNeeded(count: prefetchCount)
     }
     
-    func markAsViewed(_ comic: Comic) {
+    func markAsViewed(_ comic: Comic) async {
         var mutated = comic
         mutated.markViewed()
         if let index = comics.firstIndex(of: comic) {
             comics[index] = mutated
-            Task {
-                await comicService.store(comic: mutated, forKey: mutated.comicURL)
-            }
+            await comicService.store(comic: mutated, forKey: mutated.comicURL)
+            
+        }
+    }
+    
+    func markFavorite(_ comic: Comic, newValue: Bool) async {
+        var mutated = comic
+        mutated.markFavorite(newValue)
+        if let index = comics.firstIndex(of: comic) {
+            comics[index] = mutated
+            await comicService.store(comic: mutated, forKey: mutated.comicURL)
         }
     }
     

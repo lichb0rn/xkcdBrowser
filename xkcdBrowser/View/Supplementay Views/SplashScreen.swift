@@ -25,6 +25,7 @@ struct SplashScreen: View {
             comicCard("xkcd-people")
                 .scaleEffect(phase.scale)
                 .opacity(opacity)
+                
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + delay) {

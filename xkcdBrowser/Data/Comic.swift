@@ -23,6 +23,10 @@ struct Comic: Codable {
     mutating func markViewed() {
         isViewed = true
     }
+    
+    mutating func markFavorite(_ value: Bool) {
+        isFavorite = value
+    }
 }
 
 extension Comic: Identifiable, Hashable {}
