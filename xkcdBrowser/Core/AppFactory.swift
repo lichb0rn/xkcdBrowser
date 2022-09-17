@@ -15,12 +15,12 @@ final class AppFactory {
         }
         
 #if DEBUG
-        return createStoreWithMocks(prefetchCount: prefetchCount,
-                                    prefetchMargin: prefetchMargin)
-//        return ComicStore(prefetchCount: prefetchCount,
-//                          prefetchMargin: prefetchMargin,
-//                          comicService: ComicService.shared,
-//                          imageDownloader: ImageService(fetcher: Fetcher()))
+//        return createStoreWithMocks(prefetchCount: prefetchCount,
+//                                    prefetchMargin: prefetchMargin)
+        return ComicStore(prefetchCount: prefetchCount,
+                          prefetchMargin: prefetchMargin,
+                          comicService: ComicService.shared,
+                          imageDownloader: ImageService(fetcher: Fetcher()))
 #else
         return ComicStore(prefetchCount: prefetchCount,
                           prefetchMargin: prefetchMargin,

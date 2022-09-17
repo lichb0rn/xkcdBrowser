@@ -34,7 +34,7 @@ struct ComicGridView: View {
                     Button {
                         showBottomSheet = true
                     } label: {
-                        Image(systemName: "gear")
+                        Image(systemName: "slider.horizontal.3")
                             .foregroundColor(.white)
                     }
                     
@@ -42,7 +42,9 @@ struct ComicGridView: View {
             }
             .confirmationDialog("", isPresented: $showBottomSheet) {
                 Button("Clear cache", role: .destructive) {
-                    print("clear")
+                    Task {
+                        await store.clearCache()
+                    }
                 }
             }
         }

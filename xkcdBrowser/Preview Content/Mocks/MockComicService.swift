@@ -32,7 +32,7 @@ actor MockComicService: ComicCacheService {
     }
     
     func clear() async {
-        data.removeAll()
+//        data.removeAll()
     }
     
     func shouldThrow() {

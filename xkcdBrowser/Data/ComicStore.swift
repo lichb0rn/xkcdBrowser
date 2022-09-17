@@ -6,7 +6,7 @@ final class ComicStore: ObservableObject {
     
     @Published private(set) var comics: [Comic] = []
     @Published private(set) var showError: Bool = false
-
+    
     
     private var isFetching: Bool = false
     private let imageDownloader: ImageDownloader
@@ -29,13 +29,13 @@ final class ComicStore: ObservableObject {
     
     func fetch() async {
         guard latestIndex < 1 else { return }
-
+        
         await fetchLatest()
     }
     
     func fetch(currentIndex: Int) async {
         guard currentIndex < latestIndex + prefetchMargin else { return }
-
+        
         await fetchMoreIfNeeded(count: prefetchCount)
     }
     
@@ -48,6 +48,19 @@ final class ComicStore: ObservableObject {
                 await comicService.store(comic: mutated, forKey: mutated.comicURL)
             }
         }
+    }
+    
+    func clearCache() async {
+        Task(priority: .background) {
+            await imageDownloader.clearDiskCache()
+        }
+        Task(priority: .userInitiated)  {
+            await comicService.clear()
+        }
+        comics.removeAll(keepingCapacity: true)
+        latestIndex = -1
+        
+        await fetchLatest()
     }
     
     private func updateUI(with contents: [Comic]) {
@@ -106,7 +119,7 @@ extension ComicStore {
         let end = startIndex - count
         let step = reversed ? -1 : 1
         var urls: [URL] = []
-    
+        
         // Fetching from larger index to smaller
         for index in stride(from: startIndex, to: end, by: step) {
             urls.append(ComicEndpoint.byIndex(index).url)

@@ -75,6 +75,8 @@ actor ImageService {
         cache.keys.forEach {
             removeImageFile($0)
         }
+        
+        cache.removeAll()
     }
     
     private func getFileName(_ url: URL) -> URL? {
@@ -103,7 +105,8 @@ actor ImageService {
     }
     
     private func removeImageFile(_ url: URL) {
-        print(url)
+        guard let fileName = getFileName(url) else { return }
+        try? FileManager.default.removeItem(at: fileName)
     }
 }
 
