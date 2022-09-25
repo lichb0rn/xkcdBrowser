@@ -10,7 +10,7 @@ final class ImageServiceTests: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
         previewData = PreviewData()
-        fetcher = MockAPIFetcher(preview: previewData)
+        fetcher = MockAPIFetcher(isUnitTesting: true, preview: previewData)
         sut = ImageService(fetcher: fetcher)
     }
 

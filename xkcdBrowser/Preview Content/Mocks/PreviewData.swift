@@ -46,6 +46,15 @@ struct PreviewData {
         }
         return nil
     }
+    
+    func fetchData(_ url: URL) -> Data? {
+        let fileName = JSONPreviewLoader.fileName(url) + ".json"
+        if let comicData = data[fileName] {
+            return comicData
+        }
+        let oldest = data.keys.sorted().last!
+        return data[oldest]
+    }
 }
 
 struct JSONPreviewLoader {
@@ -59,5 +68,9 @@ struct JSONPreviewLoader {
             }
         }
         return nil
+    }
+    
+    static func fileName(_ url: URL) -> String {
+        return url.pathComponents[1]
     }
 }

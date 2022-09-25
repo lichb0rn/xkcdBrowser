@@ -1,5 +1,7 @@
 import Foundation
 
+
+
 enum ComicEndpoint {
     private var baseURL: String { "https://xkcd.com/" }
     private var suffix: String { "info.0.json" }

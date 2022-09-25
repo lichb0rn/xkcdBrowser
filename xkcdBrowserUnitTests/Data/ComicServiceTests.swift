@@ -12,7 +12,7 @@ final class ComicServiceTests: XCTestCase {
         try super.setUpWithError()
         sut = ComicService.shared
         previewData = PreviewData()
-        fetcher = MockAPIFetcher(preview: previewData)
+        fetcher = MockAPIFetcher(isUnitTesting: true, preview: previewData)
         diskStorage = MockDiskStorage(preview: previewData)
         Task {
             try await sut.setUp(fetcher: fetcher, storage: diskStorage)

@@ -75,7 +75,6 @@ actor ComicService: ComicCacheService {
             
             // Since the latest comic url differs from all other we need to reconstruct it from the comic id
             let comicURL = ComicEndpoint.byIndex(apiEntity.id).url
-            
             // And re-check if it's been cached
             let entityName = storage.entityName(comicURL)
             if !storedIndexes.contains(entityName) {

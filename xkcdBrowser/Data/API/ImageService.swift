@@ -59,7 +59,7 @@ actor ImageService {
         do {
             let image = try await downloadTask.value
             add(image, key: url)
-            saveImageToDisk(image, key: url)
+//            saveImageToDisk(image, key: url)
             return image
         } catch {
             cache[url] = .failed
@@ -84,14 +84,13 @@ actor ImageService {
         guard let applicationSupport = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else {
             return nil
         }
-        
         return applicationSupport.appendingPathComponent(fileName)
     }
     
     private func loadFromFile(fromURL url: URL) throws -> UIImage? {
         guard let fileName = getFileName(url) else { return nil }
+        
         let data = try Data(contentsOf: fileName)
-                
         return UIImage(data: data)
     }
     

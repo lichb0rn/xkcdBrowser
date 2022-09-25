@@ -45,12 +45,10 @@ actor MockComicService: ComicCacheService {
             fatalError("Could not open application support directory")
         }
         let databaseFolder = supportDirectory.appendingPathComponent("database")
-        print(databaseFolder)
         let fileName = url.deletingLastPathComponent().lastPathComponent.appending(".json")
         do {
             let encoded = try JSONEncoder().encode(comic)
             try encoded.write(to: databaseFolder.appendingPathComponent(fileName))
-            print("Saved to \(fileName): \(encoded)")
         } catch {
             print(error.localizedDescription)
         }

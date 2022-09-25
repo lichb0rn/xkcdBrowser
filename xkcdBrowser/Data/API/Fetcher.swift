@@ -2,10 +2,10 @@ import Foundation
 
 protocol Fetching {
     func downloadItem(fromURL url: URL) async throws -> Data
+    
     func downloadItem<T: Decodable>(fromURL url: URL, ofType model: T.Type) async throws -> T
     func downloadItems<T: Decodable>(fromURLs urls: [URL], ofType model: T.Type) async throws -> [T]
 }
-
 
 enum NetworkError: Error {
     case badURL
@@ -15,13 +15,13 @@ enum NetworkError: Error {
 }
 
 struct Fetcher: Fetching {
-    
     private let networking: Networking
     
     init(networking: Networking = URLSession.shared) {
         self.networking = networking
     }
     
+    // For images. Probably should refactor other methods to return Data
     func downloadItem(fromURL url: URL) async throws -> Data {
         let (data, response) = try await networking.data(from: url)
         guard let response = response as? HTTPURLResponse,
