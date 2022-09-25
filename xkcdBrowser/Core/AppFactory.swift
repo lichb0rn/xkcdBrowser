@@ -16,8 +16,8 @@ final class AppFactory {
         }
         
 #if DEBUG
-//        let fetcher = MockAPIFetcher()
-        let fetcher = Fetcher()
+        let fetcher = MockAPIFetcher()
+//        let fetcher = Fetcher()
 #else
         let fetcher = Fetcher()
 #endif

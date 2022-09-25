@@ -59,7 +59,7 @@ actor ImageService {
         do {
             let image = try await downloadTask.value
             add(image, key: url)
-//            saveImageToDisk(image, key: url)
+            saveImageToDisk(image, key: url)
             return image
         } catch {
             cache[url] = .failed
